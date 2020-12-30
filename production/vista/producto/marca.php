@@ -140,6 +140,7 @@
             <div id="cuadroFormulario" class="container-fluid">
 
                 <div class="container-fluid form-neon">
+                    <input type="hidden" id="txt_id" name="txt_id">
                     <form id="frm_Marca" action="" autocomplete="off">
                         <fieldset>
                             <legend><i class="far fa-plus-square"></i> &nbsp; INFORMACION</legend>
@@ -147,9 +148,9 @@
                                 <div class="row">
                                     <div class="col-12 col-md-12">
                                         <div class="form-group">
-                                            <label for="txt_nombrec" class="roboto-medium">NOMBRE</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_nombrec" id="txt_nombrec">
-                                            <div id="nombreerror">
+                                            <label for="txt_marca" class="roboto-medium">NOMBRE</label>
+                                            <input type="text" class="form-control text-uppercase" name="txt_marca" id="txt_marca" minlength="2" maxlength="125" required>
+                                            <div id="marcaError">
 
                                             </div>
                                         </div>
@@ -190,19 +191,21 @@
 
     <script>
         $(document).ready(function() {
-
+            $("#cuadroFormulario").slideUp("slow")
             opLista.className = "active";
             let $validar = $('#cuadroFormulario form').validate({
                 rules: {
-                    txt_nombrec: {
+                    txt_marca: {
                         required: true,
-                        minlength: 1,
-                        maxlength: 20
+                        minlength: 2,
+                        maxlength: 125
                     }
                 }
             })
         });
     </script>
+
+    <script src="../../js_app/marca.js"></script>
 
 </body>
 

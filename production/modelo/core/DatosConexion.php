@@ -44,7 +44,7 @@ define('PUERTO', 5432);
 define('SERVIDOR', 'localhost');
 
 //EL NOMBRE DE LA BASE DE DATOS QUE DESEA CONECTAR
-define('NOMBRE_BD', 'fenix');
+define('NOMBRE_BD', 'financiero');
 
 //EL USUARIO DEL GESTOS DE BASE DE DATOS
 define('USUARIO', 'root');

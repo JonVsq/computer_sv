@@ -557,7 +557,7 @@ class Nucleo
     {
         try {
             $respuesta = array();
-            $existe = 1;
+            $existe = 0;
             foreach ($datos as $campo => $valor) {
                 $consulta = "";
                 if ($this->consultarModificar) {
@@ -575,8 +575,8 @@ class Nucleo
                 $registros = $resultado->fetchAll(PDO::FETCH_ASSOC);
                 $registros = $registros[0]["total"];
                 settype($registros, 'int');
-                if ($existe > 0) {
-                    $existe = $registros > 0 ? 0 : 1;
+                if ($existe < 1) {
+                    $existe = $registros > 0 ? 1 : 0;
                 }
                 $respuesta[] = array(
                     $campo => $registros
