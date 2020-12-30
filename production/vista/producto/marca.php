@@ -191,7 +191,7 @@
     <script>
         $(document).ready(function() {
 
-            opLista.className += "active";
+            opLista.className = "active";
             let $validar = $('#cuadroFormulario form').validate({
                 rules: {
                     txt_nombrec: {
