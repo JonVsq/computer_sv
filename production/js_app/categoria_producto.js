@@ -6,25 +6,25 @@ const cuerpoTabla = document.getElementById('cuerpoTabla')
 const registros = document.getElementById('registros')
 const totalPaginas = document.getElementById('totalPaginas')
 const paginador = document.getElementById('paginador')
-const txt_nombrefiltro = document.getElementById('txt_nombrefiltro')
+const txt_descripcionFiltro = document.getElementById('txt_descripcionFiltro')
 const txt_id = document.getElementById('txt_id')
 //FORMULARIO
-const txt_marca = document.getElementById('txt_marca')
-const marcaError = document.getElementById('marcaError')
+const txt_descripcion = document.getElementById('txt_descripcion')
+const descripcionError = document.getElementById('descripcionError')
 const btn_limpiar = document.getElementById('btn_limpiar')
 const btn_listar = document.getElementById('btn_listar')
 const btn_guardar = document.getElementById('btn_guardar')
 //DIRECCION CONTROLADORES
-let urlMarca = '../../controlador/MarcaController.php'
+let urlCatProducto = '../../controlador/CategoriaProductoController.php'
 let modificar = false
 //DETECTA SI LA VENTA YA SE CARGAR
 window.addEventListener("load", inicio)
 //INICIA LOS EVENTOS
 function inicio() {
-    listarMarca(1, cantidad.value, '', '')
-    txt_nombrefiltro.addEventListener("keyup", filtroNombre)
+    listarCategoriaProducto(1, cantidad.value, '', '')
+    txt_descripcionFiltro.addEventListener("keyup", filtroDescripcion)
     cantidad.addEventListener("change", comboListado)
-    btn_guardar.addEventListener("click", guardarModificarMarca)
+    btn_guardar.addEventListener("click", guardarModificarCatProducto)
     opNueva.addEventListener("click", opcionNuevo)
     opLista.addEventListener("click", tabla)
     btn_listar.addEventListener("click", tabla)
@@ -32,11 +32,11 @@ function inicio() {
 function opcionNuevo() {
     if (modificar) {
         modificar = false;
-        document.getElementById('frm_Marca').reset();
+        document.getElementById('frm_catProducto').reset();
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
-        marcaError.innerHTML = ""
+        descripcionError.innerHTML = ""
 
     }
     opNueva.className = "active"
@@ -48,36 +48,36 @@ function opcionNuevo() {
 function tabla() {
     if (modificar) {
         modificar = false;
-        document.getElementById('frm_Marca').reset();
+        document.getElementById('frm_catProducto').reset();
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
-        marcaError.innerHTML = ""
+        descripcionError.innerHTML = ""
 
     }
     opLista.className = "active"
     opNueva.className = ""
     $("#cuadroFormulario").slideUp("slow")
     $("#cuadroTabla").slideDown("slow")
-    listarMarca(1, cantidad.value, '', '')
+    listarCategoriaProducto(1, cantidad.value, '', '')
 
 }
 
-function guardarModificarMarca() {
+function guardarModificarCatProducto() {
     btn_guardar.setAttribute('disabled', 'true')
     let validar = $('#cuadroFormulario form').valid()
     if (!validar) {
         btn_guardar.removeAttribute('disabled')
         return false;
     } else {
-        const datos = new FormData(document.getElementById('frm_Marca'))
+        const datos = new FormData(document.getElementById('frm_catProducto'))
         if (modificar) {
             datos.append('id', txt_id.value)
             datos.append('opcion', 'modificar')
         } else {
             datos.append('opcion', 'insertar')
         }
-        fetch(urlMarca, {
+        fetch(urlCatProducto, {
             method: 'POST',
             body: datos
         }).then(function (respuesta) {
@@ -87,15 +87,15 @@ function guardarModificarMarca() {
         }).then(respuesta => {
             if (respuesta[0].estado == 1) {
                 tabla()
-                listarMarca(1, cantidad.value, '', '')
+                listarCategoriaProducto(1, cantidad.value, '', '')
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
-                marcaError.innerHTML = ""
-                document.getElementById('frm_Marca').reset()
+                descripcionError.innerHTML = ""
+                document.getElementById('frm_catProducto').reset()
             } else {
-                if (respuesta[0].errores[0].nombre_marca > 0) {
-                    marcaError.innerHTML = "<span class='error'>Ingrese otro nombre.</span>"
+                if (respuesta[0].errores[0].descripcion > 0) {
+                    descripcionError.innerHTML = "<span class='error'>Ingrese otro nombre.</span>"
                 } else {
-                    marcaError.innerHTML = ""
+                    descripcionError.innerHTML = ""
                 }
             }
             btn_guardar.removeAttribute('disabled')
@@ -116,7 +116,7 @@ function cargarFormulario(id) {
     const datos = new FormData()
     datos.append('id', id)
     datos.append('opcion', 'obtener')
-    fetch(urlMarca, {
+    fetch(urlCatProducto, {
         method: 'POST',
         body: datos
     }).then(function (respuesta) {
@@ -125,10 +125,10 @@ function cargarFormulario(id) {
         }
     }).then(respuesta => {
         if (respuesta[0] == null) {
-            swal("NO ES POSIBLE MODIFICAR.", "LA MARCA YA HA SIDO ELIMINADA.", "info")
+            swal("NO ES POSIBLE MODIFICAR.", "LA CATEGORIA DEL PRODUCTO YA HA SIDO ELIMINADA.", "info")
         } else {
             txt_id.value = respuesta[0]['id']
-            document.getElementById('txt_marca').value = respuesta[0]['nombre_marca']
+            txt_descripcion.value = respuesta[0]['descripcion']
             modificar = true
             //OCULTA TABLA Y MUESTRA EL FORMULARIO
             opNueva.className = "active";
@@ -142,14 +142,14 @@ function cargarFormulario(id) {
 
     })
 }
-function listarMarca(pagina, cantidad, campo, buscar) {
+function listarCategoriaProducto(pagina, cantidad, campo, buscar) {
     const datos = new FormData()
     datos.append('opcion', 'listar')
     datos.append('pagina', pagina)
     datos.append('campo', campo)
     datos.append('cantidad', cantidad)
     datos.append('buscar', buscar)
-    fetch(urlMarca, {
+    fetch(urlCatProducto, {
         method: 'POST',
         body: datos
     }).then(function (respuesta) {
@@ -167,7 +167,7 @@ function listarMarca(pagina, cantidad, campo, buscar) {
 }
 //EVENTO DEL COMBO PARA SELECCIONAR LA CANTIDAD DE REGISTROS A MOSTRAR
 function comboListado() {
-    listarMarca(1, cantidad.value, '', '')
+    listarCategoriaProducto(1, cantidad.value, '', '')
 }
 
 //BOTONES DE LA PAGINACION
@@ -175,23 +175,23 @@ $(document).on('click', '.pagina', function (e) {
     e.preventDefault()
     let elemento = $(this)[0]
     let pagina = $(elemento).attr('pag')
-    listarMarca(pagina, cantidad.value, '', '')
+    listarCategoriaProducto(pagina, cantidad.value, '', '')
 })
 
 $(document).on('click', '.siguiente', function (e) {
     e.preventDefault()
     let elemento = $(this)[0]
     let pagina = $(elemento).attr('pag')
-    listarMarca(pagina, cantidad.value, '', '')
+    listarCategoriaProducto(pagina, cantidad.value, '', '')
 })
 
 //BUSQUEDA FILTRADA
-function filtroNombre() {
+function filtroDescripcion() {
 
-    if (txt_nombrefiltro.value.length > 0) {
-        listarMarca(1, cantidad.value, 'nombre_marca', txt_nombrefiltro.value)
+    if (txt_descripcionFiltro.value.length > 0) {
+        listarCategoriaProducto(1, cantidad.value, 'descripcion', txt_descripcionFiltro.value)
     } else {
-        listarMarca(1, cantidad.value, '', '')
+        listarCategoriaProducto(1, cantidad.value, '', '')
     }
 }
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
