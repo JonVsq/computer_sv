@@ -17,7 +17,7 @@ const txt_maxVentas = document.getElementById('txt_maxVentas')
 const txt_montoLimite = document.getElementById('txt_montoLimite')
 const nombreError = document.getElementById('nombreError')
 const descripcionError = document.getElementById('descripcionError')
-const pagoError = document.getElementById('descripcionError')
+const pagoError = document.getElementById('pagoError')
 const ventaError = document.getElementById('ventaError')
 const montoError = document.getElementById('montoError')
 const btn_limpiar = document.getElementById('btn_limpiar')
@@ -44,13 +44,12 @@ function opcionNuevo() {
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
-        nombreError.innerHTML = ""
-        descripcionError.innerHTML = ""
-        pagoError.innerHTML = ""
-        montoError.innerHTML = ""
-        ventaError.innerHTML = ""
-
     }
+    nombreError.innerHTML = ""
+    descripcionError.innerHTML = ""
+    pagoError.innerHTML = ""
+    montoError.innerHTML = ""
+    ventaError.innerHTML = ""
     opNueva.className = "active"
     opLista.className = ""
     $("#cuadroFormulario").slideDown("slow")
@@ -63,13 +62,12 @@ function tabla() {
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
-        nombreError.innerHTML = ""
-        descripcionError.innerHTML = ""
-        pagoError.innerHTML = ""
-        montoError.innerHTML = ""
-        ventaError.innerHTML = ""
-
     }
+    nombreError.innerHTML = ""
+    descripcionError.innerHTML = ""
+    pagoError.innerHTML = ""
+    montoError.innerHTML = ""
+    ventaError.innerHTML = ""
     opLista.className = "active"
     opNueva.className = ""
     $("#cuadroFormulario").slideUp("slow")
@@ -99,7 +97,6 @@ function guardarModificarCatCliente() {
                 return respuesta.json()
             }
         }).then(respuesta => {
-            console.log(respuesta)
             if (respuesta[0].estado == 1) {
                 tabla()
                 listarCategoriaCliente(1, cantidad.value, '', '')
@@ -118,12 +115,12 @@ function guardarModificarCatCliente() {
                     descripcionError.innerHTML = ""
                 }
                 if (respuesta[0].errores[2].max_atraso > 0) {
-                    pagoError.innerHTML = "<span class='error'>Ingrese otra valor.</span>"
+                    pagoError.innerHTML = "<span class='error'>Ingrese otro valor.</span>"
                 } else {
                     pagoError.innerHTML = ""
                 }
                 if (respuesta[0].errores[3].max_ventas > 0) {
-                    ventaError.innerHTML = "<span class='error'>Ingrese otra valor.</span>"
+                    ventaError.innerHTML = "<span class='error'>Ingrese otro valor.</span>"
                 } else {
                     ventaError.innerHTML = ""
                 }

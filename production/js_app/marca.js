@@ -36,9 +36,8 @@ function opcionNuevo() {
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
-        marcaError.innerHTML = ""
-
     }
+    marcaError.innerHTML = ""
     opNueva.className = "active"
     opLista.className = ""
     $("#cuadroFormulario").slideDown("slow")
@@ -52,9 +51,8 @@ function tabla() {
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
-        marcaError.innerHTML = ""
-
     }
+    marcaError.innerHTML = ""
     opLista.className = "active"
     opNueva.className = ""
     $("#cuadroFormulario").slideUp("slow")
