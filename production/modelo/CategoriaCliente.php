@@ -29,6 +29,7 @@ class CategoriaCliente
     public function obtenerCategoriaCliente($id){
         $this->nucleo->setQueryPersonalizado("SELECT * FROM categoria_cliente as c 
                                              where c.id = $id order by c.nombre DESC");
+        return $this->nucleo->getDatos();
     }
     public function tablaCategoriaCliente($numPagina, $cantidad, $campo, $buscar)
     {

@@ -1,6 +1,7 @@
 <?php
 require_once('core/Nucleo.php');
-class Proveedores{
+class Proveedores
+{
     private $nucleo;
     private $nombreTabla = "proveedor";
     public function __construct()
@@ -29,9 +30,11 @@ class Proveedores{
         $this->nucleo->setConsultarModificar(true);
         return $this->nucleo->coincidencias($campos, $identificador, $valor);
     }
-    public function obtenerProveedor($id){
+    public function obtenerProveedor($id)
+    {
         $this->nucleo->setQueryPersonalizado("SELECT * FROM proveedor as p 
                                              where p.id = $id order by p.nombre DESC");
+        return $this->nucleo->getDatos();
     }
     public function tablaProveedor($numPagina, $cantidad, $campo, $buscar)
     {
