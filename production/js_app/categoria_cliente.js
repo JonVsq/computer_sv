@@ -31,8 +31,11 @@ window.addEventListener("load", inicio)
 //INICIA LOS EVENTOS
 function inicio() {
     listarCategoriaCliente(1, cantidad.value, '', '')
+    cantidad.addEventListener("change", comboListado)
     opNueva.addEventListener("click", opcionNuevo)
     opLista.addEventListener("click", tabla)
+    txt_nombrefiltro.addEventListener("keyup", filtroNombre)
+    txt_descripcionFiltro.addEventListener("keyup", filtroDescripcion)
     btn_listar.addEventListener("click", tabla)
     btn_guardar.addEventListener("click", guardarModificarCatCliente)
 }

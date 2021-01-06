@@ -32,6 +32,11 @@ window.addEventListener("load", inicio)
 //INICIA LOS EVENTOS
 function inicio() {
     listarProveedor(1, cantidad.value, '', '')
+    cantidad.addEventListener("change", comboListado)
+    txt_nombrefiltro.addEventListener("keyup", filtroNombre)
+    txt_telefonofiltro.addEventListener("keyup", filtroTelefono)
+    txt_direccionfiltro.addEventListener("keyup", filtroDireccion)
+    txt_correofiltro.addEventListener("keyup", filtroCorreo)
     opNueva.addEventListener("click", opcionNuevo)
     opLista.addEventListener("click", tabla)
     btn_listar.addEventListener("click", tabla)
@@ -97,7 +102,7 @@ function guardarModificarProveedor() {
         }).then(respuesta => {
             if (respuesta[0].estado == 1) {
                 tabla()
-                //listarMarca(1, cantidad.value, '', '')
+                listarProveedor(1, cantidad.value, '', '')
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
                 document.getElementById('frm_proveedor').reset()
             } else {
@@ -187,6 +192,67 @@ function listarProveedor(pagina, cantidad, campo, buscar) {
     }).catch(error => {
         alert('Ocurrio un error conectado al servidor, intente de nuevo')
     })
+}
+//EVENTO DEL COMBO PARA SELECCIONAR LA CANTIDAD DE REGISTROS A MOSTRAR
+function comboListado() {
+    listarProveedor(1, cantidad.value, '', '')
+}
+
+//BOTONES DE LA PAGINACION
+$(document).on('click', '.pagina', function (e) {
+    e.preventDefault()
+    let elemento = $(this)[0]
+    let pagina = $(elemento).attr('pag')
+    listarProveedor(pagina, cantidad.value, '', '')
+})
+
+$(document).on('click', '.siguiente', function (e) {
+    e.preventDefault()
+    let elemento = $(this)[0]
+    let pagina = $(elemento).attr('pag')
+    listarProveedor(pagina, cantidad.value, '', '')
+})
+
+//BUSQUEDA FILTRADA
+function filtroNombre() {
+    if (txt_nombrefiltro.value.length > 0) {
+        txt_telefonofiltro.value = ""
+        txt_direccionfiltro.value = ""
+        txt_correofiltro.value = ""
+        listarProveedor(1, cantidad.value, 'nombre', txt_nombrefiltro.value)
+    } else {
+        listarProveedor(1, cantidad.value, '', '')
+    }
+}
+function filtroTelefono() {
+    if (txt_telefonofiltro.value.length > 0) {
+        txt_nombrefiltro.value = ""
+        txt_direccionfiltro.value = ""
+        txt_correofiltro.value = ""
+        listarProveedor(1, cantidad.value, 'telefono', txt_telefonofiltro.value)
+    } else {
+        listarProveedor(1, cantidad.value, '', '')
+    }
+}
+function filtroDireccion() {
+    if (txt_direccionfiltro.value.length > 0) {
+        txt_nombrefiltro.value = ""
+        txt_telefonofiltro.value = ""
+        txt_correofiltro.value = ""
+        listarProveedor(1, cantidad.value, 'direccion', txt_direccionfiltro.value)
+    } else {
+        listarProveedor(1, cantidad.value, '', '')
+    }
+}
+function filtroCorreo() {
+    if (txt_correofiltro.value.length > 0) {
+        txt_nombrefiltro.value = ""
+        txt_telefonofiltro.value = ""
+        txt_direccionfiltro.value = ""
+        listarProveedor(1, cantidad.value, 'correo', txt_correofiltro.value)
+    } else {
+        listarProveedor(1, cantidad.value, '', '')
+    }
 }
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
