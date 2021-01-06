@@ -16,7 +16,7 @@ switch ($opcion) {
     case 'insertar': {
             $marca = new Marca();
             $respuesta = array();
-            $existe = $marca->CamposUnicos(array("nombre_marca" => $txt_marca), "", "");
+            $existe = $marca->CamposUnicos(array("nombre_marca" => $txt_marca), "id", "");
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
                     "estado" => 0,
