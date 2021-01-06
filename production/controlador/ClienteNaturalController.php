@@ -27,10 +27,10 @@ switch ($opcion) {
             $respuesta = array();
             $existeCliente = $catClienteN->camposUnicosC(array(
                 "nombre" => $txt_nombre, "telefono" => $txt_telefono,
-            ), "", "");
+            ), "codigo", "");
             $existeDatos = $catClienteN->camposUnicosD(array(
                 "dui" => $txt_dui, "nit" => $txt_nit,
-            ), "", "");
+            ), "codigo_cliente", "");
             if ($existeCliente['existe'] == 1 || $existeDatos['existe'] == 1) {
                 $respuesta[] = array(
                     "estado" => 0,
@@ -39,7 +39,7 @@ switch ($opcion) {
 
                 );
             } else {
-                $idCategoria = $catClienteN->obtenerIdCategoria;
+                $idCategoria = $catClienteN->obtenerIdCategoria();
                 if (is_numeric($idCategoria)) {
                     if ($catClienteN->insertaCliente(array(
                         $txt_codigo, $idCategoria, $txt_nombre,
@@ -101,7 +101,7 @@ switch ($opcion) {
 
                 );
             } else {
-                $idCategoria = $catClienteN->obtenerIdCategoria;
+                $idCategoria = $catClienteN->obtenerIdCategoria();
                 if (is_numeric($idCategoria)) {
                     if ($catClienteN->modificarCliente(array(
                         $txt_codigo, $idCategoria, $txt_nombre,

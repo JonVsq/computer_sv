@@ -22,7 +22,7 @@ switch ($opcion) {
             $existe = $catProveedor->camposUnicos(array(
                 "nombre" => $txt_nombre, "telefono" => $txt_telefono,
                 "correo" => $txt_correo,
-            ), "", "");
+            ), "id", "");
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
                     "estado" => 0,
