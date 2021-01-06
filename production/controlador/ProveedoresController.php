@@ -62,7 +62,7 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                if ($catProveedor->insertaProveedor(array($id, $txt_nombre, $txt_direccion, $txt_telefono, $txt_correo, $txt_diasEntrega))) {
+                if ($catProveedor->modificarProveedor(array($id, $txt_nombre, $txt_direccion, $txt_telefono, $txt_correo, $txt_diasEntrega))) {
                     $respuesta[] = array(
                         "estado" => 1,
                         "encabezado" => "EXITO.",
