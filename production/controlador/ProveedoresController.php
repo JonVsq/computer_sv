@@ -5,7 +5,7 @@ $id = (isset($_POST['id'])) ?  $_POST['id'] : '';
 $txt_nombre =  (isset($_POST['txt_nombre'])) ? strtoupper($_POST['txt_nombre']) : '';
 $txt_direccion =  (isset($_POST['txt_direccion'])) ? strtoupper($_POST['txt_direccion']) : '';
 $txt_telefono =  (isset($_POST['txt_telefono'])) ? strtoupper($_POST['txt_telefono']) : '';
-$txt_correo =  (isset($_POST['txt_correo'])) ? strtoupper($_POST['txt_correo']) : '';
+$txt_correo =  (isset($_POST['txt_correo'])) ? $_POST['txt_correo'] : '';
 $txt_diasEntrega =  (isset($_POST['txt_diasEntrega'])) ? $_POST['txt_diasEntrega'] : '';
 //PARAMETROS PARA LISTAR DATOS
 $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
@@ -21,7 +21,7 @@ switch ($opcion) {
             $respuesta = array();
             $existe = $catProveedor->camposUnicos(array(
                 "nombre" => $txt_nombre, "telefono" => $txt_telefono,
-                "correo" => $correo,
+                "correo" => $txt_correo,
             ), "", "");
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
@@ -54,7 +54,7 @@ switch ($opcion) {
             $respuesta = array();
             $existe = $catProveedor->camposUnicosModificar(array(
                 "nombre" => $txt_nombre, "telefono" => $txt_telefono,
-                "correo" => $correo,
+                "correo" => $txt_correo,
             ), "id", $id);
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
