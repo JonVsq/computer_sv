@@ -144,12 +144,18 @@
             <div id="cuadroFormulario" class="container-fluid">
 
                 <div class="container-fluid form-neon">
-                    <input type="hidden" id="txt_id" name="txt_id">
+                    <input type="hidden" id="txt_codigo" name="txt_codigo">
+                    <input type="hidden" id="txt_fechaIngreso" name="txt_fechaIngreso">
                     <form id="frm_clienteN" action="" autocomplete="off">
                         <fieldset>
                             <legend><i class="far fa-plus-square"></i> &nbsp; INFORMACION</legend>
                             <div class="container-fluid">
                                 <div class="row">
+                                    <div class="col-12 col-md-12">
+                                        <div id="spn_codigo" class="form-group text-center">
+
+                                        </div>
+                                    </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txt_dui" class="roboto-medium">DUI</label>
@@ -161,7 +167,7 @@
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txt_nit" class="roboto-medium">NOMBRE</label>
+                                            <label for="txt_nit" class="roboto-medium">NIT</label>
                                             <input type="text" class="form-control text-uppercase" name="txt_nit" id="txt_nit" required>
                                             <div id="nitError">
 
@@ -201,7 +207,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txt_direccion" class="roboto-medium">DIRECCION</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_direccion" id="txt_direccion" min="3" max="350" required>
+                                            <input type="text" class="form-control text-uppercase" name="txt_direccion" id="txt_direccion" minlength="3" maxlength="350" required>
                                         </div>
                                     </div>
 
@@ -259,17 +265,53 @@
 
     <script src="../../../js/main.js"></script>
 
+    <script src="../../../Plugins/mascara.js"></script>
+
     <script>
         $(document).ready(function() {
             $("#cuadroFormulario").slideUp("slow")
             opLista.className = "active";
+            $('#txt_telefono').mask("(999) 9999-9999")
+            $("#txt_dui").mask("99999999-9")
+            $("#txt_nit").mask("9999-999999-999-9")
             let $validar = $('#cuadroFormulario form').validate({
                 rules: {
                     txt_nombre: {
                         required: true,
                         minlength: 3,
                         maxlength: 250
+                    },
+                    txt_telefono: {
+                        required: true
+                    },
+                    txt_direccion: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 350
+                    },
+                    txt_dui: {
+                        required: true
+                    },
+                    txt_nit: {
+                        required: true
+                    },
+                    txt_lugarTrabajo: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 250
+                    },
+                    txt_ingresos: {
+                        required: true,
+                        min: 3,
+                        max: 100000
+                    },
+                    txt_egresos: {
+                        required: true,
+                        min: 3,
+                        max: 100000
                     }
+
+
                 }
             })
         });

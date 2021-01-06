@@ -34,7 +34,7 @@ function inicio() {
     cantidad.addEventListener("change", comboListado)
     opNueva.addEventListener("click", opcionNuevo)
     opLista.addEventListener("click", tabla)
-    txt_nombrefiltro.addEventListener("keyup", filtroNombre)
+    txt_nombreFiltro.addEventListener("keyup", filtroNombre)
     txt_descripcionFiltro.addEventListener("keyup", filtroDescripcion)
     btn_listar.addEventListener("click", tabla)
     btn_guardar.addEventListener("click", guardarModificarCatCliente)

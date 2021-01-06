@@ -22,7 +22,7 @@ switch ($opcion) {
             $existe = $catCliente->camposUnicos(array(
                 "nombre" => $txt_nombre, "descripcion" => $txt_descripcion,
                 "max_atraso" => $txt_maxAtraso, "max_ventas" => $txt_maxVentas
-            ), "", "");
+            ), "id", "");
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
                     "estado" => 0,
@@ -82,13 +82,13 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
-        case 'obtener': {
+    case 'obtener': {
             $catCliente = new CategoriaCliente();
             echo json_encode($catCliente->obtenerCategoriaCliente($id));
             $catCliente = null;
             break;
         }
-        case 'listar': {
+    case 'listar': {
             $catCliente = new CategoriaCliente();
             echo json_encode($catCliente->tablaCategoriaCliente($pagina, $cantidad, $campo, $buscar));
             $catCliente = null;

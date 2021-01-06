@@ -18,7 +18,7 @@ switch ($opcion) {
             $respuesta = array();
             $existe = $interes->CamposUnicos(
                 array("plazo" => $txt_plazo, "porcentaje" => $txt_porcentaje),
-                "",
+                "id",
                 ""
             );
             if ($existe['existe'] == 1) {

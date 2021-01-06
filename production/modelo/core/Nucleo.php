@@ -561,12 +561,12 @@ class Nucleo
             foreach ($datos as $campo => $valor) {
                 $consulta = "";
                 if ($this->consultarModificar) {
-                    $consulta = "SELECT COUNT(id) AS total  FROM $this->tablaBase WHERE $identificador<> :id AND $campo = :valor $this->and";
+                    $consulta = "SELECT COUNT($identificador) AS total  FROM $this->tablaBase WHERE $identificador<> :id AND $campo = :valor $this->and";
                     $resultado = $this->conexion->prepare($consulta);
                     $resultado->bindValue(':valor', $valor);
                     $resultado->bindValue(':id', $id);
                 } else {
-                    $consulta = "SELECT COUNT(id) AS total  FROM $this->tablaBase WHERE $campo = :valor $this->and";
+                    $consulta = "SELECT COUNT($identificador) AS total  FROM $this->tablaBase WHERE $campo = :valor $this->and";
                     $resultado = $this->conexion->prepare($consulta);
                     $resultado->bindValue(':valor', $valor);
                 }
