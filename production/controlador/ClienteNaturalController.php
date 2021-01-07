@@ -15,7 +15,7 @@ $txt_ingresos =  (isset($_POST['txt_ingresos'])) ? $_POST['txt_ingresos'] : '';
 $txt_egresos =  (isset($_POST['txt_egresos'])) ? $_POST['txt_egresos'] : '';
 //PARAMETROS PARA LISTAR DATOS
 $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
-$campo = strcmp($campo, '') ? $campo : "nombre";
+$campo = strcmp($campo, '') ? $campo : "dui";
 $cantidad = (isset($_POST['cantidad'])) ? $_POST['cantidad'] : '';
 $buscar = (isset($_POST['buscar'])) ? $_POST['buscar'] : '';
 $pagina = (isset($_POST['pagina'])) ? $_POST['pagina'] : '';
