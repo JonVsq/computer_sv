@@ -146,4 +146,22 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
+        case 'obtener': {
+            $catClienteN = new ClienteNatural();
+            echo json_encode($catClienteN->obtenerClienteN($txt_codigo));
+            $catClienteN = null;
+            break;
+        }
+        case 'modal': {
+            $catClienteN = new ClienteNatural();
+            echo json_encode($catClienteN->obtenerDatosModal($txt_codigo));
+            $catClienteN = null;
+            break;
+        }
+    case 'listar': {
+            $catClienteN = new ClienteNatural();
+            echo json_encode($catClienteN->tablaClienteN($pagina, $cantidad, $campo, $buscar));
+            $catClienteN = null;
+            break;
+        }
 }
