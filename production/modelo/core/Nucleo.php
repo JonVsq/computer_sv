@@ -336,8 +336,9 @@ class Nucleo
                             $parametros = $parametros . $datos[$i]['Field'] . "= ?, ";
                         }
                         $resultado->closeCursor();
+                        $valor = is_numeric($campos[0]) ? $campos[0] : "'" . $campos[0] . "'";
                         $parametros = substr($parametros, 0, -2);
-                        return "UPDATE $this->tablaBase SET " . $parametros . " WHERE {$datos[0]['Field']} = " . $campos[0] . ";";
+                        return "UPDATE $this->tablaBase SET " . $parametros . " WHERE {$datos[0]['Field']} = " . $valor . ";";
                     }
                     $resultado->closeCursor();
                 }

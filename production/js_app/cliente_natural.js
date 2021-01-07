@@ -11,6 +11,7 @@ const txt_nitFiltro = document.getElementById('txt_nitFiltro')
 const txt_codigo = document.getElementById('txt_codigo')
 const txt_fechaIngreso = document.getElementById('txt_fechaIngreso')
 const spn_codigo = document.getElementById('spn_codigo')
+const md_datosCliente = document.getElementById('md_datosCliente')
 //FORMULARIO
 const txt_nombre = document.getElementById('txt_nombre')
 const txt_telefono = document.getElementById('txt_telefono')
@@ -20,6 +21,7 @@ const txt_nit = document.getElementById('txt_nit')
 const txt_lugarTrabajo = document.getElementById('txt_lugarTrabajo')
 const txt_ingresos = document.getElementById('txt_ingresos')
 const txt_egresos = document.getElementById('txt_egresos')
+const txt_estadoCivil = document.getElementById('txt_estadoCivil')
 const nombreError = document.getElementById('nombreError')
 const nitError = document.getElementById('nitError')
 const duiError = document.getElementById('duiError')
@@ -35,10 +37,13 @@ window.addEventListener("load", inicio)
 //INICIA LOS EVENTOS
 function inicio() {
     listarClienteN(1, cantidad.value, '', '')
+    cantidad.addEventListener("change", comboListado)
     btn_guardar.addEventListener("click", guardarModificarClienteN)
     opNueva.addEventListener("click", opcionNuevo)
     opLista.addEventListener("click", tabla)
     btn_listar.addEventListener("click", tabla)
+    txt_duiFiltro.addEventListener("keyup", filtroDui)
+    txt_nitFiltro.addEventListener("keyup", filtroNit)
 }
 function opcionNuevo() {
     if (modificar) {
@@ -64,7 +69,8 @@ function tabla() {
     if (modificar) {
         modificar = false;
         document.getElementById('frm_clienteN').reset();
-        txt_id.value = ""
+        txt_codigo.value = ""
+        txt_fechaIngreso.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
@@ -76,7 +82,7 @@ function tabla() {
     opNueva.className = ""
     $("#cuadroFormulario").slideUp("slow")
     $("#cuadroTabla").slideDown("slow")
-    //listarMarca(1, cantidad.value, '', '')
+    listarClienteN(1, cantidad.value, '', '')
 
 }
 function guardarModificarClienteN() {
@@ -105,7 +111,7 @@ function guardarModificarClienteN() {
             console.log(respuesta)
             if (respuesta[0].estado == 1) {
                 tabla()
-                //listarMarca(1, cantidad.value, '', '')
+                listarClienteN(1, cantidad.value, '', '')
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
                 document.getElementById('frm_clienteN').reset()
             } else {
@@ -138,6 +144,52 @@ function guardarModificarClienteN() {
         })
     }
 }
+//OBTIENE LOS DATOS PARA MODIFICAR
+$(document).on('click', '.editar', function () {
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objeditar')
+    cargarFormulario(id)
+})
+function cargarFormulario(id) {
+    const datos = new FormData()
+    datos.append('txt_codigo', id)
+    datos.append('opcion', 'obtener')
+    fetch(urlClienteN, {
+        method: 'POST',
+        body: datos
+    }).then(function (respuesta) {
+        if (respuesta.ok) {
+            return respuesta.json()
+        }
+    }).then(respuesta => {
+        if (respuesta[0] == null) {
+            swal("NO ES POSIBLE MODIFICAR.", "EL CLIENTE YA HA SIDO ELIMINADO.", "info")
+        } else {
+            txt_codigo.value = respuesta[0]['codigo']
+            txt_fechaIngreso.value = respuesta[0]['fecha_ingreso']
+            txt_dui.value = respuesta[0]['dui']
+            txt_nit.value = respuesta[0]['nit']
+            txt_nombre.value = respuesta[0]['nombre']
+            txt_telefono.value = respuesta[0]['telefono']
+            txt_direccion.value = respuesta[0]['direccion']
+            txt_lugarTrabajo.value = respuesta[0]['lugar_trabajo']
+            txt_ingresos.value = respuesta[0]['ingresos']
+            txt_egresos.value = respuesta[0]['egresos']
+            txt_estadoCivil.value = respuesta[0]['estado_civil']
+            spn_codigo.innerHTML = "<span class='text text-info tex-center roboto-medium'>CODIGO: " + respuesta[0]['codigo'] + ".</span>"
+            modificar = true
+            //OCULTA TABLA Y MUESTRA EL FORMULARIO
+            opNueva.className = "active";
+            opLista.className = "";
+            modificar = true
+            opNueva.innerHTML = "<i class='fas fa-edit fa-fw'></i> &nbsp; MODIFICAR"
+            btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; MODIFICAR"
+            $("#cuadroFormulario").slideDown("slow")
+            $("#cuadroTabla").slideUp("slow")
+        }
+
+    })
+}
 
 function generarCodigo() {
     let caracteres = "AMN0QWA1SGF2PLI3KZLJ4VCS5KAQ6TEUY7JAHJSJ8JJSA9"
@@ -151,6 +203,34 @@ function generarCodigo() {
 }
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
+}
+//OBTIENE LOS DATOS PARA VISUALIZAR EN EL MODAL
+$(document).on('click', '.ver', function () {
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objver')
+    cargarModal(id)
+})
+
+function cargarModal(id) {
+    const datos = new FormData()
+    datos.append('opcion', 'modal')
+    datos.append('txt_codigo', id)
+    fetch(urlClienteN, {
+        method: 'POST',
+        body: datos
+    }).then(function (respuesta) {
+        if (respuesta.ok) {
+            return respuesta.json()
+        } else {
+            console('error')
+        }
+    }).then(respuesta => {
+        md_datosCliente.innerHTML = respuesta['modalCuerpo']
+        $('#ModalCliente').modal('show')
+    }).catch(error => {
+        alert('OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, INTENTE DE NUEVO.')
+    })
+
 }
 function listarClienteN(pagina, cantidad, campo, buscar) {
     const datos = new FormData()
@@ -174,6 +254,43 @@ function listarClienteN(pagina, cantidad, campo, buscar) {
     }).catch(error => {
         alert('Ocurrio un error conectado al servidor, intente de nuevo')
     })
+}
+//EVENTO DEL COMBO PARA SELECCIONAR LA CANTIDAD DE REGISTROS A MOSTRAR
+function comboListado() {
+    listarClienteN(1, cantidad.value, '', '')
+}
+//BOTONES DE LA PAGINACION
+$(document).on('click', '.pagina', function (e) {
+    e.preventDefault()
+    let elemento = $(this)[0]
+    let pagina = $(elemento).attr('pag')
+    listarClienteN(pagina, cantidad.value, '', '')
+})
+
+$(document).on('click', '.siguiente', function (e) {
+    e.preventDefault()
+    let elemento = $(this)[0]
+    let pagina = $(elemento).attr('pag')
+    listarClienteN(pagina, cantidad.value, '', '')
+})
+//BUSQUEDA FILTRADA
+function filtroDui() {
+
+    if (txt_duiFiltro.value.length > 0) {
+        txt_nitFiltro.value = ""
+        listarClienteN(1, cantidad.value, 'dui', txt_duiFiltro.value)
+    } else {
+        listarClienteN(1, cantidad.value, '', '')
+    }
+}
+function filtroNit() {
+
+    if (txt_nitFiltro.value.length > 0) {
+        txt_duiFiltro.value = ""
+        listarClienteN(1, cantidad.value, 'nit', txt_nitFiltro.value)
+    } else {
+        listarClienteN(1, cantidad.value, '', '')
+    }
 }
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
