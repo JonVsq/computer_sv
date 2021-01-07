@@ -34,7 +34,7 @@ let modificar = false
 window.addEventListener("load", inicio)
 //INICIA LOS EVENTOS
 function inicio() {
-
+    listarClienteN(1, cantidad.value, '', '')
     btn_guardar.addEventListener("click", guardarModificarClienteN)
     opNueva.addEventListener("click", opcionNuevo)
     opLista.addEventListener("click", tabla)
@@ -151,6 +151,29 @@ function generarCodigo() {
 }
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
+}
+function listarClienteN(pagina, cantidad, campo, buscar) {
+    const datos = new FormData()
+    datos.append('opcion', 'listar')
+    datos.append('pagina', pagina)
+    datos.append('campo', campo)
+    datos.append('cantidad', cantidad)
+    datos.append('buscar', buscar)
+    fetch(urlClienteN, {
+        method: 'POST',
+        body: datos
+    }).then(function (respuesta) {
+        if (respuesta.ok) {
+            return respuesta.json()
+        }
+    }).then(respuesta => {
+        registros.innerText = "MOSTRANDO DEL " + respuesta['desde'] + " AL " + respuesta['hasta'] + " DE UN TOTAL DE " + respuesta['totalRegistros'] + " REGISTROS."
+        totalPaginas.innerText = "VISUALIZANDO PAGINA " + respuesta['paginaActual'] + " DE UN TOTAL DE  " + respuesta['totalPagina']
+        cuerpoTabla.innerHTML = respuesta['tabla']
+        paginador.innerHTML = respuesta['paginador']
+    }).catch(error => {
+        alert('Ocurrio un error conectado al servidor, intente de nuevo')
+    })
 }
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
