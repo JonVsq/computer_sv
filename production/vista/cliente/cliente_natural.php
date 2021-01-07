@@ -84,7 +84,7 @@
                         <a id="opLista" href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA</a>
                     </li>
                     <li>
-                        <a id="opNueva" href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVA</a>
+                        <a id="opNueva" href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO</a>
                     </li>
                 </ul>
             </div>
@@ -108,11 +108,10 @@
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
-                                <th class="text-center">NOMBRE<br> <input type="text" name="txt_nombreFiltro" id="txt_nombreFiltro"></th>
-                                <th class="text-center">DESCRIPCION<br> <input type="text" name="txt_descripcionFiltro" id="txt_descripcionFiltro"></th>
-                                <th class="text-center">MAXIMO PAGOS ATRASO<br> </th>
-                                <th class="text-center">MAXIMA VENTAS A REALIZAR<br> </th>
-                                <th class="text-center">MONTO LIMITE<br> </th>
+                                <th class="text-center">DUI<br> <input type="text" name="txt_duiFiltro" id="txt_duiFiltro"></th>
+                                <th class="text-center">NIT<br> <input type="text" name="txt_nitFiltro" id="txt_nitFiltro"></th>
+                                <th class="text-center">NOMBRE<br> </th>
+                                <th class="text-center">CATEGORIA<br> </th>
                                 <th class="text-center">ACCIONES<br> </th>
                             </tr>
                         </thead>

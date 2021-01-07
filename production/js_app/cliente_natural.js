@@ -6,7 +6,8 @@ const cuerpoTabla = document.getElementById('cuerpoTabla')
 const registros = document.getElementById('registros')
 const totalPaginas = document.getElementById('totalPaginas')
 const paginador = document.getElementById('paginador')
-const txt_nombrefiltro = document.getElementById('txt_nombrefiltro')
+const txt_duiFiltro = document.getElementById('txt_duiFiltro')
+const txt_nitFiltro = document.getElementById('txt_nitFiltro')
 const txt_codigo = document.getElementById('txt_codigo')
 const txt_fechaIngreso = document.getElementById('txt_fechaIngreso')
 const spn_codigo = document.getElementById('spn_codigo')
@@ -19,7 +20,10 @@ const txt_nit = document.getElementById('txt_nit')
 const txt_lugarTrabajo = document.getElementById('txt_lugarTrabajo')
 const txt_ingresos = document.getElementById('txt_ingresos')
 const txt_egresos = document.getElementById('txt_egresos')
-//const marcaError = document.getElementById('marcaError')
+const nombreError = document.getElementById('nombreError')
+const nitError = document.getElementById('nitError')
+const duiError = document.getElementById('duiError')
+const telefonoError = document.getElementById('telefonoError')
 const btn_limpiar = document.getElementById('btn_limpiar')
 const btn_listar = document.getElementById('btn_listar')
 const btn_guardar = document.getElementById('btn_guardar')
@@ -46,6 +50,10 @@ function opcionNuevo() {
     } else {
         generarCodigo()
     }
+    nombreError.innerHTML = ""
+    nitError.innerHTML = ""
+    duiError.innerHTML = ""
+    telefonoError.innerHTML = ""
     opNueva.className = "active"
     opLista.className = ""
     $("#cuadroFormulario").slideDown("slow")
@@ -60,6 +68,10 @@ function tabla() {
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
+    nombreError.innerHTML = ""
+    nitError.innerHTML = ""
+    duiError.innerHTML = ""
+    telefonoError.innerHTML = ""
     opLista.className = "active"
     opNueva.className = ""
     $("#cuadroFormulario").slideUp("slow")
@@ -90,16 +102,32 @@ function guardarModificarClienteN() {
                 return respuesta.json()
             }
         }).then(respuesta => {
+            console.log(respuesta)
             if (respuesta[0].estado == 1) {
                 tabla()
                 //listarMarca(1, cantidad.value, '', '')
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
                 document.getElementById('frm_clienteN').reset()
             } else {
-                if (respuesta[0].errores[0].nombre_marca > 0) {
-                    marcaError.innerHTML = "<span class='error'>Ingrese otro nombre.</span>"
+                if (respuesta[0].errorC[0].nombre > 0) {
+                    nombreError.innerHTML = "<span class='error'>Ingrese otro nombre.</span>"
                 } else {
-                    marcaError.innerHTML = ""
+                    nombreError.innerHTML = ""
+                }
+                if (respuesta[0].errorC[1].telefono > 0) {
+                    telefonoError.innerHTML = "<span class='error'>Ingrese otro télefono.</span>"
+                } else {
+                    telefonoError.innerHTML = ""
+                }
+                if (respuesta[0].errorD[0].dui > 0) {
+                    duiError.innerHTML = "<span class='error'>Ingrese otro DUI.</span>"
+                } else {
+                    duiError.innerHTML = ""
+                }
+                if (respuesta[0].errorD[1].nit > 0) {
+                    nitError.innerHTML = "<span class='error'>Ingrese otro NIT.</span>"
+                } else {
+                    nitError.innerHTML = ""
                 }
             }
             btn_guardar.removeAttribute('disabled')
