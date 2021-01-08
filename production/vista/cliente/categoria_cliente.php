@@ -50,7 +50,9 @@
                 </figure>
                 <div class="full-box nav-lateral-bar"></div>
                 <nav class="full-box nav-lateral-menu">
-
+                    <?php
+                    include('../../includes/menuAdmin.php');
+                    ?>
                 </nav>
             </div>
         </section>
