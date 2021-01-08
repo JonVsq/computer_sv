@@ -112,7 +112,8 @@ switch ($opcion) {
                     );
                 }
             }
-
+            $catClienteJ = null;
+            echo json_encode($respuesta);
             break;
         }
 }
