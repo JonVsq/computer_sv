@@ -112,6 +112,7 @@ switch ($opcion) {
                     );
                 }
             }
+            $catClienteJ = null;
 
             break;
         }
