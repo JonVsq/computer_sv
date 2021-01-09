@@ -1,10 +1,6 @@
 <?php
 include('../modelo/ClienteJuridico.php');
-$raiz = "../archivos";
-$existeRaiz = false;
 
-$rutaCliente = "$rutaRaiz." / ".$txt_codigo";
-$existeRC = false;
 //CAPTURA CAMPOS CLIENTE
 $txt_codigo = (isset($_POST['txt_codigo'])) ?  strtoupper($_POST['txt_codigo']) : '';
 $txt_nombre =  (isset($_POST['txt_nombre'])) ? strtoupper($_POST['txt_nombre']) : '';
@@ -26,6 +22,12 @@ $buscar = (isset($_POST['buscar'])) ? $_POST['buscar'] : '';
 $pagina = (isset($_POST['pagina'])) ? $_POST['pagina'] : '';
 //OPCION A EJECUTAR
 $opcion  = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
+//DIRECTORIOS
+$rutaRaiz = "../archivos";
+$existeRaiz = false;
+
+$rutaCliente = "$rutaRaiz/$txt_codigo";
+$existeRC = false;
 switch ($opcion) {
     case 'insertar': {
             $catClienteJ = new ClienteJuridico();

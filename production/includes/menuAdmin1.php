@@ -14,7 +14,7 @@
                 <a href="cliente/cliente_natural.php"><i class="fas fa-user fa-fw"></i> &nbsp; CLIENTE NATURAL</a>
             </li>
             <li>
-                <a href="../cliente/cliente_juridico.php"><i class="fas fa-users fa-fw"></i> &nbsp; CLIENTE JURIDICO</a>
+                <a href="cliente/cliente_juridico.php"><i class="fas fa-users fa-fw"></i> &nbsp; CLIENTE JURIDICO</a>
             </li>
         </ul>
     </li>

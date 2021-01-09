@@ -184,20 +184,32 @@
 
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txt_ingresos" class="roboto-medium">ACTIVO CORRIENTE</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_ingresos" id="txt_ingresos" min="3" required>
+                                            <label for="txt_activoCorriente" class="roboto-medium">ACTIVO CORRIENTE</label>
+                                            <input type="number" class="form-control text-uppercase" name="txt_activoCorriente" id="txt_activoCorriente" min="3" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txt_egresos" class="roboto-medium">PASIVO CORRIENTE</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_egresos" id="txt_egresos" min="3" required>
+                                            <label for="txt_pasivoCorriente" class="roboto-medium">PASIVO CORRIENTE</label>
+                                            <input type="number" class="form-control text-uppercase" name="txt_pasivoCorriente" id="txt_pasivoCorriente" min="3" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txt_inventario" class="roboto-medium">INVENTARIOS</label>
                                             <input type="number" class="form-control text-uppercase" name="txt_inventario" id="txt_inventario" min="1" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="balanceGeneral" class="roboto-medium">BALANCE GENERAL (PDF)</label>
+                                            <input id="balanceGeneral" name="balanceGeneral" class="btn btn-warning" type="file" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="estadoResultado" class="roboto-medium">ESTADO DE RESULTADO (PDF)</label>
+                                            <input id="estadoResultado" name="estadoResultado" class="btn btn-warning" type="file" required>
                                         </div>
                                     </div>
                                 </div>

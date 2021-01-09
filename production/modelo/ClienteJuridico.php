@@ -4,7 +4,7 @@ class ClienteJuridico
 {
     private $nucleo;
     private $tablaClienteJ = "cliente";
-    private $tablaDatosJ = "datos_juridico";
+    private $tablaDatosJ = "datos_juridica";
     public function __construct()
     {
         $this->nucleo = new Nucleo();
@@ -37,8 +37,7 @@ class ClienteJuridico
     public function modificarDatosC($campos)
     {
         $this->nucleo->setTablaBase($this->tablaDatosJ);
-        $this->nucleo->setQueryPersonalizado
-        ("activo_corriente=?, pasivo_corriente=?, inventario=?, balance_general=?, 
+        $this->nucleo->setQueryPersonalizado("activo_corriente=?, pasivo_corriente=?, inventario=?, balance_general=?, 
         estado_resultado=? WHERE codigo_cliente=?");
         $guardado = $this->nucleo->modificarRegistro($campos);
         $this->nucleo->setTablaBase($this->tablaClienteJ);
@@ -72,17 +71,18 @@ class ClienteJuridico
 
         //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
         return $this->nucleo->getDatosHtml(
-            array("activo_corriente", "pasivo_corriente", "inventario", "balance_general", 
-            "estado_resultado"),
+            array(
+                "activo_corriente", "pasivo_corriente", "inventario", "balance_general",
+                "estado_resultado"
+            ),
             array("editar" => "edit", "eliminar" => "trash"),
             "id"
         );
     }
-        public function obtenerIdCategoria()
+    public function obtenerIdCategoria()
     {
         $this->nucleo->setQueryPersonalizado("SELECT c.id, min(c.max_atraso) FROM categoria_cliente as c");
         $categoriaMenor = $this->nucleo->getDatos();
         return $categoriaMenor != null ? $categoriaMenor[0]['id'] : null;
     }
-    
 }
