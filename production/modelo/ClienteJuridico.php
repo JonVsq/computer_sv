@@ -79,10 +79,112 @@ class ClienteJuridico
             "id"
         );
     }
+    public function tablaClienteJ($numPagina, $cantidad, $campo, $buscar)
+    {
+        $this->nucleo->setNumPagina($numPagina);
+        $this->nucleo->setPorPagina($cantidad);
+        //SQL QUE CUENTA LOS REGISTROS EN LA TABLA
+        $this->nucleo->setQueryTotalRegistroPag("SELECT 
+        COUNT(c.codigo) as total
+        FROM
+        cliente as c
+        INNER JOIN datos_juridica as cj ON cj.codigo_cliente = c.codigo
+        INNER JOIN categoria_cliente as ct ON ct.id = c.id_categoria
+        WHERE (c.$campo LIKE '%$buscar%')
+        ORDER BY c.nombre DESC");
+        //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
+        $this->nucleo->setQueryExtractRegistroPag("c.codigo,
+        c.nombre,
+        ct.nombre as categoria
+        FROM
+        cliente as c
+        INNER JOIN datos_juridica as cj ON cj.codigo_cliente = c.codigo
+        INNER JOIN categoria_cliente as ct ON ct.id = c.id_categoria
+        WHERE (c.$campo LIKE '%$buscar%')
+        ORDER BY c.nombre DESC");
+        //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
+        return $this->nucleo->getDatosHtml(
+            array("nombre", "categoria"),
+            array("ver" => "tasks", "editar" => "edit", "eliminar" => "trash"),
+            "codigo"
+        );
+    }
+    public function obtenerClienteJ($codigo)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT 
+        c.codigo,
+        c.nombre,
+        c.telefono,
+        c.direccion,
+        c.fecha_ingreso,
+        c.id_categoria,
+        cj.activo_corriente,
+        cj.balance_general,
+        cj.estado_resultado,
+        cj.inventario,
+        cj.pasivo_corriente
+        FROM
+        cliente as c
+        INNER JOIN datos_juridica as cj ON cj.codigo_cliente = c.codigo
+        INNER JOIN categoria_cliente as ct ON ct.id = c.id_categoria
+        WHERE c.codigo = '$codigo'
+        ORDER BY c.nombre DESC");
+        return $this->nucleo->getDatos();
+    }
+    public function obtenerDatosModal($codigo)
+    {
+        $respuesta = array();
+        $this->nucleo->setQueryPersonalizado("SELECT 
+        c.codigo,
+        c.nombre,
+        c.telefono,
+        c.direccion,
+        c.fecha_ingreso,
+        c.id_categoria,
+        cj.activo_corriente,
+        cj.balance_general,
+        cj.estado_resultado,
+        cj.inventario,
+        cj.pasivo_corriente
+        FROM
+        cliente as c
+        INNER JOIN datos_juridica as cj ON cj.codigo_cliente = c.codigo
+        INNER JOIN categoria_cliente as ct ON ct.id = c.id_categoria
+        WHERE c.codigo = '$codigo'
+        ORDER BY c.nombre DESC");
+        $resultado = $this->nucleo->getDatos();
+
+        $respuesta["modalCuerpo"] = $this->htmlModalDatosCliente($resultado);
+        
+        return $respuesta;
+    }
     public function obtenerIdCategoria()
     {
         $this->nucleo->setQueryPersonalizado("SELECT c.id, min(c.max_atraso) FROM categoria_cliente as c");
         $categoriaMenor = $this->nucleo->getDatos();
         return $categoriaMenor != null ? $categoriaMenor[0]['id'] : null;
+    }
+    private function htmlModalDatosCliente($datos)
+    {
+        $datosCliente = "";
+        foreach ($datos as $cliente) {
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>CODIGO: {$cliente['codigo']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>NOMBRE: {$cliente['nombre']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>TELEFONO: {$cliente['telefono']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>DIRECCION: {$cliente['direccion']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>CATEGORIA: {$cliente['categoria']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>ACTIVO CORRIENTE: {$cliente['activo_corriente']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>PASIVO CORRIENTE: {$cliente['pasivo_corriente']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>INVENTARIO: {$cliente['inventario']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+        }
+        return $datosCliente;
     }
 }
