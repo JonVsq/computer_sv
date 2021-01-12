@@ -101,7 +101,7 @@ switch ($opcion) {
                         $respuesta[] = array(
                             "estado" => 2,
                             "encabezado" => "ERROR.",
-                            "msj" => "NO ES POSIBRE SUBIR LOS PDF.",
+                            "msj" => "NO ES POSIBlE SUBIR LOS PDF.",
                             "icono" => "error"
                         );
                     }
