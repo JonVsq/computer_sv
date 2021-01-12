@@ -76,7 +76,7 @@
             <!-- Page header -->
             <div class="full-box page-header">
                 <h3 class="text-left">
-                    <i class="fas fa-store  fa-fw"></i> &nbsp; PRODUCTOS
+                    <i class="fas fa-shopping-cart  fa-fw"></i> &nbsp; COMPRAS DE PRODUCTO
                 </h3>
 
             </div>
@@ -86,7 +86,7 @@
                         <a id="opLista" href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA</a>
                     </li>
                     <li>
-                        <a id="opNueva" href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO</a>
+                        <a id="opNueva" href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVA</a>
                     </li>
                 </ul>
             </div>
@@ -110,10 +110,7 @@
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
-                                <th class="text-center">PRODUCTO<br> <input type="text" name="txt_nombrefiltro" id="txt_nombrefiltro"></th>
-                                <th class="text-center">DESCRIPCION<br> </th>
-                                <th class="text-center">MARCA<br> </th>
-                                <th class="text-center">CATEGORIA<br> </th>
+                                <th class="text-center">NOMBRE<br> <input type="text" name="txt_nombrefiltro" id="txt_nombrefiltro"></th>
                                 <th class="text-center">ACCIONES<br> </th>
                             </tr>
                         </thead>
@@ -146,77 +143,38 @@
 
                 <div class="container-fluid form-neon">
                     <input type="hidden" id="txt_id" name="txt_id">
-                    <form id="frm_Producto" action="" autocomplete="off">
+                    <form id="frm_factura" action="" autocomplete="off">
                         <fieldset>
-                            <legend><i class="far fa-plus-square"></i> &nbsp; INFORMACION</legend>
+                            <legend><i class="far fa-plus-square"></i> &nbsp; INFORMACION FACTURA</legend>
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <span class="roboto-medium">MARCA: </span>
-                                            <input type="hidden" id="txt_idMarca" name="txt_idMarca">
-                                            <span id="spn_marca" class="text-danger">&nbsp; <i class="fas fa-exclamation-triangle"></i> SELECCIONE MARCA</span>
-                                            <button id="btn_modalMarca" type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
+                                            <span class="roboto-medium">PROVEEDOR: </span>
+                                            <input type="hidden" id="txt_idProveedor" name="txt_idProveedor">
+                                            <span id="spn_Proveedor" class="text-danger">&nbsp; <i class="fas fa-exclamation-triangle"></i> SELECCIONE PROVEEDOR</span>
+                                            <button id="btn_modalProveedor" type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group text-center">
+                                            <span id="spn_total" style="font-size: 24px;" class="roboto-medium text-danger">TOTAL $: </span>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <span class="roboto-medium">CATEGORIA: </span>
-                                            <input type="hidden" id="txt_idCategoria" name="txt_idCategoria">
-                                            <span id="spn_Categoria" class="text-danger">&nbsp; <i class="fas fa-exclamation-triangle"></i> SELECCIONE CATEGORIA</span>
-                                            <button id="btn_modalCategoria" type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_producto" class="roboto-medium">PRODUCTO</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_producto" id="txt_producto" minlength="2" maxlength="200" required>
-                                            <div id="productoError">
+                                            <label for="txt_factura" class="roboto-medium">Nº FACTURA</label>
+                                            <input type="number" class="form-control text-uppercase" name="txt_factura" id="txt_factura" min="1" required>
+                                            <div id="facturaError">
 
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txt_descripcion" class="roboto-medium">DESCRIPCION</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_descripcion" id="txt_descripcion" minlength="2" maxlength="350" required>
-                                            <div id="descripcionError">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_modelo" class="roboto-medium">MODELO</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_modelo" id="txt_modelo" minlength="2" maxlength="250" required>
-                                            <div id="modeloError">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_ganancia" class="roboto-medium">PORCENTAJE DE GANANCIA DESEADO</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_ganancia" id="txt_ganancia" min="1" max="100" required>
-                                            <div id="porcentajeError">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_usoDiario" class="roboto-medium">USO DIARIO</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_usoDiario" id="txt_usoDiario" min="1" max="99999" required>
-                                            <div id="usoError">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_entrega" class="roboto-medium">DIAS QUE TARDA EL PEDIDO</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_entrega" id="txt_entrega" min="1" max="99999" required>
-                                            <div id="entregaError">
+                                            <label for="txt_fecha" class="roboto-medium">FECHA COMPRA</label>
+                                            <input type="date" class="form-control text-uppercase" name="txt_fecha" id="txt_fecha" required>
+                                            <div id="fechaError">
 
                                             </div>
                                         </div>
@@ -224,144 +182,184 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <br>
+                    </form>
+                    <form id="frm_detalle" action="" autocomplete="off">
+                        <fieldset>
+                            <legend><i class="far fa-plus-square"></i> &nbsp; DETALLE COMPRA</legend>
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <span class="roboto-medium">PRODUCTO: </span>
+                                            <input type="hidden" id="txt_idProducto" name="txt_idProducto">
+                                            <span id="spn_Producto" class="text-danger">&nbsp; <i class="fas fa-exclamation-triangle"></i> SELECCIONE PRODUCTO</span>
+                                            <button id="btn_modalProducto" type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txt_garantia" class="roboto-medium">AÑOS DE GARANTIA</label>
+                                            <input type="number" class="form-control text-uppercase" name="txt_garantia" id="txt_garantia" min="0" required>
+                                            <div id="garantiaError">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txt_cantidad" class="roboto-medium">CANTIDAD</label>
+                                            <input type="number" class="form-control text-uppercase" name="txt_cantidad" id="txt_cantidad" min="1" required>
+                                            <div id="cantidadError">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="txt_precio" class="roboto-medium">COSTO (UNITARIO)</label>
+                                            <input type="number" class="form-control text-uppercase" name="txt_precio" id="txt_precio" required>
+                                            <div id="precioError">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
                         <p class="text-center" style="margin-top: 5px;">
-                            <button id="btn_limpiar" type="reset" class="btn btn-raised btn-info btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
-                            &nbsp; &nbsp;
-                            <button id="btn_listar" type="button" class="btn btn-raised btn-info btn-sm"><i class="fas fa-list"></i> &nbsp; LISTAR</button>
-                            &nbsp; &nbsp;
-                            <button id="btn_guardar" type="button" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+                            <button id="btn_agregar" type="button" class="btn btn-raised btn-info btn-sm btn-block"><i class="fa fa-plus"></i> &nbsp; AGREGAR DETALLE</button>
                         </p>
                     </form>
-                </div>
-            </div>
-            <!-- MODAL Marca -->
-            <div class="modal fade" id="ModalMarca" tabindex="-1" role="dialog" aria-labelledby="ModalCliente" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title roboto-medium" id="ModalMarca">LISTA DE MARCAS DE PRODUCTO</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-bordered table-sm roboto-medium">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <td>NOMBRE<br> <input type="text" id="txt_buscarMarca" name="txt_buscarMarca"></td>
-                                                <td>SELECCIONAR</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="cuerpoTablaMarca">
-
-
-                                        </tbody>
-                                    </table>
-                                    <nav aria-label="Page navigation example">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <p id="registrosMarca" class="text-left roboto-medium"></p>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <p id="totalPaginasMarca" class="text-right roboto-medium"></p>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <ul id="paginadorMarca" class="pagination justify-content-center">
-
-                                        </ul>
-
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-sm">
+                            <thead>
+                                <tr class="text-center roboto-medium">
+                                    <th class="text-center">PRODUCTO<br></th>
+                                    <th class="text-center">CANTIDAD<br> </th>
+                                    <th class="text-center">COSTO (UNITARIO)<br> </th>
+                                    <th class="text-center">SUB-TOTAL<br> </th>
+                                    <th class="text-center">AÑOS GARANTIA<br> </th>
+                                    <th class="text-center">ACCIONES<br> </th>
+                                </tr>
+                            </thead>
+                            <tbody id="cuerpoDetalle">
+                            </tbody>
+                        </table>
                     </div>
+                    <p class="text-center" style="margin-top: 5px;">
+                        <button id="btn_listar" type="button" class="btn btn-raised btn-info btn-sm"><i class="fas fa-list"></i> &nbsp; LISTAR</button>
+                        &nbsp; &nbsp;
+                        <button id="btn_guardar" type="button" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+                    </p>
                 </div>
             </div>
-
-            <!-- MODAL Marca -->
-            <div class="modal fade" id="ModalCategoria" tabindex="-1" role="dialog" aria-labelledby="ModalCliente" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title roboto-medium" id="ModalCategoria">LISTA DE CATEGORIAS DE PRODUCTO</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="table-responsive">
-                                    <table class="table table-hover table-bordered table-sm roboto-medium">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <td>CATEGORIA<br> <input type="text" id="txt_buscarCategoria" name="txt_buscarCategoria"></td>
-                                                <td>SELECCIONAR</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="cuerpoTablaCategoria">
-
-
-                                        </tbody>
-                                    </table>
-                                    <nav aria-label="Page navigation example">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <p id="registrosCategoria" class="text-left roboto-medium"></p>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <p id="totalPaginasCategoria" class="text-right roboto-medium"></p>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <ul id="paginadorCategoria" class="pagination justify-content-center">
-
-                                        </ul>
-
-                                    </nav>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- MODAL Cliente -->
+            <!-- MODAL Productos -->
             <div class="modal fade" id="ModalProducto" tabindex="-1" role="dialog" aria-labelledby="ModalCliente" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title roboto-medium" id="ModalProducto">DATOS PRODUCTO</h5>
+                            <h5 class="modal-title roboto-medium" id="Modal1">LISTA DE PROVEEDORES</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+
                         <div class="modal-body">
                             <div class="container-fluid">
-                                <div id="md_datosProducto" class="form-group">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered table-sm roboto-medium">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <td>PRODUCTO<br> <input type="text" id="txt_buscarProducto" name="txt_buscarProducto"></td>
+                                                <td>DESCRIPCION<br> <input type="text" id="txt_buscarDescripcion" name="txt_buscarDescripcion"></td>
+                                                <td>SELECCIONAR</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cuerpoTablaProducto">
 
+
+                                        </tbody>
+                                    </table>
+                                    <nav aria-label="Page navigation example">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <p id="registrosProducto" class="text-left roboto-medium"></p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <p id="totalPaginasProducto" class="text-right roboto-medium"></p>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <ul id="paginadorProducto" class="pagination justify-content-center">
+
+                                        </ul>
+
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL Proveedor -->
+            <div class="modal fade" id="ModalProveedor" tabindex="-1" role="dialog" aria-labelledby="ModalCliente" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title roboto-medium" id="Modal1">LISTA DE PROVEEDORES</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered table-sm roboto-medium">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <td>NOMBRE<br> <input type="text" id="txt_buscarProveedor" name="txt_buscarProveedor"></td>
+                                                <td>SELECCIONAR</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cuerpoTablaProveedor">
+
+
+                                        </tbody>
+                                    </table>
+                                    <nav aria-label="Page navigation example">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <p id="registrosProveedor" class="text-left roboto-medium"></p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <p id="totalPaginasProveedor" class="text-right roboto-medium"></p>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                        <ul id="paginadorProveedor" class="pagination justify-content-center">
+
+                                        </ul>
+
+                                    </nav>
                                 </div>
                             </div>
                         </div>
@@ -392,8 +390,8 @@
 
     <script>
         $(document).ready(function() {
+            // $("#cuadroFormulario").slideUp("slow")
             opLista.className = "active";
-            $("#cuadroFormulario").slideUp("slow")
             let $validar = $('#cuadroFormulario form').validate({
                 rules: {
                     txt_marca: {
@@ -406,7 +404,7 @@
         });
     </script>
 
-    <script src="../../js_app/productos.js"></script>
+    <script src="../../js_app/compras.js"></script>
 
 </body>
 

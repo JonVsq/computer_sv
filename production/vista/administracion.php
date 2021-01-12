@@ -85,8 +85,13 @@
 
             <!-- Content -->
             <div class="full-box tile-container">
-
-
+                <a href="producto/existencias.php" id="ir_pedidos" class="tile">
+                    <div class="tile-tittle">EXISTENCIAS</div>
+                    <div class="tile-icon">
+                        <i class="fas fa-store fa-fw"></i>
+                        <p id="info_pedidos">DE PRODUCTOS</p>
+                    </div>
+                </a>
 
             </div>
 
@@ -110,6 +115,7 @@
 
 
     <script src="../../js/main.js"></script>
+    <script src="../js_app/administracion.js"></script>
 </body>
 
 </html>

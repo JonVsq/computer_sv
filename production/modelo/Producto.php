@@ -35,9 +35,6 @@ class Producto
         p.descripcion,
         p.modelo,
         p.porcentaje_ganancia,
-        p.unidades_periodo,
-        p.costo_unitario_pedido,
-        p.costo_mantenimiento,
         p.uso_diario,
         p.dias_entrega,
         m.id as id_marca,
@@ -133,12 +130,8 @@ class Producto
         p.descripcion,
         p.modelo,
         p.porcentaje_ganancia,
-        p.unidades_periodo,
-        p.costo_unitario_pedido,
-        p.costo_mantenimiento,
         p.uso_diario,
         p.dias_entrega,
-        p.cep,
         p.stock_minimo,
         m.id as id_marca,
         m.nombre_marca,
@@ -166,19 +159,71 @@ class Producto
             $datosProducto = $datosProducto . "<br>";
             $datosProducto = $datosProducto . "<label class='bmd-label-floating roboto-medium'>CATEGORIA: {$producto['descripCatP']}</label>";
             $datosProducto = $datosProducto . "<br>";
-            $datosProducto = $datosProducto . "<label class='bmd-label-floating roboto-medium'>USO ANUAL: {$producto['unidades_periodo']}</label>";
-            $datosProducto = $datosProducto . "<br>";
             $datosProducto = $datosProducto . "<label class='bmd-label-floating roboto-medium'>USO DIARIO (UNIDADES): {$producto['uso_diario']}</label>";
-            $datosProducto = $datosProducto . "<br>";
-            $datosProducto = $datosProducto . "<label class='bmd-label-floating roboto-medium'>COSTO PEDIDO (UNITARIO) $: {$producto['costo_unitario_pedido']}</label>";
-            $datosProducto = $datosProducto . "<br>";
-            $datosProducto = $datosProducto . "<label class='bmd-label-floating roboto-medium'>COSTO DE MANTENIMIENTO (UNIDAD) $: {$producto['costo_mantenimiento']}</label>";
-            $datosProducto = $datosProducto . "<br>";
-            $datosProducto = $datosProducto . "<label class='bmd-label-floating roboto-medium'>CEP (UNIDADES): {$producto['cep']}</label>";
             $datosProducto = $datosProducto . "<br>";
             $datosProducto = $datosProducto . "<label class='bmd-label-floating roboto-medium'>STOCK MINIMO (UNIDADES): {$producto['stock_minimo']}</label>";
             $datosProducto = $datosProducto . "<br>";
         }
         return $datosProducto;
+    }
+    public function verificarExistencias()
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT COUNT(p.id) as total
+        FROM
+        productos as p
+        LEFT JOIN movimientos as m on m.id_producto = p.id
+        WHERE p.stock_minimo > (SELECT COALESCE(SUM(m.saldo),0) from movimientos as m INNER JOIN productos as p
+        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )
+        OR NOT EXISTS (SELECT m.id_producto from movimientos as m  WHERE m.id_producto = p.id)");
+        $existe = $this->nucleo->getDatos();
+        if ($existe[0]['total'] > 0) {
+            return $existe[0]['total'];
+        } else {
+            $this->nucleo->setQueryPersonalizado("SELECT
+            COUNT(p.id) as total
+            FROM
+            productos as p 
+            WHERE (SELECT SUM(m.saldo) FROM movimientos as m
+            WHERE m.id_producto = p.id AND(m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA') AND m.activo = 1) < p.stock_minimo");
+            $existe = $this->nucleo->getDatos();
+            return $existe[0]['total'];
+        }
+    }
+    public function tablaExistencias($numPagina, $cantidad, $campo, $buscar)
+    {
+        $this->nucleo->setNumPagina($numPagina);
+        $this->nucleo->setPorPagina($cantidad);
+        //SQL QUE CUENTA LOS REGISTROS EN LA TABLA
+        $this->nucleo->setQueryTotalRegistroPag("SELECT 
+        COUNT(DISTINCT(p.id)) as total
+        FROM
+        productos as p
+        LEFT JOIN movimientos as m on m.id_producto = p.id 
+        WHERE (p.$campo LIKE '%$buscar%') and p.stock_minimo >= (SELECT COUNT(saldo) from movimientos as m INNER JOIN productos as p
+        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )
+        OR p.stock_minimo <= (SELECT COUNT(saldo) from movimientos as m INNER JOIN productos as p
+        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )");
+        //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
+        $this->nucleo->setQueryExtractRegistroPag("SELECT 
+        p.id,
+        p.producto,
+        p.descripcion,
+        p.stock_minimo,
+        COALESCE(sum(m.saldo),0) as saldoTotal
+        FROM
+        productos as p
+        LEFT JOIN movimientos as m on m.id_producto = p.id 
+        WHERE (p.$campo LIKE '%$buscar%') and p.stock_minimo >= (SELECT sum(saldo) from movimientos as m INNER JOIN productos as p
+        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )
+        OR p.stock_minimo <= (SELECT sum(saldo) from movimientos as m INNER JOIN productos as p
+        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )
+        GROUP BY p.id
+        ORDER BY saldoTotal, p.producto ASC");
+        //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
+        return $this->nucleo->getDatosHtml(
+            array("producto", "descripcion", "saldoTotal", "stock_minimo"),
+            array(),
+            ""
+        );
     }
 }

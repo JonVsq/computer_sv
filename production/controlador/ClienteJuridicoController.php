@@ -12,11 +12,11 @@ $id = (isset($_POST['id'])) ?  $_POST['id'] : '';
 $txt_activoCorriente = (isset($_POST['txt_activoCorriente'])) ?  $_POST['txt_activoCorriente'] : '';
 $txt_pasivoCorriente = (isset($_POST['txt_pasivoCorriente'])) ?  $_POST['txt_pasivoCorriente'] : '';
 $txt_inventario = (isset($_POST['txt_inventario'])) ?  $_POST['txt_inventario'] : '';
-$balanceGeneral = $_FILES['balanceGeneral'];
-$estadoResultado = $_FILES['estadoResultado'];
+$balanceGeneral = isset($_FILES['balanceGeneral']) ? $_FILES['balanceGeneral'] : '';
+$estadoResultado = isset($_FILES['estadoResultado']) ? $_FILES['estadoResultado'] : '';
 //PARAMETROS PARA LISTAR DATOS
 $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
-$campo = strcmp($campo, '') ? $campo : "dui";
+$campo = strcmp($campo, '') ? $campo : "nombre";
 $cantidad = (isset($_POST['cantidad'])) ? $_POST['cantidad'] : '';
 $buscar = (isset($_POST['buscar'])) ? $_POST['buscar'] : '';
 $pagina = (isset($_POST['pagina'])) ? $_POST['pagina'] : '';
@@ -118,13 +118,13 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
-        case 'obtener': {
+    case 'obtener': {
             $catClienteJ = new ClienteJuridico();
             echo json_encode($catClienteJ->obtenerClienteJ($txt_codigo));
             $catClienteJ = null;
             break;
         }
-        case 'modal': {
+    case 'modal': {
             $catClienteJ = new ClienteJuridico();
             echo json_encode($catClienteJ->obtenerDatosModal($txt_codigo));
             $catClienteJ = null;

@@ -8,9 +8,6 @@ $txt_producto =  (isset($_POST['txt_producto'])) ? strtoupper($_POST['txt_produc
 $txt_descripcion =  (isset($_POST['txt_descripcion'])) ? strtoupper($_POST['txt_descripcion']) : '';
 $txt_ganancia =  (isset($_POST['txt_ganancia'])) ? $_POST['txt_ganancia'] : '';
 $txt_modelo =  (isset($_POST['txt_modelo'])) ? strtoupper($_POST['txt_modelo']) : '';
-$txt_unidadPeriodo =  (isset($_POST['txt_unidadPeriodo'])) ? $_POST['txt_unidadPeriodo'] : '';
-$txt_costoPedido =  (isset($_POST['txt_costoPedido'])) ? $_POST['txt_costoPedido'] : '';
-$txt_costoMantenimiento =  (isset($_POST['txt_costoMantenimiento'])) ? $_POST['txt_costoMantenimiento'] : '';
 $txt_usoDiario =  (isset($_POST['txt_usoDiario'])) ? $_POST['txt_usoDiario'] : '';
 $txt_entrega =  (isset($_POST['txt_entrega'])) ? $_POST['txt_entrega'] : '';
 
@@ -44,13 +41,12 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                $cep = $producto->cep($txt_unidadPeriodo, $txt_costoPedido, $txt_costoMantenimiento);
                 $stock_minimo = $producto->puntoReformulacion($txt_entrega, $txt_usoDiario);
                 if ($producto->insertarProducto(
                     array(
                         $txt_idCategoria, $txt_idMarca,
                         $txt_producto, $txt_descripcion, $txt_ganancia, $txt_modelo,
-                        $stock_minimo, $txt_unidadPeriodo, $txt_costoPedido, $txt_costoMantenimiento, $cep, $txt_usoDiario, $txt_entrega
+                        $stock_minimo, $txt_usoDiario, $txt_entrega
                     )
                 )) {
                     $respuesta[] = array(
@@ -86,14 +82,13 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                $cep = $producto->cep($txt_unidadPeriodo, $txt_costoPedido, $txt_costoMantenimiento);
                 $stock_minimo = $producto->puntoReformulacion($txt_entrega, $txt_usoDiario);
                 if ($producto->modificarProducto(
                     array(
                         $id,
                         $txt_idCategoria, $txt_idMarca,
                         $txt_producto, $txt_descripcion, $txt_ganancia, $txt_modelo,
-                        $stock_minimo, $txt_unidadPeriodo, $txt_costoPedido, $txt_costoMantenimiento, $cep, $txt_usoDiario, $txt_entrega
+                        $stock_minimo, $txt_usoDiario, $txt_entrega
                     )
                 )) {
                     $respuesta[] = array(
@@ -143,6 +138,20 @@ switch ($opcion) {
             $producto = new Producto();
             echo json_encode($producto->tablaProducto($pagina, $cantidad, $campo, $buscar));
             $producto = null;
+            break;
+        }
+    case 'listarExistencia': {
+            $producto = new Producto();
+            echo json_encode($producto->tablaExistencias($pagina, $cantidad, $campo, $buscar));
+            $producto = null;
+            break;
+        }
+    case 'verificarInformacion': {
+            $producto = new Producto();
+            $respuesta = array();
+            $respuesta['pedido_necesario'] = $producto->verificarExistencias();
+            $producto = null;
+            echo json_encode($respuesta);
             break;
         }
 }

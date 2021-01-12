@@ -76,23 +76,20 @@
             <!-- Page header -->
             <div class="full-box page-header">
                 <h3 class="text-left">
-                    <i class="fas fa-user  fa-fw"></i> &nbsp; PROVEEDORES
+                    <i class="fas fa-store  fa-fw"></i> &nbsp; KARDEX PRODUCTO
                 </h3>
 
-            </div>
-            <div class="container-fluid">
-                <ul class="full-box list-unstyled page-nav-tabs">
-                    <li>
-                        <a id="opLista" href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA</a>
-                    </li>
-                    <li>
-                        <a id="opNueva" href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO</a>
-                    </li>
-                </ul>
             </div>
 
             <!--CONTENT-->
             <div id="cuadroTabla" class="container-fluid" style="margin-top: 0px;">
+                <div class="col-12 text-center">
+                    <button id="btn_seleccionar" class="btn btn-info btn-sm">SELECCIONE PRODUCTO</button>
+                </div>
+                <br>
+                <div class="col-12 text-center">
+                    <span id="spn_producto" class="text text-success roboto-medium" style="font-size: 36px;">PRODUCTO</span>
+                </div>
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="form-group">
@@ -110,11 +107,23 @@
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
-                                <th class="text-center">NOMBRE<br> <input type="text" name="txt_nombrefiltro" id="txt_nombrefiltro"></th>
-                                <th class="text-center">DIRECCION<br> <input type="text" name="txt_direccionfiltro" id="txt_direccionfiltro"></th>
-                                <th class="text-center">TELEFONO<br> <input type="text" name="txt_telefonofiltro" id="txt_telefonofiltro"></th>
-                                <th class="text-center">CORREO<br> <input type="text" name="txt_correofiltro" id="txt_correofiltro"></th>
-                                <th class="text-center">ACCIONES<br> </th>
+                                <th style="border-color: black;  background-color: #fff; color:black !important; border: 1px solid black;" colspan="2" class="text-center">DATOS<br> </th>
+                                <th style="border-color: black;  background-color: #fff; color:black !important; border: 1px solid black;" colspan="3" class="text-center">ENTRADAS<br> </th>
+                                <th style="border-color: black;  background-color: #fff; color:black !important; border: 1px solid black;" colspan="3" class="text-center">SALIDAS<br> </th>
+                                <th style="border-color: black;  background-color: #fff; color:black !important; border: 1px solid black;" colspan="3" class="text-center">SALDO<br> </th>
+                            </tr>
+                            <tr class="text-center">
+                                <th class="text-center">FECHA<br> </th>
+                                <th class="text-center">TIPO<br> </th>
+                                <th class="text-center">CANTIDAD<br> </th>
+                                <th class="text-center">COSTO UNITARIO $<br> </th>
+                                <th class="text-center">TOTAL<br> </th>
+                                <th class="text-center">CANTIDAD<br> </th>
+                                <th class="text-center">COSTO UNITARIO $<br> </th>
+                                <th class="text-center">TOTAL<br> </th>
+                                <th class="text-center">CANTIDAD<br> </th>
+                                <th class="text-center">COSTO UNITARIO $<br> </th>
+                                <th class="text-center">TOTAL<br> </th>
                             </tr>
                         </thead>
                         <tbody id="cuerpoTabla">
@@ -141,67 +150,63 @@
 
                 </nav>
             </div>
+            <!-- MODAL Productos -->
+            <div class="modal fade" id="ModalProducto" tabindex="-1" role="dialog" aria-labelledby="ModalCliente" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title roboto-medium" id="Modal1">LISTA DE PROVEEDORES</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
 
-            <div id="cuadroFormulario" class="container-fluid">
-
-                <div class="container-fluid form-neon">
-                    <input type="hidden" id="txt_id" name="txt_id">
-                    <form id="frm_proveedor" action="" autocomplete="off">
-                        <fieldset>
-                            <legend><i class="far fa-plus-square"></i> &nbsp; INFORMACION</legend>
+                        <div class="modal-body">
                             <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_nombre" class="roboto-medium">NOMBRE</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_nombre" id="txt_nombre" minlength="3" maxlength="125" required>
-                                            <div id="nombreError">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered table-sm roboto-medium">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <td>PRODUCTO<br> <input type="text" id="txt_buscarProducto" name="txt_buscarProducto"></td>
+                                                <td>DESCRIPCION<br> <input type="text" id="txt_buscarDescripcion" name="txt_buscarDescripcion"></td>
+                                                <td>SELECCIONAR</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="cuerpoTablaProducto">
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_direccion" class="roboto-medium">DIRECCION</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_direccion" id="txt_direccion" minlength="3" maxlength="300" required>
-                                            <div id="direccionError">
 
+                                        </tbody>
+                                    </table>
+                                    <nav aria-label="Page navigation example">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <p id="registrosProducto" class="text-left roboto-medium"></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_telefono" class="roboto-medium">TELEFONO</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_telefono" id="txt_telefono" required>
-                                            <div id="telefonoError">
 
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <p id="totalPaginasProducto" class="text-right roboto-medium"></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_correo" class="roboto-medium">CORREO</label>
-                                            <input type="email" class="form-control" name="txt_correo" id="txt_correo" required>
-                                            <div id="correoError">
 
-                                            </div>
+
                                         </div>
-                                    </div>
+                                        <ul id="paginadorProducto" class="pagination justify-content-center">
+
+                                        </ul>
+
+                                    </nav>
                                 </div>
                             </div>
-                        </fieldset>
-                        <br>
-                        <p class="text-center" style="margin-top: 5px;">
-                            <button id="btn_limpiar" type="reset" class="btn btn-raised btn-info btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
-                            &nbsp; &nbsp;
-                            <button id="btn_listar" type="button" class="btn btn-raised btn-info btn-sm"><i class="fas fa-list"></i> &nbsp; LISTAR</button>
-                            &nbsp; &nbsp;
-                            <button id="btn_guardar" type="button" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
-                        </p>
-                    </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </section>
     </main>
 
@@ -220,37 +225,8 @@
     <script src="../../../css/login/js/jquery.validate.min.js"></script>
 
     <script src="../../../js/main.js"></script>
-    <script src="../../../Plugins/mascara.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            $("#cuadroFormulario").slideUp("slow")
-            $('#txt_telefono').mask("(999) 9999-9999")
-            opLista.className = "active";
-            let $validar = $('#cuadroFormulario form').validate({
-                rules: {
-                    txt_nombre: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 125
-                    },
-                    txt_direccion: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 300
-                    },
-                    txt_telefono: {
-                        required: true
-                    },
-                    txt_correo: {
-                        required: true
-                    }
-                }
-            })
-        });
-    </script>
-
-    <script src="../../js_app/proveedor.js"></script>
+    <script src="../../js_app/kardex.js"></script>
 
 </body>
 

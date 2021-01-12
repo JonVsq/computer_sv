@@ -48,7 +48,7 @@ class Proveedores
         WHERE ($campo LIKE '%$buscar%') order by nombre ASC");
         //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
         return $this->nucleo->getDatosHtml(
-            array("nombre", "direccion", "telefono", "correo", "dias_entrega"),
+            array("nombre", "direccion", "telefono", "correo"),
             array("editar" => "edit", "eliminar" => "trash"),
             "id"
         );

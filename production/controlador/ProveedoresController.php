@@ -6,7 +6,6 @@ $txt_nombre =  (isset($_POST['txt_nombre'])) ? strtoupper($_POST['txt_nombre']) 
 $txt_direccion =  (isset($_POST['txt_direccion'])) ? strtoupper($_POST['txt_direccion']) : '';
 $txt_telefono =  (isset($_POST['txt_telefono'])) ? strtoupper($_POST['txt_telefono']) : '';
 $txt_correo =  (isset($_POST['txt_correo'])) ? $_POST['txt_correo'] : '';
-$txt_diasEntrega =  (isset($_POST['txt_diasEntrega'])) ? $_POST['txt_diasEntrega'] : '';
 //PARAMETROS PARA LISTAR DATOS
 $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
 $campo = strcmp($campo, '') ? $campo : "nombre";
@@ -29,7 +28,7 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                if ($catProveedor->insertaProveedor(array($txt_nombre, $txt_direccion, $txt_telefono, $txt_correo, $txt_diasEntrega))) {
+                if ($catProveedor->insertaProveedor(array($txt_nombre, $txt_direccion, $txt_telefono, $txt_correo))) {
                     $respuesta[] = array(
                         "estado" => 1,
                         "encabezado" => "EXITO.",
@@ -49,7 +48,7 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
-        case 'modificar': {
+    case 'modificar': {
             $catProveedor = new Proveedores();
             $respuesta = array();
             $existe = $catProveedor->camposUnicosModificar(array(
@@ -62,7 +61,7 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                if ($catProveedor->modificarProveedor(array($id, $txt_nombre, $txt_direccion, $txt_telefono, $txt_correo, $txt_diasEntrega))) {
+                if ($catProveedor->modificarProveedor(array($id, $txt_nombre, $txt_direccion, $txt_telefono, $txt_correo))) {
                     $respuesta[] = array(
                         "estado" => 1,
                         "encabezado" => "EXITO.",
@@ -82,13 +81,13 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
-        case 'obtener': {
+    case 'obtener': {
             $catProveedor = new Proveedores();
             echo json_encode($catProveedor->obtenerProveedor($id));
             $catProveedor = null;
             break;
         }
-        case 'listar': {
+    case 'listar': {
             $catProveedor = new Proveedores();
             echo json_encode($catProveedor->tablaProveedor($pagina, $cantidad, $campo, $buscar));
             $catProveedor = null;

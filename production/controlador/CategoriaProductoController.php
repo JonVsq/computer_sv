@@ -16,7 +16,7 @@ switch ($opcion) {
     case 'insertar': {
             $catPro = new CategoriaProducto();
             $respuesta = array();
-            $existe = $catPro->CamposUnicos(array("descripcion" => $txt_descripcion), "", "");
+            $existe = $catPro->CamposUnicos(array("descripcion" => $txt_descripcion), "id", "");
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
                     "estado" => 0,

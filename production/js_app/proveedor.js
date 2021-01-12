@@ -16,7 +16,6 @@ const txt_nombre = document.getElementById('txt_nombre')
 const txt_direccion = document.getElementById('txt_direccion')
 const txt_telefono = document.getElementById('txt_telefono')
 const txt_correo = document.getElementById('txt_correo')
-const txt_diasEntrega = document.getElementById('txt_diasEntrega')
 const nombreError = document.getElementById('nombreError')
 const direccionError = document.getElementById('direccionError')
 const telefonoError = document.getElementById('telefonoError')
@@ -156,7 +155,6 @@ function cargarFormulario(id) {
             txt_direccion.value = respuesta[0]['direccion']
             txt_telefono.value = respuesta[0]['telefono']
             txt_correo.value = respuesta[0]['correo']
-            txt_diasEntrega.value = respuesta[0]['dias_entrega']
             modificar = true
             //OCULTA TABLA Y MUESTRA EL FORMULARIO
             opNueva.className = "active";

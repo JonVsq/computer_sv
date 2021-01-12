@@ -93,7 +93,7 @@ class ClienteJuridico
         WHERE (c.$campo LIKE '%$buscar%')
         ORDER BY c.nombre DESC");
         //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
-        $this->nucleo->setQueryExtractRegistroPag("c.codigo,
+        $this->nucleo->setQueryExtractRegistroPag("SELECT c.codigo,
         c.nombre,
         ct.nombre as categoria
         FROM

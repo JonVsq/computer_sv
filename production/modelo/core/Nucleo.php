@@ -394,21 +394,23 @@ class Nucleo
                 foreach ($campos as $valor) {
                     $fila = $fila . "<td>{$objeto[$valor]}</td>";
                 }
-                $fila = $fila . "<td>";
-                foreach ($botones as $boton => $tipo) {
-                    $tipoB = "";
-                    if ($boton == "editar" || $boton == "seleccion" || $boton == "amortizacion") {
-                        $tipoB = "primary";
-                    } else if ($boton == "eliminar") {
-                        $tipoB = "danger";
-                    } else if ($boton == "ver" || $boton == "cobro") {
-                        $tipoB = "success";
-                    }
-                    $fila = $fila . "<button obj$boton='{$objeto[$identificador]}'  type='button'  class='$boton btn btn-$tipoB btn-sm'>
+                if (!empty($botones)) {
+                    $fila = $fila . "<td>";
+                    foreach ($botones as $boton => $tipo) {
+                        $tipoB = "";
+                        if ($boton == "editar" || $boton == "seleccion" || $boton == "amortizacion") {
+                            $tipoB = "primary";
+                        } else if ($boton == "eliminar") {
+                            $tipoB = "danger";
+                        } else if ($boton == "ver" || $boton == "cobro") {
+                            $tipoB = "success";
+                        }
+                        $fila = $fila . "<button obj$boton='{$objeto[$identificador]}'  type='button'  class='$boton btn btn-$tipoB btn-sm'>
                                         <i class='fas fa-$tipo'></i></button>
                                         ";
+                    }
+                    $fila = $fila . "</td>";
                 }
-                $fila = $fila . "</td>";
                 $fila = $fila . "</tr>\n";
                 $tabla = $tabla . $fila;
             }

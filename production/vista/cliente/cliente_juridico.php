@@ -76,7 +76,7 @@
             <!-- Page header -->
             <div class="full-box page-header">
                 <h3 class="text-left">
-                    <i class="fas fa-users  fa-fw"></i> &nbsp; CLIENTES NATURALES
+                    <i class="fas fa-users  fa-fw"></i> &nbsp; CLIENTES JURIDICOS
                 </h3>
 
             </div>
@@ -110,8 +110,6 @@
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
-                                <th class="text-center">DUI<br> <input type="text" name="txt_duiFiltro" id="txt_duiFiltro"></th>
-                                <th class="text-center">NIT<br> <input type="text" name="txt_nitFiltro" id="txt_nitFiltro"></th>
                                 <th class="text-center">NOMBRE<br> </th>
                                 <th class="text-center">CATEGORIA<br> </th>
                                 <th class="text-center">ACCIONES<br> </th>
@@ -274,7 +272,7 @@
 
     <script>
         $(document).ready(function() {
-            //$("#cuadroFormulario").slideUp("slow")
+            $("#cuadroFormulario").slideUp("slow")
             opLista.className = "active";
             $('#txt_telefono').mask("(999) 9999-9999")
             $("#txt_dui").mask("99999999-9")

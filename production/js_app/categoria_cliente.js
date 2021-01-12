@@ -122,11 +122,6 @@ function guardarModificarCatCliente() {
                 } else {
                     pagoError.innerHTML = ""
                 }
-                if (respuesta[0].errores[3].max_ventas > 0) {
-                    ventaError.innerHTML = "<span class='error'>Ingrese otro valor.</span>"
-                } else {
-                    ventaError.innerHTML = ""
-                }
             }
             btn_guardar.removeAttribute('disabled')
         }).catch(error => {

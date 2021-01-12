@@ -21,7 +21,7 @@ switch ($opcion) {
             $respuesta = array();
             $existe = $catCliente->camposUnicos(array(
                 "nombre" => $txt_nombre, "descripcion" => $txt_descripcion,
-                "max_atraso" => $txt_maxAtraso, "max_ventas" => $txt_maxVentas
+                "max_atraso" => $txt_maxAtraso
             ), "id", "");
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
@@ -54,7 +54,7 @@ switch ($opcion) {
             $respuesta = array();
             $existe = $catCliente->camposUnicosModificar(array(
                 "nombre" => $txt_nombre, "descripcion" => $txt_descripcion,
-                "max_atraso" => $txt_maxAtraso, "max_ventas" => $txt_maxVentas
+                "max_atraso" => $txt_maxAtraso
             ), "id", $id);
             if ($existe['existe'] == 1) {
                 $respuesta[] = array(
