@@ -136,4 +136,10 @@ switch ($opcion) {
             $catClienteJ = null;
             break;
         }
+    case 'modalClienteVenta': {
+            $catClienteJ = new ClienteJuridico();
+            echo json_encode($catClienteJ->ClienteJuridicoModal($pagina, $cantidad, $campo, $buscar));
+            $catClienteJ = null;
+            break;
+        }
 }

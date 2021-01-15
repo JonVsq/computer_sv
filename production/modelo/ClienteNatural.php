@@ -143,7 +143,7 @@ class ClienteNatural
         $resultado = $this->nucleo->getDatos();
 
         $respuesta["modalCuerpo"] = $this->htmlModalDatosCliente($resultado);
-        
+
         return $respuesta;
     }
     private function htmlModalDatosCliente($datos)
@@ -175,5 +175,44 @@ class ClienteNatural
         }
         return $datosCliente;
     }
-
+    public function ClienteNaturalModal($numPagina, $cantidad, $campo, $buscar)
+    {
+        $this->nucleo->setNumPagina($numPagina);
+        $this->nucleo->setPorPagina($cantidad);
+        //SQL QUE CUENTA LOS REGISTROS EN LA TABLA
+        $this->nucleo->setQueryTotalRegistroPag("SELECT
+        COUNT(DISTINCT(c.codigo)) as total
+        FROM
+        cliente as c
+        INNER JOIN categoria_cliente as ct on ct.id = c.id_categoria
+        INNER JOIN datos_natural as dn ON dn.codigo_cliente = c.codigo
+        WHERE (dn.$campo LIKE '%$buscar%') and NOT EXISTS(SELECT cr.id_venta FROM credito as cr
+        INNER JOIN venta as v ON v.id = cr.id_venta
+        WHERE c.codigo = v.codigo_cliente)
+        OR ct.max_ventas != 0 OR ct.max_ventas < (SELECT COUNT(cc.id) FROM credito as cc
+        WHERE cc.cancelado = 0)
+        ORDER BY c.nombre DESC");
+        //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
+        $this->nucleo->setQueryExtractRegistroPag("SELECT
+        c.codigo,
+        c.nombre,
+        ct.nombre as categoria
+        FROM
+        cliente as c
+        INNER JOIN categoria_cliente as ct on ct.id = c.id_categoria
+        INNER JOIN datos_natural as dn ON dn.codigo_cliente = c.codigo
+        WHERE (dn.$campo LIKE '%$buscar%') and NOT EXISTS(SELECT cr.id_venta FROM credito as cr
+        INNER JOIN venta as v ON v.id = cr.id_venta
+        WHERE c.codigo = v.codigo_cliente)
+        OR ct.max_ventas != 0 OR ct.max_ventas < (SELECT COUNT(cc.id) FROM credito as cc
+        WHERE cc.cancelado = 0)
+        ORDER BY c.nombre DESC");
+        //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
+        return $this->nucleo->getDatosHtml(
+            array("codigo", "nombre", "categoria"),
+            array("seleccion" => "user-plus"),
+            "codigo"
+        );
+    }
+    
 }

@@ -32,9 +32,9 @@ class Kardex
         IF(m.tipo = 'VENTA',m.cantidad_movimiento,'') as cantidad_salida,
         IF(m.tipo = 'VENTA',m.costo_unitario,'') as costo_unitario_salida,
         IF(m.tipo = 'VENTA',ROUND((m.cantidad_movimiento * m.costo_unitario),2),'') as total_salida,
-        m.saldo as saldo,
-        m.saldo_costo_unitario as saldo_costo,
-        ROUND((m.saldo * m.costo_unitario),2) as total_saldo
+        IF( m.saldo=0,'',m.saldo)as saldo,
+        IF(m.saldo_costo_unitario=0,'',m.saldo_costo_unitario) as saldo_costo,
+        IF(m.saldo=0,'',ROUND((m.saldo * m.costo_unitario),2)) as total_saldo
         FROM
         movimientos as m
         WHERE m.id_producto = $id_producto
@@ -50,5 +50,15 @@ class Kardex
             array(),
             "id"
         );
+    }
+    public function obtenerStockProductos($id_producto)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        *
+        FROM
+        movimientos as m
+        where m.id_producto = $id_producto and m.activo = 1 and saldo != 0
+        ORDER BY id asc");
+        return $this->nucleo->getDatos();
     }
 }

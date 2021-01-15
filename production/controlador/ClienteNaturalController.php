@@ -108,7 +108,7 @@ switch ($opcion) {
                         $txt_telefono, $txt_direccion, $txt_fechaIngreso
                     ))) {
                         if ($catClienteN->modificarDatosC(array(
-                            $txt_dui, $txt_nit, $txt_estadoCivil, 
+                            $txt_dui, $txt_nit, $txt_estadoCivil,
                             $txt_lugarTrabajo, $txt_ingresos, $txt_egresos, $txt_codigo
                         ))) {
                             $respuesta[] = array(
@@ -146,13 +146,13 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
-        case 'obtener': {
+    case 'obtener': {
             $catClienteN = new ClienteNatural();
             echo json_encode($catClienteN->obtenerClienteN($txt_codigo));
             $catClienteN = null;
             break;
         }
-        case 'modal': {
+    case 'modal': {
             $catClienteN = new ClienteNatural();
             echo json_encode($catClienteN->obtenerDatosModal($txt_codigo));
             $catClienteN = null;
@@ -161,6 +161,12 @@ switch ($opcion) {
     case 'listar': {
             $catClienteN = new ClienteNatural();
             echo json_encode($catClienteN->tablaClienteN($pagina, $cantidad, $campo, $buscar));
+            $catClienteN = null;
+            break;
+        }
+    case 'modalClienteVenta': {
+            $catClienteN = new ClienteNatural();
+            echo json_encode($catClienteN->ClienteNaturalModal($pagina, $cantidad, $campo, $buscar));
             $catClienteN = null;
             break;
         }

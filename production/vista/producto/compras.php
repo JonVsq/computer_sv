@@ -228,7 +228,7 @@
                             </div>
                         </fieldset>
                         <p class="text-center" style="margin-top: 5px;">
-                            <button id="btn_agregar" type="button" class="btn btn-raised btn-info btn-sm btn-block"><i class="fa fa-plus"></i> &nbsp; AGREGAR DETALLE</button>
+                            <button id="btn_agregar" type="button" class="btn btn-raised btn-success btn-sm btn-block"><i class="fa fa-plus"></i> &nbsp; AGREGAR DETALLE</button>
                         </p>
                     </form>
                     <br>

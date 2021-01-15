@@ -143,4 +143,35 @@ class Compra
             "id"
         );
     }
+
+    //MODAL PRODUCTOS
+    public function modalProductosVenta($numPagina, $cantidad, $campo, $buscar)
+    {
+        $this->nucleo->setNumPagina($numPagina);
+        $this->nucleo->setPorPagina($cantidad);
+        //SQL QUE CUENTA LOS REGISTROS EN LA TABLA
+        $this->nucleo->setQueryTotalRegistroPag("SELECT COUNT(id) AS total
+           FROM
+           productos as p
+           WHERE (p.$campo LIKE '%$buscar%')
+           ORDER BY p.producto ASC");
+        //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
+        $this->nucleo->setQueryExtractRegistroPag("SELECT
+          p.id,
+          p.producto,
+          p.descripcion,
+          SUM(m.saldo) as stock
+          FROM
+          movimientos as m
+          INNER JOIN productos as p ON p.id = m.id_producto
+          WHERE (p.$campo LIKE '%$buscar%') and m.activo = 1 and m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA'
+          GROUP BY m.id_producto
+          ORDER BY p.producto");
+        //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
+        return $this->nucleo->getDatosHtml(
+            array("producto", "descripcion"),
+            array("seleccion" => "user-plus"),
+            "id"
+        );
+    }
 }

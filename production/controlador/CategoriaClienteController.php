@@ -2,6 +2,7 @@
 include('../modelo/CategoriaCliente.php');
 //CAPTURA CAMPOS
 $id = (isset($_POST['id'])) ?  $_POST['id'] : '';
+$codigoCliente = (isset($_POST['codigoCliente'])) ?  $_POST['codigoCliente'] : '';
 $txt_nombre =  (isset($_POST['txt_nombre'])) ? strtoupper($_POST['txt_nombre']) : '';
 $txt_descripcion =  (isset($_POST['txt_descripcion'])) ? strtoupper($_POST['txt_descripcion']) : '';
 $txt_maxAtraso =  (isset($_POST['txt_maxAtraso'])) ? $_POST['txt_maxAtraso'] : '';
@@ -91,6 +92,12 @@ switch ($opcion) {
     case 'listar': {
             $catCliente = new CategoriaCliente();
             echo json_encode($catCliente->tablaCategoriaCliente($pagina, $cantidad, $campo, $buscar));
+            $catCliente = null;
+            break;
+        }
+    case 'categoriaCliente': {
+            $catCliente = new CategoriaCliente();
+            echo json_encode($catCliente->categoriaCliente($codigoCliente));
             $catCliente = null;
             break;
         }

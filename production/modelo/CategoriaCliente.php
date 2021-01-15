@@ -26,7 +26,8 @@ class CategoriaCliente
         $this->nucleo->setConsultarModificar(true);
         return $this->nucleo->coincidencias($campos, $identificador, $valor);
     }
-    public function obtenerCategoriaCliente($id){
+    public function obtenerCategoriaCliente($id)
+    {
         $this->nucleo->setQueryPersonalizado("SELECT * FROM categoria_cliente as c 
                                              where c.id = $id order by c.nombre DESC");
         return $this->nucleo->getDatos();
@@ -47,5 +48,19 @@ class CategoriaCliente
             array("editar" => "edit", "eliminar" => "trash"),
             "id"
         );
+    }
+    public function categoriaCliente($codigo)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        ct.id,
+        ct.nombre,
+        ct.max_atraso,
+        ct.max_ventas,
+        ct.monto_limite
+        FROM
+        categoria_cliente as ct
+        INNER JOIN cliente as c on c.id_categoria = ct.id
+        WHERE c.codigo = '$codigo'");
+        return $this->nucleo->getDatos();
     }
 }

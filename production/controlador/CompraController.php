@@ -83,4 +83,10 @@ switch ($opcion) {
             $compra = null;
             break;
         }
+    case 'modalProductosVenta': {
+            $compra = new Compra();
+            echo json_encode($compra->modalProductosVenta($pagina, $cantidad, $campoP, $buscar));
+            $compra = null;
+            break;
+        }
 }

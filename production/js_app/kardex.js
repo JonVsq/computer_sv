@@ -17,7 +17,7 @@ window.addEventListener("load", inicio)
 //INICIA LOS EVENTOS
 function inicio() {
     btn_seleccionar.addEventListener("click", abrirModal)
-    cantidad.addEventListener("keyup", comboListado)
+    cantidad.addEventListener("change", comboListado)
 }
 function abrirModal() {
     txt_buscarProducto.addEventListener("keyup", filtroProducto)
