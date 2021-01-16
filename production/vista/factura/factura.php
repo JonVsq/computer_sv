@@ -97,7 +97,7 @@ foreach ($items as $item) {
     $plantilla .= '<td class="total">$' . round($item['cantidad'] * $item['precio_venta'], 2) . '</td> </tr>';
 }
 $iva = round($total * 0.13, 2);
-$cesc = round($total * 0.05);
+$cesc = round($total * 0.05,2);
 $plantilla = $plantilla . ' </tbody>
 <tfoot>
   <tr>

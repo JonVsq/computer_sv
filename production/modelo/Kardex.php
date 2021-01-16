@@ -54,11 +54,21 @@ class Kardex
     public function obtenerStockProductos($id_producto)
     {
         $this->nucleo->setQueryPersonalizado("SELECT
-        *
+        m.id,
+        m.id_producto,
+        m.tipo,
+        m.fecha,
+        m.cantidad_movimiento,
+        m.costo_unitario,
+        m.saldo,
+        m.saldo_costo_unitario,
+        m.precio_venta_unitario,
+        m.activo,
+        IF(m.tipo='VENTA',1,IF(m.tipo='SALDO INICIAL',2,IF(m.tipo='COMPRA',3,0))) as orden
         FROM
         movimientos as m
         where m.id_producto = $id_producto and m.activo = 1 and saldo != 0
-        ORDER BY id asc");
+        ORDER BY orden asc, id asc");
         return $this->nucleo->getDatos();
     }
 }
