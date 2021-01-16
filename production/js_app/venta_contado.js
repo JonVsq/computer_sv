@@ -23,6 +23,8 @@ let urlClienteN = '../../controlador/ClienteNaturalController.php'
 let urlCatCliente = '../../controlador/CategoriaClienteController.php'
 let urlKardex = '../../controlador/KardexController.php'
 let urlVentaContado = '../../controlador/VentaContadoController.php'
+let urlComprobanteCF = '../../vista/factura/comprobante_credito_fiscal.php'
+let urlFactura = '../../vista/factura/factura.php'
 let paginaCliente = 1
 let campoCliente = ""
 let buscarCliente = ""
@@ -76,8 +78,26 @@ function guardarVenta() {
                 return respuesta.json()
             }
         }).then(respuesta => {
-            console.log(respuesta)
+            if (respuesta[0].estado == 1) {
+                cargarNumeroFactura()
+                spn_Producto.className = "text-danger"
+                spn_Producto.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE PRODUCTO"
+                txt_idProducto.value = ""
+                spn_Unidades.innerText = "#"
+                txt_cantidad.value = ""
+                spn_Cliente.className = "text-danger"
+                spn_Cliente.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE CLIENTE"
+                txt_idCliente.value = ""
+                cuerpoDetalle.innerHTML = "respuesta['tabla']"
+                let imprimir = cobrarImpuestos ? urlFactura : urlComprobanteCF
+                window.open(imprimir, '_blank')
+                cobrarImpuestos = true
+
+            }
+            mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+            btn_guardar.removeAttribute('disabled')
         }).catch(error => {
+            btn_guardar.removeAttribute('disabled')
             console.log(error)
             alert('OCURRIO UN ERROR CONECTANDO CON ELSERVIDOR, INTENTE DE NUEVO.')
         })
@@ -343,4 +363,8 @@ function obtenerStock(id_producto) {
         console.log(error)
         alert('OCURRIO UN ERROR CONECTANDO CON ELSERVIDOR, INTENTE DE NUEVO.')
     })
+}
+//FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
+function mensaje(encabezado, msj, icono) {
+    swal(encabezado, msj, icono)
 }

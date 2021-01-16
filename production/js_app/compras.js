@@ -94,7 +94,23 @@ function guardarModificarCompra() {
                     return respuesta.json()
                 }
             }).then(respuesta => {
-                console.log(respuesta)
+                if (respuesta[0].estado == 1) {
+                    spn_Proveedor.className = "text-danger"
+                    spn_Proveedor.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE PROVEEDOR"
+                    spn_Proveedor.className = "text-danger"
+                    spn_Proveedor.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE PRODUCTO"
+                    txt_cantidad.value = ""
+                    txt_factura.value = ""
+                    txt_garantia.value = ""
+                    txt_precio.value = ""
+                    txt_fecha.value = ""
+                    spn_total.textContent = "TOTAL $:"
+                    cuerpoDetalle.innerHTML = ""
+
+                }
+                mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+                btn_guardar.removeAttribute('disabled')
+
             }).catch(error => {
                 btn_guardar.removeAttribute('disabled')
                 alert("Ocurrio un error conectando al servidor");

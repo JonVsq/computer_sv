@@ -150,11 +150,15 @@ class Compra
         $this->nucleo->setNumPagina($numPagina);
         $this->nucleo->setPorPagina($cantidad);
         //SQL QUE CUENTA LOS REGISTROS EN LA TABLA
-        $this->nucleo->setQueryTotalRegistroPag("SELECT COUNT(id) AS total
-           FROM
-           productos as p
-           WHERE (p.$campo LIKE '%$buscar%')
-           ORDER BY p.producto ASC");
+        $this->nucleo->setQueryTotalRegistroPag("SELECT
+        COUNT(p.id) as total
+       
+        FROM
+        movimientos as m
+        INNER JOIN productos as p ON p.id = m.id_producto
+        WHERE (p.$campo LIKE '%$buscar%') and m.activo = 1
+       
+        ORDER BY p.producto  ASC");
         //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
         $this->nucleo->setQueryExtractRegistroPag("SELECT
           p.id,
@@ -164,7 +168,7 @@ class Compra
           FROM
           movimientos as m
           INNER JOIN productos as p ON p.id = m.id_producto
-          WHERE (p.$campo LIKE '%$buscar%') and m.activo = 1 and m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA'
+          WHERE (p.$campo LIKE '%$buscar%') and m.activo = 1
           GROUP BY m.id_producto
           ORDER BY p.producto");
         //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS

@@ -33,10 +33,11 @@ switch ($opcion) {
                             if ($venta->crearMovimientos($items, $fecha)) {
                                 $_SESSION['inventario'] = null;
                                 $_SESSION['items'] = null;
+                                $_SESSION['factura'] = $txt_factura;
                                 $respuesta[] = array(
                                     "estado" => 1,
                                     "encabezado" => "EXITO.",
-                                    "msj" => "DATOS ALMACENADOS.",
+                                    "msj" => "VENTA PROCESADA.",
                                     "icono" => "success"
                                 );
                             } else {
@@ -80,6 +81,7 @@ switch ($opcion) {
                 );
             }
             $venta = null;
+            echo json_encode($respuesta);
             break;
         }
 }

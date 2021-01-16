@@ -119,3 +119,8 @@ $(document).on('click', '.siguiente', function (e) {
     let pagina = $(elemento).attr('pag')
     listarKardex(pagina, cantidad.value, '', '')
 })
+
+//FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
+function mensaje(encabezado, msj, icono) {
+    swal(encabezado, msj, icono)
+}

@@ -34,7 +34,44 @@ window.addEventListener("load", inicio)
 function inicio() {
     listarClienteJ(1, cantidad.value, '', '')
     generarCodigo()
+    opNueva.addEventListener("click", opcionNuevo)
+    opLista.addEventListener("click", tabla)
     btn_guardar.addEventListener("click", guardarModificarClienteJ)
+
+}
+function opcionNuevo() {
+    if (modificar) {
+        modificar = false;
+        document.getElementById('frm_clienteJ').reset();
+        txt_id.value = ""
+        opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
+        btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
+    } else {
+        generarCodigo()
+    }
+    nombreError.innerHTML = ""
+    telefonoError.innerHTML = ""
+    opNueva.className = "active"
+    opLista.className = ""
+    $("#cuadroFormulario").slideDown("slow")
+    $("#cuadroTabla").slideUp("slow")
+}
+function tabla() {
+    if (modificar) {
+        modificar = false;
+        document.getElementById('frm_clienteJ').reset();
+        txt_codigo.value = ""
+        txt_fechaIngreso.value = ""
+        opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
+        btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
+    }
+    nombreError.innerHTML = ""
+    telefonoError.innerHTML = ""
+    opLista.className = "active"
+    opNueva.className = ""
+    $("#cuadroFormulario").slideUp("slow")
+    $("#cuadroTabla").slideDown("slow")
+    listarClienteJ(1, cantidad.value, '', '')
 
 }
 

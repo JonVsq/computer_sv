@@ -80,64 +80,6 @@
                 </h3>
 
             </div>
-            <div class="container-fluid">
-                <ul class="full-box list-unstyled page-nav-tabs">
-                    <li>
-                        <a id="opLista" href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA</a>
-                    </li>
-                    <li>
-                        <a id="opNueva" href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVA</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!--CONTENT-->
-            <div id="cuadroTabla" class="container-fluid" style="margin-top: 0px;">
-                <div class="row">
-                    <div class="col-12 col-md-6">
-                        <div class="form-group">
-                            <label for="cantidad" class="roboto-medium">MOSTRAR</label>
-                            <select id="cantidad" name="cantidad">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="25">25</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-dark table-sm">
-                        <thead>
-                            <tr class="text-center roboto-medium">
-                                <th class="text-center">NOMBRE<br> <input type="text" name="txt_nombrefiltro" id="txt_nombrefiltro"></th>
-                                <th class="text-center">ACCIONES<br> </th>
-                            </tr>
-                        </thead>
-                        <tbody id="cuerpoTabla">
-                        </tbody>
-                    </table>
-                </div>
-                <nav aria-label="Page navigation example">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <p id="registros" class="text-left roboto-medium"></p>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <p id="totalPaginas" class="text-right roboto-medium"></p>
-                            </div>
-                        </div>
-                    </div>
-                    <ul id="paginador" class="pagination justify-content-center">
-
-                    </ul>
-
-                </nav>
-            </div>
 
             <div id="cuadroFormulario" class="container-fluid">
 
@@ -387,23 +329,6 @@
     <script src="../../../css/login/js/jquery.validate.min.js"></script>
 
     <script src="../../../js/main.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            // $("#cuadroFormulario").slideUp("slow")
-            opLista.className = "active";
-            let $validar = $('#cuadroFormulario form').validate({
-                rules: {
-                    txt_marca: {
-                        required: true,
-                        minlength: 2,
-                        maxlength: 125
-                    }
-                }
-            })
-        });
-    </script>
-
     <script src="../../js_app/compras.js"></script>
 
 </body>
