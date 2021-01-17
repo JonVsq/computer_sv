@@ -199,13 +199,11 @@ class Producto
         FROM
         productos as p
         LEFT JOIN movimientos as m on m.id_producto = p.id 
-        WHERE (p.$campo LIKE '%$buscar%') and p.stock_minimo >= (SELECT COUNT(saldo) from movimientos as m INNER JOIN productos as p
-        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )
-        OR p.stock_minimo <= (SELECT COUNT(saldo) from movimientos as m INNER JOIN productos as p
-        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )");
+        where (p.$campo LIKE '%$buscar%') and m.activo = 1 
+        GROUP BY p.id
+       ");
         //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
-        $this->nucleo->setQueryExtractRegistroPag("SELECT 
-        p.id,
+        $this->nucleo->setQueryExtractRegistroPag("SELECT p.id,
         p.producto,
         p.descripcion,
         p.stock_minimo,
@@ -213,12 +211,10 @@ class Producto
         FROM
         productos as p
         LEFT JOIN movimientos as m on m.id_producto = p.id 
-        WHERE (p.$campo LIKE '%$buscar%') and p.stock_minimo >= (SELECT sum(saldo) from movimientos as m INNER JOIN productos as p
-        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )
-        OR p.stock_minimo <= (SELECT sum(saldo) from movimientos as m INNER JOIN productos as p
-        on m.id_producto = p.id WHERE m.activo = 1 AND m.tipo = 'SALDO INICIAL' or m.tipo = 'COMPRA' )
+        where (p.$campo LIKE '%$buscar%') and m.activo = 1 
         GROUP BY p.id
-        ORDER BY saldoTotal, p.producto ASC");
+        ORDER BY saldoTotal, p.producto ASC 
+      ");
         //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
         return $this->nucleo->getDatosHtml(
             array("producto", "descripcion", "saldoTotal", "stock_minimo"),
