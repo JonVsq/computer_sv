@@ -33,5 +33,41 @@
         </ul>
     </li>
 
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; EMPLEADOS <i class="fas fa-chevron-down"></i></a>
+        <ul>
+            <li>
+                <a href="../empleado/cargo.php"><i class="fas fa-box-open fa-fw"></i> &nbsp; CARGOS</a>
+            </li>
+            <li>
+                <a href="../empleado/empleado.php"><i class="fas fa-list fa-fw"></i> &nbsp; Empleado</a>
+            </li>
+           
+        </ul>
+    </li>
+
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; EMPRESA<i class="fas fa-chevron-down"></i></a>
+        <ul>
+            <li>
+                <a href="../empresa/empresa.php"><i class="fas fa-box-open fa-fw"></i> &nbsp; DATOS</a>
+            </li>
+            
+           
+        </ul>
+    </li>
+
+
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; USUARIO<i class="fas fa-chevron-down"></i></a>
+        <ul>
+            <li>
+                <a href="../usuarios/usuario.php"><i class="fas fa-box-open fa-fw"></i> &nbsp; USUARIO</a>
+            </li>
+         
+           
+        </ul>
+    </li>
+
 
 </ul>
