@@ -13,7 +13,7 @@ $pagina = (isset($_POST['pagina'])) ? $_POST['pagina'] : '';
 //OPCION A EJECUTAR
 $opcion  = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
 switch ($opcion) {
-    case 'insertar': {
+    case 'insertar': {    
             $interes = new Interes();
             $respuesta = array();
             $existe = $interes->CamposUnicos(
