@@ -123,7 +123,7 @@ class VentaCredito
         $datosPago = $this->simulador($interes[0]['porcentaje'], $interes[0]['plazo'], $monto);
         if (!empty($interes)) {
             $this->nucleo->setTablaBase($this->tblPagos);
-            for ($i = 0; $i < 2; $i++) {
+            for ($i = 0; $i <= $interes[0]['plazo']; $i++) {
                 if (!$this->nucleo->insertarRegistro(array(
                     $idCredito,
                     $datosPago[$i]['numcuota'],
