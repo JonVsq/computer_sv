@@ -191,6 +191,6 @@ function tablaItems($array, $tipo)
     $tabla = $tabla . "<td id='totalPagar' class ='text-center text-danger roboto-medium'>" . round($subTotal + $totalIva + $totalCesc, 2) . "</td>";
 
     $tabla = $tabla . '</tr>';
-    $_SESSION['total'] = round($subTotal + $totalIva + $totalCesc, 2);
+    $_SESSION['total'] = $subTotal + $totalIva + $totalCesc;
     return $tabla;
 }

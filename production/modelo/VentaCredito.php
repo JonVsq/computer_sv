@@ -175,29 +175,29 @@ class VentaCredito
             "saldo" => $monto
         );
         $montoAux = $monto;
-        $interesMes = round((($interes / 100) * $monto) / $plazo, 2);
+        $interesMes = (($interes / 100) * $monto) / $plazo;
         for ($i = 1; $i <= $plazo; $i++) {
             $fecha = $this->proximaCuota($fecha, $dias);
             $dias = $this->diasMes($fecha);
             if ($i == $plazo) {
                 if ($montoAux < $couta) {
-                    $couta = $couta - round(($montoAux - $couta) * -1, 2);
+                    $couta = $couta - ($montoAux - $couta) * -1;
                 } else {
-                    $couta = round($couta + (round($montoAux - ($couta), 2)), 2);
+                    $couta = $couta + $montoAux - ($couta);
                 }
             }
-            $montoAux = round($montoAux - ($couta), 2);
+            $montoAux = $montoAux - ($couta);
             $amortizacion[] = array(
                 "numcuota" => $i,
                 "fecha" => $fecha,
                 "dias" => $dias,
-                "principal" => round(($couta + $interesMes) - $interesMes, 2),
+                "principal" => ($couta + $interesMes) - $interesMes,
                 "interes" => $interesMes,
                 "dias_atraso" => 0,
                 "mora" => 0,
                 "couta" => $couta,
                 "abonocap" => 0,
-                "coutaCobrar" => round($couta + $interesMes, 2),
+                "coutaCobrar" => $couta + $interesMes,
                 "saldo" => $montoAux == "-0" ? 0 : $montoAux
             );
         }
@@ -205,7 +205,7 @@ class VentaCredito
     }
     private function coutaMensual($monto, $plazo)
     {
-        return round($monto / $plazo, 2);
+        return $monto / $plazo;
     }
 
 
