@@ -49,4 +49,27 @@ class Interes
             "id"
         );
     }
+    public function plazosModal($numPagina, $cantidad, $campo, $buscar)
+    {
+        $this->nucleo->setNumPagina($numPagina);
+        $this->nucleo->setPorPagina($cantidad);
+        //SQL QUE CUENTA LOS REGISTROS EN LA TABLA
+        $this->nucleo->setQueryTotalRegistroPag("SELECT
+        COUNT(id) as total
+        FROM
+        interes
+        WHERE ($campo LIKE '%$buscar%')");
+        //SQL QUE OBTIENE LOS REGISTROS DE LA TABLA
+        $this->nucleo->setQueryExtractRegistroPag("SELECT
+        *
+        FROM
+        interes 
+        WHERE ($campo LIKE '%$buscar%')");
+        //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
+        return $this->nucleo->getDatosHtml(
+            array("plazo", "porcentaje"),
+            array("seleccion" => "user-plus"),
+            "id"
+        );
+    }
 }

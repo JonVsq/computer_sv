@@ -34,10 +34,15 @@
                 <a href="producto/productos.php"><i class="fas fa-store fa-fw"></i> &nbsp; PRODUCTOS</a>
             </li>
             <li>
-                <a href="producto/compras.php"><i class="fas fa-shopping-cart fa-fw"></i> &nbsp; COMPRAS</a>
-            </li>
-            <li>
                 <a href="producto/existencias.php"><i class="fas fa-list fa-fw"></i> &nbsp; EXISTENCIAS</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fas fa-list fa-fw"></i> &nbsp; COMPRAS <i class="fas fa-chevron-down"></i></a>
+        <ul>
+            <li>
+                <a href="compra/compras.php"><i class="fas fa-shopping-cart fa-fw"></i> &nbsp; COMPRAS</a>
             </li>
         </ul>
     </li>
@@ -46,6 +51,9 @@
         <ul>
             <li>
                 <a href="venta/venta.php"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; VENTA CONTADO</a>
+            </li>
+            <li>
+                <a href="venta/credito.php"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; VENTA CREDITO</a>
             </li>
         </ul>
     </li>

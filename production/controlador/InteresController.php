@@ -93,4 +93,10 @@ switch ($opcion) {
             $interes = null;
             break;
         }
+    case 'plazoModal': {
+            $interes = new Interes();
+            echo json_encode($interes->plazosModal($pagina, $cantidad, $campo, $buscar));
+            $interes = null;
+            break;
+        }
 }
