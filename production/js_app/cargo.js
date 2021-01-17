@@ -1,126 +1,121 @@
 //CONSTANTES
 const opLista = document.getElementById('opLista')
+const opEliminar = document.getElementById('opEliminar')
 const opNueva = document.getElementById('opNueva')
 const cantidad = document.getElementById('cantidad')
 const cuerpoTabla = document.getElementById('cuerpoTabla')
 const registros = document.getElementById('registros')
 const totalPaginas = document.getElementById('totalPaginas')
 const paginador = document.getElementById('paginador')
-const txt_nombreFiltro = document.getElementById('txt_nombreFiltro')
-const txt_descripcionFiltro = document.getElementById('txt_descripcionFiltro')
+const txt_nombrefiltro = document.getElementById('txt_nombrefiltro')
+const txt_descripcionfiltro = document.getElementById('txt_descripcionfiltro')
 const txt_id = document.getElementById('txt_id')
 //FORMULARIO
-const txt_nombre = document.getElementById('txt_nombre')
+const txt_cargo = document.getElementById('txt_cargo')
 const txt_descripcion = document.getElementById('txt_descripcion')
-const txt_maxAtraso = document.getElementById('txt_maxAtraso')
-const txt_maxVentas = document.getElementById('txt_maxVentas')
-const txt_montoLimite = document.getElementById('txt_montoLimite')
-const nombreError = document.getElementById('nombreError')
+const txt_sueldo = document.getElementById('txt_sueldo')
+const cargoError = document.getElementById('cargoError')
+const sueldoError = document.getElementById('sueldoError')
 const descripcionError = document.getElementById('descripcionError')
-const pagoError = document.getElementById('pagoError')
-const ventaError = document.getElementById('ventaError')
-const montoError = document.getElementById('montoError')
 const btn_limpiar = document.getElementById('btn_limpiar')
 const btn_listar = document.getElementById('btn_listar')
 const btn_guardar = document.getElementById('btn_guardar')
 //DIRECCION CONTROLADORES
-let urlCatCliente = '../../controlador/CategoriaClienteController.php'
+let urlCargo = '../../controlador/CargoController.php'
 let modificar = false
 //DETECTA SI LA VENTA YA SE CARGAR
 window.addEventListener("load", inicio)
 //INICIA LOS EVENTOS
 function inicio() {
-    listarCategoriaCliente(1, cantidad.value, '', '')
+    listarCargo(1, cantidad.value, '', '')
+    txt_nombrefiltro.addEventListener("keyup", filtroNombre)
+    txt_descripcionfiltro.addEventListener("keyup", filtroDescripcion)
+
     cantidad.addEventListener("change", comboListado)
+    btn_guardar.addEventListener("click", guardarModificarCargo)
     opNueva.addEventListener("click", opcionNuevo)
     opLista.addEventListener("click", tabla)
-    txt_nombreFiltro.addEventListener("keyup", filtroNombre)
-    txt_descripcionFiltro.addEventListener("keyup", filtroDescripcion)
     btn_listar.addEventListener("click", tabla)
-    btn_guardar.addEventListener("click", guardarModificarCatCliente)
 }
-
 function opcionNuevo() {
     if (modificar) {
         modificar = false;
-        document.getElementById('frm_catCliente').reset();
+        document.getElementById('frm_Cargo').reset();
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
-    nombreError.innerHTML = ""
+    cargoError.innerHTML = ""
     descripcionError.innerHTML = ""
-    pagoError.innerHTML = ""
-    montoError.innerHTML = ""
-    ventaError.innerHTML = ""
+    sueldoError.innerHTML = ""
     opNueva.className = "active"
     opLista.className = ""
     $("#cuadroFormulario").slideDown("slow")
     $("#cuadroTabla").slideUp("slow")
+
 }
 function tabla() {
     if (modificar) {
         modificar = false;
-        document.getElementById('frm_catCliente').reset();
+        document.getElementById('frm_Cargo').reset();
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVA"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
-    nombreError.innerHTML = ""
+    cargoError.innerHTML = ""
     descripcionError.innerHTML = ""
-    pagoError.innerHTML = ""
-    montoError.innerHTML = ""
-    ventaError.innerHTML = ""
+    sueldoError.innerHTML = ""
     opLista.className = "active"
     opNueva.className = ""
     $("#cuadroFormulario").slideUp("slow")
     $("#cuadroTabla").slideDown("slow")
-    listarCategoriaCliente(1, cantidad.value, '', '')
+    listarCargo(1, cantidad.value, '', '')
+
 }
 
-function guardarModificarCatCliente() {
+function guardarModificarCargo() {
     btn_guardar.setAttribute('disabled', 'true')
     let validar = $('#cuadroFormulario form').valid()
-    if (!validar) {
+    if (!validar && sueldoValido()) {
         btn_guardar.removeAttribute('disabled')
         return false;
     } else {
-        const datos = new FormData(document.getElementById('frm_catCliente'))
+        const datos = new FormData(document.getElementById('frm_Cargo'))
         if (modificar) {
             datos.append('id', txt_id.value)
             datos.append('opcion', 'modificar')
         } else {
             datos.append('opcion', 'insertar')
         }
-        fetch(urlCatCliente, {
+        fetch(urlCargo, {
             method: 'POST',
             body: datos
         }).then(function (respuesta) {
             if (respuesta.ok) {
-                return respuesta.json() 
+                return respuesta.json()
             }
         }).then(respuesta => {
             if (respuesta[0].estado == 1) {
                 tabla()
-                listarCategoriaCliente(1, cantidad.value, '', '')
+                listarCargo(1, cantidad.value, '', '')
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
-                descripcionError.innerHTML = ""
-                document.getElementById('frm_catCliente').reset()
+                cargoError.innerHTML = ""
+                document.getElementById('frm_Cargo').reset()
             } else {
-                if (respuesta[0].errores[0].nombre > 0) {
-                    nombreError.innerHTML = "<span class='error'>Ingrese otro nombre.</span>"
+                if (respuesta[0].errores[0].cargo > 0) {
+                    cargoError.innerHTML = "<span class='error'>Ingrese otro nombre.</span>"
                 } else {
-                    nombreError.innerHTML = ""
+                    cargoError.innerHTML = ""
                 }
-                if (respuesta[0].errores[1].descripcion > 0) {
-                    descripcionError.innerHTML = "<span class='error'>Ingrese otra descripción.</span>"
+
+                if (respuesta[0].errores[0].descripcion > 0) {
+                    descripcionError.innerHTML = "<span class='error'>Ingrese otra Descripción.</span>"
                 } else {
                     descripcionError.innerHTML = ""
-                }
-                if (respuesta[0].errores[2].max_atraso > 0) {
-                    pagoError.innerHTML = "<span class='error'>Ingrese otro valor.</span>"
+                }if (respuesta[0].errores[0].sueldo > 0) {
+                    sueldoError.innerHTML = "<span class='error'>Ingrese otra cantidad.</span>"
                 } else {
-                    pagoError.innerHTML = ""
+                    sueldoError.innerHTML = ""
                 }
             }
             btn_guardar.removeAttribute('disabled')
@@ -141,7 +136,7 @@ function cargarFormulario(id) {
     const datos = new FormData()
     datos.append('id', id)
     datos.append('opcion', 'obtener')
-    fetch(urlCatCliente, {
+    fetch(urlCargo, {
         method: 'POST',
         body: datos
     }).then(function (respuesta) {
@@ -150,14 +145,12 @@ function cargarFormulario(id) {
         }
     }).then(respuesta => {
         if (respuesta[0] == null) {
-            swal("NO ES POSIBLE MODIFICAR.", "LA CATEGORIA DEL PRODUCTO YA HA SIDO ELIMINADA.", "info")
+            swal("NO ES POSIBLE MODIFICAR.", "EL CARGO HA SIDO ELIMINADA.", "info")
         } else {
             txt_id.value = respuesta[0]['id']
-            txt_nombre.value = respuesta[0]['nombre']
-            txt_descripcion.value = respuesta[0]['descripcion']
-            txt_maxAtraso.value = respuesta[0]['max_atraso']
-            txt_maxVentas.value = respuesta[0]['max_ventas']
-            txt_montoLimite.value = respuesta[0]['monto_limite']
+            document.getElementById('txt_cargo').value = respuesta[0]['cargo']
+            document.getElementById('txt_descripcion').value = respuesta[0]['descripcion']
+            document.getElementById('txt_sueldo').value = respuesta[0]['sueldo']
             modificar = true
             //OCULTA TABLA Y MUESTRA EL FORMULARIO
             opNueva.className = "active";
@@ -171,14 +164,14 @@ function cargarFormulario(id) {
 
     })
 }
-function listarCategoriaCliente(pagina, cantidad, campo, buscar) {
+function listarCargo(pagina, cantidad, campo, buscar) {
     const datos = new FormData()
     datos.append('opcion', 'listar')
     datos.append('pagina', pagina)
     datos.append('campo', campo)
     datos.append('cantidad', cantidad)
     datos.append('buscar', buscar)
-    fetch(urlCatCliente, {
+    fetch(urlCargo, {
         method: 'POST',
         body: datos
     }).then(function (respuesta) {
@@ -194,9 +187,26 @@ function listarCategoriaCliente(pagina, cantidad, campo, buscar) {
         alert('Ocurrio un error conectado al servidor, intente de nuevo')
     })
 }
+
+function sueldoValido() {
+    let valido = false
+    if (txt_sueldo!= "") {
+       
+        
+        if (txt_sueldo.value>=300) {
+           
+            document.getElementById('sueldoError').innerHTML = ""
+            valido=true
+        } else {
+            document.getElementById('sueldoError').innerHTML = "<span class='error'>Debe ser mayor o igual a $300.00</span>"
+        }
+    }
+    return valido
+}
+
 //EVENTO DEL COMBO PARA SELECCIONAR LA CANTIDAD DE REGISTROS A MOSTRAR
 function comboListado() {
-    listarCategoriaCliente(1, cantidad.value, '', '')
+    listarCargo(1, cantidad.value, '', '')
 }
 
 //BOTONES DE LA PAGINACION
@@ -204,34 +214,33 @@ $(document).on('click', '.pagina', function (e) {
     e.preventDefault()
     let elemento = $(this)[0]
     let pagina = $(elemento).attr('pag')
-    listarCategoriaCliente(pagina, cantidad.value, '', '')
+    listarCargo(pagina, cantidad.value, '', '')
 })
 
 $(document).on('click', '.siguiente', function (e) {
     e.preventDefault()
     let elemento = $(this)[0]
     let pagina = $(elemento).attr('pag')
-    listarCategoriaCliente(pagina, cantidad.value, '', '')
+    listarCargo(pagina, cantidad.value, '', '')
 })
 
 //BUSQUEDA FILTRADA
-function filtroDescripcion() {
-
-    if (txt_descripcionFiltro.value.length > 0) {
-        txt_nombreFiltro.value = ""
-        listarCategoriaCliente(1, cantidad.value, 'descripcion', txt_descripcionFiltro.value)
-    } else {
-        listarCategoriaCliente(1, cantidad.value, '', '')
-    }
-}
-//BUSQUEDA FILTRADA
 function filtroNombre() {
 
-    if (txt_nombreFiltro.value.length > 0) {
-        txt_descripcionFiltro.value = ""
-        listarCategoriaCliente(1, cantidad.value, 'nombre', txt_nombreFiltro.value)
+    if (txt_nombrefiltro.value.length > 0) {
+        listarCargo(1, cantidad.value, 'cargo', txt_nombrefiltro.value)
     } else {
-        listarCategoriaCliente(1, cantidad.value, '', '')
+        listarCargo(1, cantidad.value, '', '')
+    }
+}
+
+
+function filtroDescripcion() {
+
+    if (txt_descripcionfiltro.value.length > 0) {
+        listarCargo(1, cantidad.value, 'descripcion', txt_descripcionfiltro.value)
+    } else {
+        listarCargo(1, cantidad.value, '', '')
     }
 }
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
