@@ -126,7 +126,7 @@ function guardarModificarUsuario() {
                     mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
                     document.getElementById('frm_Usuario').reset()
                 } else {
-                    if (respuesta[0].errores[0].producto > 0) {
+                    if (respuesta[0].errores[0].correo > 0) {
                         correoError.innerHTML = "<span class='error'>Ingrese otro correo.</span>"
                     } else {
                         correoError.innerHTML = ""
@@ -318,7 +318,7 @@ function cargarModal(id) {
             console('error')
         }
     }).then(respuesta => {
-        md_datosProducto.innerHTML = respuesta['modalCuerpo']
+        md_datosUsuario.innerHTML = respuesta['modalCuerpo']
         $('#ModalUsuario').modal('show')
     }).catch(error => {
         alert('OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, INTENTE DE NUEVO.')

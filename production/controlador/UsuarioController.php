@@ -12,7 +12,7 @@ $txt_contra =  (isset($_POST['txt_contra'])) ? $_POST['txt_contra'] : '';
 $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
 $campo = strcmp($campo, '') ? $campo : "correo";
 //MODAL MARCA
-$campoEmpleaado = (isset($_POST['campoEmpleado'])) ? $_POST['campoEmpleado'] : '';
+$campoEmpleado = (isset($_POST['campoEmpleado'])) ? $_POST['campoEmpleado'] : '';
 $campoEmpleado= strcmp($campoEmpleado, '') ? $campoEmpleado : "nombres";
 //MODAL CATEGORIA
 
@@ -41,7 +41,7 @@ switch ($opcion) {
                 if ($usuario->insertarUsuario(
                     array(
                         $txt_idEmpleado, $txt_correo,
-                        $txt_pass, $txt_ac
+                        $txt_contra, $txt_ac
                     )
                 )) {
                     $respuesta[] = array(
@@ -82,7 +82,7 @@ switch ($opcion) {
                     array(
                         $id,
                         $txt_idEmpleado, $txt_correo,
-                        $txt_pass, $txt_ac
+                        $txt_contra, $txt_ac
                     )
                 )) {
                     $respuesta[] = array(
@@ -106,8 +106,8 @@ switch ($opcion) {
         }
     case 'modalEmpleado': {
             $usuario = new Usuario();
-            echo json_encode($usuario->modalEmpleado($pagina, $cantidad, $campoMarca, $buscar));
-            $campoEmpleaado = null;
+            echo json_encode($usuario->modalEmpleado($pagina, $cantidad, $campoEmpleado, $buscar));
+            $usuario = null;
             break;
         }
     
@@ -118,15 +118,15 @@ switch ($opcion) {
             break;
         }
     case 'obtener': {
-            $producto = new Usuario();
-            echo json_encode($producto->obtenerUsuario($id));
-            $producto = null;
+            $usuario = new Usuario();
+            echo json_encode($usuario->obtenerUsuario($id));
+            $usuario = null;
             break;
         }
     case 'listar': {
-            $producto = new Usuario();
-            echo json_encode($producto->tablaUsuarios($pagina, $cantidad, $campo, $buscar));
-            $producto = null;
+            $usuario = new Usuario();
+            echo json_encode($usuario->tablaUsuarios($pagina, $cantidad, $campo, $buscar));
+            $usuario = null;
             break;
         }
 }

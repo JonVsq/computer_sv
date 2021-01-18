@@ -165,11 +165,12 @@
                                     
                                         <div class="form-group">
                                             <label for="txt_correo" class="roboto-medium">CORREO</label>
-                                            <input type="email" class="form-control" name="txt_correo" id="txt_correo" readonly required>
+                                            <input type="email" class="form-control" name="txt_correo" id="txt_correo" required>
                                             <div id="correoError">
 
                                             </div>
                                         
+                                    </div>
                                     </div>
                                     </div>
                                     <div class="row">

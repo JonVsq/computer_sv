@@ -113,11 +113,11 @@ class Usuario
     {
         $datosUsuario = "";
         foreach ($datos as $usuario) {
-            $datosUsuario = $datosUsuario . "<label class='bmd-label-floating roboto-medium'>PRODUCTO: {$usuario['nombres']}</label>";
+            $datosUsuario = $datosUsuario . "<label class='bmd-label-floating roboto-medium'>EMPLEADO: {$usuario['nombres']}</label>";
             $datosUsuario = $datosUsuario . "<br>";
-            $datosUsuario = $datosUsuario . "<label class='bmd-label-floating roboto-medium'>DESCRIPCION: {$usuario['correo']}</label>";
+            $datosUsuario = $datosUsuario . "<label class='bmd-label-floating roboto-medium'>CORREO: {$usuario['correo']}</label>";
             $datosUsuario = $datosUsuario . "<br>";
-            $datosUsuario = $datosUsuario . "<label class='bmd-label-floating roboto-medium'>MARCA: {$usuario['acceso']}</label>";
+            $datosUsuario = $datosUsuario . "<label class='bmd-label-floating roboto-medium'>ACCESO: {$usuario['acceso']}</label>";
             $datosUsuario = $datosUsuario . "<br>";
         
         }
