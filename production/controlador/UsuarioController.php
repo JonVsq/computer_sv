@@ -16,6 +16,8 @@ $campoEmpleado = (isset($_POST['campoEmpleado'])) ? $_POST['campoEmpleado'] : ''
 $campoEmpleado= strcmp($campoEmpleado, '') ? $campoEmpleado : "nombres";
 //MODAL CATEGORIA
 
+
+
 $cantidad = (isset($_POST['cantidad'])) ? $_POST['cantidad'] : '';
 $buscar = (isset($_POST['buscar'])) ? $_POST['buscar'] : '';
 $pagina = (isset($_POST['pagina'])) ? $_POST['pagina'] : '';
