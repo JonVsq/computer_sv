@@ -4,6 +4,8 @@ const btn_guardarpago = document.getElementById('btn_guardarpago')
 const btn_modalPagar = document.getElementById('btn_modalPagar')
 const opBuscar = document.getElementById('opBuscar')
 const btn_buscar = document.getElementById('btn_buscar')
+let urlComprobanteCF = '../../vista/factura/comprobante_credito_fiscal.php'
+let urlFactura = '../../vista/factura/factura.php'
 let urlCuentaporcobrar = '../../controlador/CuentaporcobrarController.php'
 let modificar = false
 //DETECTA SI LA VENTA YA SE CARGAR
@@ -29,11 +31,12 @@ function pagar() {
     fetch(urlCuentaporcobrar, {
         method: 'POST',
         body: datos
-    }).then(function(respuesta) {
+    }).then(function (respuesta) {
         if (respuesta.ok) {
             return respuesta.json()
         }
     }).then(respuesta => {
+        console.log(respuesta)
         if (respuesta[0].estado == 1) {
             swal("VACIO.", "VACIO. es unoooooo", "info")
         } else if (respuesta[0].estado == 2) {
@@ -45,9 +48,11 @@ function pagar() {
         } else if (respuesta[0].estado == 3) {
             //AQUI ES CUANDO YA SE CANCELA TODO EL CREDITO
             $('#ModalPagar').modal('hide')
+            let imprimir = respuesta[0].tipo == "JURIDIC0" ? urlComprobanteCF : urlFactura
+            window.open(imprimir, '_blank')
             //ACTUALIZAR TABLA
-            cargarFormulario(document.getElementById('txt_codigo_cliente').textContent)
             mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+            cargar()
         }
     })
     //$('#ModalPagar').modal('show')
@@ -60,7 +65,7 @@ function CargarModal(codigo) {
     fetch(urlCuentaporcobrar, {
         method: 'POST',
         body: datos
-    }).then(function(respuesta) {
+    }).then(function (respuesta) {
         if (respuesta.ok) {
             return respuesta.json()
         }
@@ -72,10 +77,10 @@ function CargarModal(codigo) {
             document.getElementById("txt_id_credito").innerHTML = respuesta[0]['id_credito']
             document.getElementById("txt_id_pago").innerHTML = respuesta[0]['id']
             document.getElementById("txt_numero_recuperado").innerHTML = respuesta[0]['numero_cuota']
-            document.getElementById("txt_montocuota_recuperado").innerHTML = respuesta[0]['cuota']
-            document.getElementById("txt_intereses_recuperado").innerHTML = respuesta[0]['interes']
-            document.getElementById("txt_mora_recuperado").innerHTML = respuesta[0]['mora']
-            document.getElementById("txt_cuotatotal_recuperado").innerHTML = respuesta[0]['cuota_cobrar']
+            document.getElementById("txt_montocuota_recuperado").innerHTML = parseFloat(respuesta[0]['cuota']).toFixed(2)
+            document.getElementById("txt_intereses_recuperado").innerHTML = parseFloat(respuesta[0]['interes']).toFixed(2)
+            document.getElementById("txt_mora_recuperado").innerHTML = parseFloat(respuesta[0]['mora']).toFixed(2)
+            document.getElementById("txt_cuotatotal_recuperado").innerHTML = parseFloat(respuesta[0]['cuota_cobrar']).toFixed(2)
             //OCULTA TABLA Y MUESTRA EL FORMULARIO
             $('#ModalPagar').modal('show')
         }
@@ -101,7 +106,7 @@ function cargarFormulario(codigo) {
     fetch(urlCuentaporcobrar, {
         method: 'POST',
         body: datos
-    }).then(function(respuesta) {
+    }).then(function (respuesta) {
         if (respuesta.ok) {
             return respuesta.json()
         }
