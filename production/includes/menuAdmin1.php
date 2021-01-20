@@ -92,7 +92,7 @@
             </li>
         </ul>
     </li>
-    <<<<<<< HEAD=======<li>
+    <li>
         <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; EMPLEADOS <i class="fas fa-chevron-down"></i></a>
         <ul>
             <li>
@@ -104,15 +104,13 @@
 
         </ul>
 
-        <li>
-            <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; USUARIO <i class="fas fa-chevron-down"></i></a>
-            <ul>
-                <a href="usuarios/usuario.php"><i class="fas fa-store fa-fw"></i> &nbsp; USUARIOS</a>
-        </li>
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; USUARIO <i class="fas fa-chevron-down"></i></a>
+        <ul>
+            <a href="usuarios/usuario.php"><i class="fas fa-store fa-fw"></i> &nbsp; USUARIOS</a>
+    </li>
 </ul>
 </li>
 </li>
-
->>>>>>> YESSICA
 
 </ul>
