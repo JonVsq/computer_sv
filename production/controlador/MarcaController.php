@@ -85,4 +85,35 @@ switch ($opcion) {
             $marca = null;
             break;
         }
+    case 'eliminar': {
+            $marca = new Marca();
+            $respuesta = array();
+            if ($marca->verificarRelacion($idMarca)) {
+                if ($marca->eliminarMarca($idMarca)) {
+                    $respuesta[] = array(
+                        "estado" => 1,
+                        "encabezado" => "EXITO.",
+                        "msj" => "MARCA ELIMINADA.",
+                        "icono" => "success"
+                    );
+                } else {
+                    $respuesta[] = array(
+                        "estado" => 2,
+                        "encabezado" => "ERROR.",
+                        "msj" => "NO SE PUDO ELIMINAR LA MARCA.",
+                        "icono" => "error"
+                    );
+                }
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS A LA MARCA.",
+                    "icono" => "error"
+                );
+            }
+            $marca = null;
+            echo  json_encode($respuesta);
+            break;
+        }
 }

@@ -50,4 +50,22 @@ class CategoriaProducto
             "id"
         );
     }
+    public function verificarRelacion($id)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(v.id_categoria) as total
+        FROM
+        productos as v
+        WHERE v.id_categoria = $id");
+        $tablaProducto = $this->nucleo->getDatos();
+        $tablaProducto = $tablaProducto[0]['total'];
+        settype($tablaProducto, 'int');
+        return ($tablaProducto > 0) ? false : true;
+    }
+
+    public function eliminarCategoria($id)
+    {
+        $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+        return $this->nucleo->eliminarRegistro(array($id));
+    }
 }

@@ -9,6 +9,9 @@
             <li>
                 <a href="cuenta/cuentaporcobrar.php"><i class="fa fa-university"></i> &nbsp; BUSCAR CUENTA</a>
             </li>
+            <li>
+                <a href="credito/interes.php"><i class="fa fa-tasks"></i> &nbsp; TASA DE INTERES</a>
+            </li>
 
         </ul>
     </li>

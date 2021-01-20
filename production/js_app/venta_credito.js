@@ -311,7 +311,7 @@ function modalPlazo() {
 }
 function modalCliente() {
     const datos = new FormData()
-    datos.append('opcion', 'modalClienteVenta')
+    datos.append('opcion', 'modalClienteCredito')
     datos.append('pagina', paginaCliente)
     datos.append('campo', campoCliente)
     datos.append('cantidad', cantida)

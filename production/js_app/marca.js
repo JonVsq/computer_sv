@@ -196,3 +196,51 @@ function filtroNombre() {
 function mensaje(encabezado, msj, icono) {
     swal(encabezado, msj, icono)
 }
+$(document).on('click', '.eliminar', function (e) {
+    e.preventDefault()
+    let fila = $(this).parents("tr").find("td")[0]
+    let nombre = $(fila).html()
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objeliminar')
+
+    confirmarEliminacion("ELIMINAR A: " + nombre, "ESTA SEGURO?", "warning", id)
+})
+
+function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
+    swal({
+        title: titulo,
+        text: msj,
+        type: tipo,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "SI",
+        cancelButtonText: "NO",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            const datos = new FormData()
+            datos.append('id', idEliminar)
+            datos.append('opcion', 'eliminar')
+            fetch(urlMarca, {
+                method: 'POST',
+                body: datos
+            }).then(function (respuesta) {
+                if (respuesta.ok) {
+                    return respuesta.json()
+                } else {
+                    console('error')
+                }
+            }).then(respuesta => {
+                listarMarca(1, cantidad.value, '', '')
+                mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+            }).catch(error => {
+                alert('OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, INTENTE DE NUEVO.  ' + error)
+
+
+            })
+        } else {
+            swal("CANCELADO", "EL REGISTRO SE CONSERVA INTACTO", "info");
+        }
+    });
+}

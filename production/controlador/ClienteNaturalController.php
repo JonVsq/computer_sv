@@ -170,6 +170,12 @@ switch ($opcion) {
             $catClienteN = null;
             break;
         }
+    case 'modalClienteCredito': {
+            $catClienteN = new ClienteNatural();
+            echo json_encode($catClienteN->ClienteNaturalCredito($pagina, $cantidad, $campo, $buscar));
+            $catClienteN = null;
+            break;
+        }
     case 'eliminar': {
             $catClienteN = new ClienteNatural();
             $respuesta = array();

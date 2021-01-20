@@ -154,4 +154,35 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
+    case 'eliminar': {
+            $producto = new Producto();
+            $respuesta = array();
+            if ($producto->verificarRelacion($id)) {
+                if ($producto->eliminarProducto($id)) {
+                    $respuesta[] = array(
+                        "estado" => 1,
+                        "encabezado" => "EXITO.",
+                        "msj" => "PRODUCTO ELIMINADO.",
+                        "icono" => "success"
+                    );
+                } else {
+                    $respuesta[] = array(
+                        "estado" => 2,
+                        "encabezado" => "ERROR.",
+                        "msj" => "NO SE PUDO ELIMINAR EL PRODUCTO.",
+                        "icono" => "error"
+                    );
+                }
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS AL PRODUCTO.",
+                    "icono" => "error"
+                );
+            }
+            $producto = null;
+            echo  json_encode($respuesta);
+            break;
+        }
 }

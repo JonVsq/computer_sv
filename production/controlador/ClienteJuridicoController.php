@@ -244,6 +244,12 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
+        case 'modalClienteCredito': {
+            $catClienteJ = new ClienteJuridico();
+            echo json_encode($catClienteJ->ClienteJuridicoCredito($pagina, $cantidad, $campo, $buscar));
+            $catClienteN = null;
+            break;
+        }
     case 'eliminar': {
             $catClienteJ = new ClienteJuridico();
             $respuesta = array();

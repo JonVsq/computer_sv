@@ -53,15 +53,22 @@ class Marca
             "id"
         );
     }
-    public function verificarRelacion($id_marca)
+    public function verificarRelacion($id)
     {
-        $this->nucleo->setQueryPersonalizado("SELECT COUNT(DISTINCT p.id) as total
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(v.id_marca) as total
         FROM
-        productos as p
-        INNER JOIN marca as m ON m.id = $id_marca");
+        productos as v
+        WHERE v.id_marca = $id");
         $tablaProducto = $this->nucleo->getDatos();
-        $tablaProducto = $tablaProducto[0]["total"];
+        $tablaProducto = $tablaProducto[0]['total'];
         settype($tablaProducto, 'int');
         return ($tablaProducto > 0) ? false : true;
+    }
+
+    public function eliminarMarca($id)
+    {
+        $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+        return $this->nucleo->eliminarRegistro(array($id));
     }
 }

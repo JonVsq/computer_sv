@@ -222,4 +222,22 @@ class Producto
             ""
         );
     }
+    public function verificarRelacion($id)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(v.id_producto) as total
+        FROM
+        movimientos as v
+        WHERE v.id_producto = $id");
+        $tablaMovimiento = $this->nucleo->getDatos();
+        $tablaMovimiento = $tablaMovimiento[0]['total'];
+        settype($tablaMovimiento, 'int');
+        return ($tablaMovimiento > 0) ? false : true;
+    }
+
+    public function eliminarProducto($id)
+    {
+        $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+        return $this->nucleo->eliminarRegistro(array($id));
+    }
 }

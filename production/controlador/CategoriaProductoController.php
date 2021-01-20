@@ -85,4 +85,35 @@ switch ($opcion) {
             $catPro = null;
             break;
         }
+    case 'eliminar': {
+            $catPro = new CategoriaProducto();
+            $respuesta = array();
+            if ($catPro->verificarRelacion($id)) {
+                if ($catPro->eliminarCategoria($id)) {
+                    $respuesta[] = array(
+                        "estado" => 1,
+                        "encabezado" => "EXITO.",
+                        "msj" => "CATEGORIA ELIMINADA.",
+                        "icono" => "success"
+                    );
+                } else {
+                    $respuesta[] = array(
+                        "estado" => 2,
+                        "encabezado" => "ERROR.",
+                        "msj" => "NO SE PUDO ELIMINAR LA CATEGORIA.",
+                        "icono" => "error"
+                    );
+                }
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS A LA CATEGORIA.",
+                    "icono" => "error"
+                );
+            }
+            $catPro = null;
+            echo  json_encode($respuesta);
+            break;
+        }
 }
