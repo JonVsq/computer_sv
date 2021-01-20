@@ -133,5 +133,30 @@
         </ul>
     </li>
 
-
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; REPORTES <i class="fas fa-chevron-down"></i></a>
+        <ul>
+            <li>
+                <a href="../activo/activosvendidosPDF.php" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; ACTIVO VENDIDO</a>
+            </li>
+            <li>
+                <a href="../activo/activosdonadosPDF.php" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; ACTIVO DONADO</a>
+            </li>
+            <li>
+                <a href="../activo/activosbotadosPDF.php" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; ACTIVO BOTADOS</a>
+            </li>
+            <li>
+                <a href="../activo/activosdepreciadosPDF.php" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; DEPRECIADOS ALTA</a>
+            </li>
+            <li>
+                <a href="../activo/activosNodepreciadosPDF.php" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; NO DEPRECIADOS ALTA</a>
+            </li>
+            <li>
+                <a href="../activo/activosamortizadosPDF.php" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; AMORTIZADOS ALTA</a>
+            </li>
+            <li>
+                <a href="../activo/activosNoamortizadosPDF.php" target="_blank"><i class="fas fa-file-pdf fa-fw"></i> &nbsp; NO AMORTIZADOS ALTA</a>
+            </li>
+        </ul>
+    </li>
 </ul>

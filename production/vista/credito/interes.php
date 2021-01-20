@@ -152,7 +152,7 @@
                                     <div class="col-12 col-md-6">
                                         <div class="form-group">
                                             <label for="txt_plazo" class="roboto-medium">PLAZO (MESES)</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_plazo" id="txt_plazo" min="1" max="24" required>
+                                            <input type="number" class="form-control text-uppercase" name="txt_plazo" id="txt_plazo" min="6" max="12" required>
                                             <div id="plazoError">
 
                                             </div>
