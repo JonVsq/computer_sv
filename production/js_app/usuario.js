@@ -20,7 +20,7 @@ const txt_contra = document.getElementById('txt_contra')
 
 
 const correoError = document.getElementById('correoError')
-const acError = document.getElementById('acError')
+
 const contraError = document.getElementById('contraError')
 const btn_limpiar = document.getElementById('btn_limpiar')
 const btn_listar = document.getElementById('btn_listar')
@@ -60,7 +60,7 @@ function opcionNuevo() {
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
-    acError.innerHTML = ""
+  
     contraError.innerHTML = ""
     correoError.innerHTML = ""
     opNueva.className = "active"
@@ -81,7 +81,7 @@ function tabla() {
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
-    acError.innerHTML = ""
+ 
     contraError.innerHTML = ""
     correoError.innerHTML = ""
     opLista.className = "active"

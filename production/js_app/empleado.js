@@ -458,8 +458,8 @@ function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
                 swal("NO ES POSIBLE MODIFICAR.", "EL EMPLEADO YA HA SIDO ELIMINADO.", "info")
             } else {
                 txt_id.value = respuesta[0]['id']
-                txt_idDepto.value = respuesta[0]['id']
-                txt_idCargo.value = respuesta[0]['id']
+                txt_idDepto.value = respuesta[0]['id_departamento']
+                txt_idCargo.value = respuesta[0]['id_cargo']
                 spn_Depto.innerText = respuesta[0]['nombre']
                 spn_Cargo.innerText = respuesta[0]['cargo']
                 spn_Depto.className = ""

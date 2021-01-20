@@ -58,7 +58,7 @@ class Empleado
         e.apellidos,
         d.nombre,
         c.cargo,
-        e.id_departamento,
+        e.id_departamento,e.id_cargo,
         e.nit,
         e.sexo,
         e.fecha_nacimiento,
