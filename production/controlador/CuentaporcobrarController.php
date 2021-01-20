@@ -1,4 +1,5 @@
 <?php
+session_start();
 include('../modelo/Cuentaporcobrar.php');
 //CAPTURA CAMPOS
 //$codigoCliente = (isset($_POST['id'])) ?  $_POST['id'] : '';
@@ -11,7 +12,7 @@ $opcion  = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
 switch ($opcion) {
 
     case 'modificar': {
-                /*$departamento = new Departamento();
+            /*$departamento = new Departamento();
                 $respuesta = array();
             /*$existe = $departamento->camposUnicosModificar(array("nombre" => $txt_nombre), "id", $idDepartamento);
             if ($existe['existe'] == 1) {
@@ -43,85 +44,88 @@ switch ($opcion) {
                 $departamento = null;
                 echo  json_encode($respuesta);
                 break;*/
+        }
+    case 'obtener': {
+            $cuenta = new Cuentaporcobrar();
+            if (empty($cuenta->obtenerCuenta($txt_codigo))) {
+                $respuesta = null;
+
+                echo json_encode($respuesta);
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "DATOS NO MODIFICADOS.",
+                    "icono" => "error"
+                );
+                $datos[] = $cuenta->obtenerCuenta($txt_codigo);
+                $cuenta->verificarMora($datos);
+                echo json_encode($cuenta->mostrarCuentaHTML($txt_codigo));
+                //echo json_encode($cuenta->tablaCuotas(1, 5, "","", $txt_codigo));
+
             }
-            case 'obtener': {
-                $cuenta = new Cuentaporcobrar();
-                if(empty($cuenta->obtenerCuenta($txt_codigo))){
-                    $respuesta = null; 
+            //echo json_encode($cuenta->tablaCuotas($txt_codigo));
+            $cuenta = null;
+            break;
+        }
 
-                    echo json_encode($respuesta);
-                }else{
-                    $respuesta[] = array(
-                        "estado" => 2,
-                        "encabezado" => "ERROR.",
-                        "msj" => "DATOS NO MODIFICADOS.",
-                        "icono" => "error"
-                    );
-                    $datos[] = $cuenta->obtenerCuenta($txt_codigo);
-                    $cuenta->verificarMora($datos);
-                    echo json_encode($cuenta->mostrarCuentaHTML($txt_codigo));
-                    //echo json_encode($cuenta->tablaCuotas(1, 5, "","", $txt_codigo));
-
-                }
-                //echo json_encode($cuenta->tablaCuotas($txt_codigo));
-                $cuenta = null;
-                break;
+    case 'obtenerCuota': {
+            $cuenta = new Cuentaporcobrar();
+            if (empty($cuenta->obtenerCuota($txt_codigo))) {
+                $respuesta[] = array(
+                    "estado" => 1,
+                    "encabezado" => "ERROR.",
+                    "msj" => "DATOS ESTA VACIO LA FUNCION.",
+                    "icono" => "error"
+                );
+                echo json_encode($respuesta);
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "DATOS NO MODIFICADOS.",
+                    "icono" => "error"
+                );
+                //$datos[] = $cuenta->obtenerCuenta($txt_codigo);
+                //$cuenta->verificarMora($datos);
+                //echo json_encode($cuenta->mostrarCuentaHTML($txt_codigo));
+                //echo json_encode($cuenta->tablaCuotas(1, 5, "","", $txt_codigo));
+                echo json_encode($cuenta->obtenerCuota($txt_codigo));
             }
-            
-            case 'obtenerCuota': {
-                $cuenta = new Cuentaporcobrar();
-                if(empty($cuenta->obtenerCuota($txt_codigo))){
-                    $respuesta[] = array(
-                        "estado" => 1,
-                        "encabezado" => "ERROR.",
-                        "msj" => "DATOS ESTA VACIO LA FUNCION.",
-                        "icono" => "error"
-                    );
-                    echo json_encode($respuesta);
-                }else{
-                    $respuesta[] = array(
-                        "estado" => 2,
-                        "encabezado" => "ERROR.",
-                        "msj" => "DATOS NO MODIFICADOS.",
-                        "icono" => "error"
-                    );
-                    //$datos[] = $cuenta->obtenerCuenta($txt_codigo);
-                    //$cuenta->verificarMora($datos);
-                    //echo json_encode($cuenta->mostrarCuentaHTML($txt_codigo));
-                    //echo json_encode($cuenta->tablaCuotas(1, 5, "","", $txt_codigo));
-                    echo json_encode($cuenta->obtenerCuota($txt_codigo));
-                }
-                //echo json_encode($cuenta->tablaCuotas($txt_codigo));
-                $cuenta = null; 
-                break;
-            }
+            //echo json_encode($cuenta->tablaCuotas($txt_codigo));
+            $cuenta = null;
+            break;
+        }
 
 
-            case 'pagar': {
-                $cuenta = new Cuentaporcobrar();
-                $respuesta = array();
-                if(!$cuenta->pagar(array(true, $id_pago), $id_pago )){
-                    $respuesta[] = array(
-                        "estado" => 1,
-                        "encabezado" => "ERROR.",
-                        "msj" => "NO CANCELADA.",
-                        "icono" => "error"
-                    );
-                   // echo json_encode($respuesta);
-                }else{
+    case 'pagar': {
+            $cuenta = new Cuentaporcobrar();
+            $respuesta = array();
+            if (!$cuenta->pagar(array(true, $id_pago), $id_pago)) {
+                $respuesta[] = array(
+                    "estado" => 1,
+                    "encabezado" => "ERROR.",
+                    "msj" => "NO CANCELADA.",
+                    "icono" => "error"
+                );
+                // echo json_encode($respuesta);
+            } else {
 
-                 if(empty($cuenta->obtenerCuota($txt_codigo)) || $cuenta->obtenerCuota($txt_codigo) == null){
+                if (empty($cuenta->obtenerCuota($txt_codigo)) || $cuenta->obtenerCuota($txt_codigo) == null) {
 
-                     if($cuenta->cancelarCredito($id_credito,$txt_codigo)){
+                    if ($cuenta->cancelarCredito($id_credito, $txt_codigo)) {
+                        $esJuridico = $cuenta->isJuridico($txt_codigo);
+                        $_SESSION['factura'] = $cuenta->numeroFactura($id_credito);
+                        $tipo = $esJuridico ? "JURIDICO" : "NATURAL";
                         $respuesta[] = array(
                             "estado" => 3,
                             "encabezado" => "EXITO.",
                             "msj" => "EL CREDITO A SIDO CANCELADO",
-                            "icono" => "success"
+                            "icono" => "success",
+                            "tipo" => $tipo
                         );
                     }
-
-                }else{
+                } else {
 
                     $respuesta[] = array(
                         "estado" => 2,
@@ -130,14 +134,9 @@ switch ($opcion) {
                         "icono" => "success"
                     );
                 }
-
             }
             echo json_encode($respuesta);
-            $cuenta = null; 
+            $cuenta = null;
             break;
         }
-
-
-
-
-    }
+}
