@@ -93,4 +93,35 @@ switch ($opcion) {
             $catProveedor = null;
             break;
         }
+    case 'eliminar': {
+            $catProveedor = new Proveedores();
+            $respuesta = array();
+            if ($catProveedor->verificarRelacion($id)) {
+                if ($catProveedor->eliminarProveedor($id)) {
+                    $respuesta[] = array(
+                        "estado" => 1,
+                        "encabezado" => "EXITO.",
+                        "msj" => "PROVEEDOR ELIMINADO.",
+                        "icono" => "success"
+                    );
+                } else {
+                    $respuesta[] = array(
+                        "estado" => 2,
+                        "encabezado" => "ERROR.",
+                        "msj" => "NO SE PUDO ELIMINAR AL PROVEEDOR.",
+                        "icono" => "error"
+                    );
+                }
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS AL PROVEEDOR.",
+                    "icono" => "error"
+                );
+            }
+            $catProveedor = null;
+            echo  json_encode($respuesta);
+            break;
+        }
 }

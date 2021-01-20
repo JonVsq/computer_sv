@@ -191,8 +191,6 @@
                         </table>
                     </div>
                     <p class="text-center" style="margin-top: 5px;">
-                        <button id="btn_listar" type="button" class="btn btn-raised btn-info btn-sm"><i class="fas fa-list"></i> &nbsp; LISTAR</button>
-                        &nbsp; &nbsp;
                         <button id="btn_guardar" type="button" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
                     </p>
                 </div>

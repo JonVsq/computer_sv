@@ -44,7 +44,7 @@ class CategoriaCliente
         WHERE ($campo LIKE '%$buscar%') order by nombre ASC");
         //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
         return $this->nucleo->getDatosHtml(
-            array("nombre", "descripcion", "max_atraso", "max_ventas", "monto_limite"),
+            array("nombre", "descripcion", "max_atraso"),
             array("editar" => "edit", "eliminar" => "trash"),
             "id"
         );
@@ -62,5 +62,22 @@ class CategoriaCliente
         INNER JOIN cliente as c on c.id_categoria = ct.id
         WHERE c.codigo = '$codigo'");
         return $this->nucleo->getDatos();
+    }
+    public function verificarRelacion($id)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(c.id_categoria) as total
+        FROM
+        cliente as c
+        WHERE c.id_categoria = $id");
+        $tablaCliente = $this->nucleo->getDatos();
+        $tablaCliente = $tablaCliente[0]['total'];
+        settype($tablaCliente, 'int');
+        return ($tablaCliente > 0) ? false : true;
+    }
+    public function eliminarCategoria($id)
+    {
+        $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+        return $this->nucleo->eliminarRegistro(array($id));
     }
 }

@@ -113,8 +113,6 @@
                                 <th class="text-center">NOMBRE<br> <input type="text" name="txt_nombreFiltro" id="txt_nombreFiltro"></th>
                                 <th class="text-center">DESCRIPCION<br> <input type="text" name="txt_descripcionFiltro" id="txt_descripcionFiltro"></th>
                                 <th class="text-center">MAXIMO PAGOS ATRASO<br> </th>
-                                <th class="text-center">MAXIMA VENTAS A REALIZAR<br> </th>
-                                <th class="text-center">MONTO LIMITE<br> </th>
                                 <th class="text-center">ACCIONES<br> </th>
                             </tr>
                         </thead>
@@ -179,24 +177,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_maxVentas" class="roboto-medium">MAXIMO DE VENTAS AL CREDITO</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_maxVentas" id="txt_maxVentas" min="0" max="12" required>
-                                            <div id="ventaError">
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="txt_montoLimite" class="roboto-medium">MONTO MAXIMO DE VENTAS AL CREDITO</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_montoLimite" id="txt_montoLimite" min="0" max="100000" required>
-                                            <div id="montoError">
-
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>
@@ -253,16 +234,6 @@
                         required: true,
                         min: 1,
                         max: 12
-                    },
-                    txt_maxVentas: {
-                        required: true,
-                        min: 0,
-                        max: 12
-                    },
-                    txt_montoLimite: {
-                        required: true,
-                        min: 0,
-                        max: 100000
                     }
                 }
             })

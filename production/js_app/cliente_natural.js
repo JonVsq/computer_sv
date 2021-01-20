@@ -46,6 +46,8 @@ function inicio() {
     txt_nitFiltro.addEventListener("keyup", filtroNit)
 }
 function opcionNuevo() {
+    txt_dui.removeAttribute('readonly')
+    txt_nit.removeAttribute('readonly')
     if (modificar) {
         modificar = false;
         document.getElementById('frm_clienteN').reset();
@@ -66,6 +68,8 @@ function opcionNuevo() {
 
 }
 function tabla() {
+    txt_dui.removeAttribute('readonly')
+    txt_nit.removeAttribute('readonly')
     if (modificar) {
         modificar = false;
         document.getElementById('frm_clienteN').reset();
@@ -110,6 +114,8 @@ function guardarModificarClienteN() {
         }).then(respuesta => {
             console.log(respuesta)
             if (respuesta[0].estado == 1) {
+                txt_dui.removeAttribute('readonly')
+                txt_nit.removeAttribute('readonly')
                 tabla()
                 listarClienteN(1, cantidad.value, '', '')
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
@@ -165,6 +171,8 @@ function cargarFormulario(id) {
         if (respuesta[0] == null) {
             swal("NO ES POSIBLE MODIFICAR.", "EL CLIENTE YA HA SIDO ELIMINADO.", "info")
         } else {
+            txt_nit.setAttribute('readonly', 'true')
+            txt_dui.setAttribute('readonly', 'true')
             txt_codigo.value = respuesta[0]['codigo']
             txt_fechaIngreso.value = respuesta[0]['fecha_ingreso']
             txt_dui.value = respuesta[0]['dui']
@@ -295,4 +303,50 @@ function filtroNit() {
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
     swal(encabezado, msj, icono)
+}
+//ELIMINAR
+$(document).on('click', '.eliminar', function (e) {
+    e.preventDefault()
+    let filaNombre = $(this).parents("tr").find("td")[2]
+    let nombre = $(filaNombre).html()
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objeliminar')
+    confirmarEliminacion("ELIMINAR CLIENTE: " + nombre, "ESTA SEGURO?", "warning", id)
+})
+function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
+    swal({
+        title: titulo,
+        text: msj,
+        type: tipo,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "SI",
+        cancelButtonText: "NO",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            const datos = new FormData()
+            datos.append('txt_codigo', idEliminar)
+            datos.append('opcion', 'eliminar')
+            fetch(urlClienteN, {
+                method: 'POST',
+                body: datos
+            }).then(function (respuesta) {
+                if (respuesta.ok) {
+                    return respuesta.json()
+                } else {
+                    console('error')
+                }
+            }).then(respuesta => {
+                listarClienteN(1, cantidad.value, '', '')
+                mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+            }).catch(error => {
+                console.log(error)
+                alert("OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, VERIFIQUE SU CONEXION A INTERNET E INTENTE DE NUEVO ")
+            })
+        } else {
+            swal("CANCELADO", "EL REGISTRO SE CONSERVA INTACTO", "info");
+        }
+    });
 }
