@@ -14,7 +14,7 @@ class Usuario
     {
         return $this->nucleo->insertarRegistro($campos);
     }
-    public function modificarUsuario($campos)
+    public function modificarUsuario($campos) 
     {
         return $this->nucleo->modificarRegistro($campos);
     }
