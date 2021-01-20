@@ -244,4 +244,41 @@ switch ($opcion) {
             echo json_encode($respuesta);
             break;
         }
+    case 'eliminar': {
+            $catClienteJ = new ClienteJuridico();
+            $respuesta = array();
+            if ($catClienteJ->verificarRelacion($txt_codigo)) {
+                if ($catClienteJ->eliminarCliente($txt_codigo)) {
+                    $archivos = glob($rutaCliente . '/*');
+                    foreach ($archivos as $archivo) {
+                        if (is_file($archivo)) {
+                            unlink($archivo);
+                        }
+                    }
+                    $respuesta[] = array(
+                        "estado" => 1,
+                        "encabezado" => "EXITO.",
+                        "msj" => "CLIENTE ELIMINADO.",
+                        "icono" => "success"
+                    );
+                } else {
+                    $respuesta[] = array(
+                        "estado" => 2,
+                        "encabezado" => "ERROR.",
+                        "msj" => "NO SE PUDO ELIMINAR AL CLIENTE.",
+                        "icono" => "error"
+                    );
+                }
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS AL CLIENTE.",
+                    "icono" => "error"
+                );
+            }
+            $catClienteN = null;
+            echo  json_encode($respuesta);
+            break;
+        }
 }

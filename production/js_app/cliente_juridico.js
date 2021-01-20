@@ -163,6 +163,52 @@ function listarClienteJ(pagina, cantidad, campo, buscar) {
         alert('Ocurrio un error conectado al servidor, intente de nuevo')
     })
 }
+//ELIMINAR
+$(document).on('click', '.eliminar', function (e) {
+    e.preventDefault()
+    let filaNombre = $(this).parents("tr").find("td")[0]
+    let nombre = $(filaNombre).html()
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objeliminar')
+    confirmarEliminacion("ELIMINAR PROVEEDOR: " + nombre, "ESTA SEGURO?", "warning", id)
+})
+function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
+    swal({
+        title: titulo,
+        text: msj,
+        type: tipo,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "SI",
+        cancelButtonText: "NO",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            const datos = new FormData()
+            datos.append('txt_codigo', idEliminar)
+            datos.append('opcion', 'eliminar')
+            fetch(urlClienteJ, {
+                method: 'POST',
+                body: datos
+            }).then(function (respuesta) {
+                if (respuesta.ok) {
+                    return respuesta.json()
+                } else {
+                    console('error')
+                }
+            }).then(respuesta => {
+                listarClienteJ(1, cantidad.value, '', '')
+                mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+            }).catch(error => {
+                console.log(error)
+                alert("OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, VERIFIQUE SU CONEXION A INTERNET E INTENTE DE NUEVO ")
+            })
+        } else {
+            swal("CANCELADO", "EL REGISTRO SE CONSERVA INTACTO", "info");
+        }
+    });
+}
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
     swal(encabezado, msj, icono)
