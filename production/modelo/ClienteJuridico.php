@@ -161,7 +161,8 @@ class ClienteJuridico
     }
     public function obtenerIdCategoria()
     {
-        $this->nucleo->setQueryPersonalizado("SELECT c.id, min(c.max_atraso) FROM categoria_cliente as c");
+        $this->nucleo->setQueryPersonalizado("SELECT c.id FROM categoria_cliente as c
+        where c.nombre = 'A'");
         $categoriaMenor = $this->nucleo->getDatos();
         return $categoriaMenor != null ? $categoriaMenor[0]['id'] : null;
     }
