@@ -110,9 +110,9 @@
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
-                                <th class="text-center">CORREO<br> 
+                                <th class="text-center">CORREO<br>
                                 <th class="text-center">NOMBRE<br> <input type="text" name="txt_nombrefiltro" id="txt_nombrefiltro"></th>
-    
+
                                 <th class="text-center">ACCIONES<br></th>
                             </tr>
                         </thead>
@@ -149,31 +149,31 @@
                         <fieldset>
                             <legend><i class="far fa-plus-square"></i> &nbsp; INFORMACION</legend>
                             <div class="container-fluid">
-                                
+
                                 <div class="row">
-                                <div class="col-12 col-md-10">
+                                    <div class="col-12 col-md-10">
                                         <div class="form-group">
                                             <span class="roboto-medium">Empleado: </span>
                                             <input type="hidden" id="txt_idEmpleado" name="txt_idEmpleado">
                                             <span id="spn_empleado" class="text-danger">&nbsp; <i class="fas fa-exclamation-triangle"></i> SELECCIONE EMPLEADO</span>
                                             <button id="btn_modalEmpleado" type="button" class="btn btn-info btn-sm"><i class="fas fa-list"></i></button>
-                                     </div>
-                                </div>
+                                        </div>
                                     </div>
-                                    <div class="row">
+                                </div>
+                                <div class="row">
                                     <div class="col-12 col-md-10">
-                                    
+
                                         <div class="form-group">
                                             <label for="txt_correo" class="roboto-medium">CORREO</label>
                                             <input type="email" class="form-control" name="txt_correo" id="txt_correo" required>
                                             <div id="correoError">
 
                                             </div>
-                                        
+
+                                        </div>
                                     </div>
-                                    </div>
-                                    </div>
-                                    <div class="row">
+                                </div>
+                                <div class="row">
                                     <div class="col-12 col-md-10">
                                         <div class="form-group">
                                             <label for="txt_contra" class="roboto-medium">CONTRASEÑA</label>
@@ -182,24 +182,24 @@
 
                                             </div>
                                         </div>
-                                        </div>
                                     </div>
-                               <div class="row">
-                               <div class="col-12 col-md-6">
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                        <label for="txt_ac" class="roboto-medium">ACCESO</label>
+                                            <label for="txt_ac" class="roboto-medium">ACCESO</label>
                                             <br>
                                             <select id="txt_ac" class="select btn btn-block" style="border-color: black;" name="txt_ac">
-                                                <option value="1">1.opcion</option>
-                                                <option value="2">2opcion</option>
+                                                <option value="1">ADMINISTRADOR</option>
+                                                <option value="2">VENDEDOR</option>
                                             </select>
                                         </div>
                                     </div>
-                               
-                    
-                            
-                               
-                            </div>
+
+
+
+
+                                </div>
                         </fieldset>
                         <br>
                         <p class="text-center" style="margin-top: 5px;">
@@ -269,7 +269,7 @@
                 </div>
             </div>
 
-           
+
             <!-- MODAL USUARIO -->
             <div class="modal fade" id="ModalUsuario" tabindex="-1" role="dialog" aria-labelledby="ModalCliente" aria-hidden="true">
                 <div class="modal-dialog" role="document">

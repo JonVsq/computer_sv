@@ -11,14 +11,14 @@ $txt_nit =  (isset($_POST['txt_nit'])) ? strtoupper($_POST['txt_nit']) : '';
 $txt_fecha =  (isset($_POST['txt_fecha'])) ? $_POST['txt_fecha'] : '';
 $txt_sexo =  (isset($_POST['rb_sexo'])) ? $_POST['rb_sexo'] : '';
 $txt_tell =  (isset($_POST['txt_tell'])) ? $_POST['txt_tell'] : '';
-$txt_dir =  (isset($_POST['txt_dir'])) ? $_POST['txt_dir'] : '';
+$txt_dir =  (isset($_POST['txt_dir'])) ? strtoupper($_POST['txt_dir']) : '';
 
 //PARAMETROS PARA LISTAR DATOS
 $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
 $campo = strcmp($campo, '') ? $campo : "nombres";
 //MODAL MARCA
 $campoDepto = (isset($_POST['campoDepto'])) ? $_POST['campoDepto'] : '';
-$campoDepto= strcmp($campoDepto, '') ? $campoDepto : "nombre";
+$campoDepto = strcmp($campoDepto, '') ? $campoDepto : "nombre";
 //MODAL CATEGORIA
 $campoCargo = (isset($_POST['campoCargo'])) ? $_POST['campoCargo'] : '';
 $campoCargo = strcmp($campoCargo, '') ? $campoCargo : "cargo";
@@ -43,7 +43,7 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                
+
                 if ($empleado->insertarEmpleado(
                     array(
                         $txt_idDepto, $txt_dui,
@@ -71,7 +71,7 @@ switch ($opcion) {
             break;
         }
     case 'modificar': {
-            $empleado= new Empleado();
+            $empleado = new Empleado();
             $respuesta = array();
             $existe = $empleado->camposUnicosModificar(
                 array("dui" => $txt_dui, "nit" => $txt_nit),
@@ -84,7 +84,7 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                
+
                 if ($empleado->modificarEmpleado(
                     array(
                         $id,
@@ -119,7 +119,7 @@ switch ($opcion) {
             break;
         }
     case 'modalCargo': {
-            $empleado= new Empleado();
+            $empleado = new Empleado();
             echo json_encode($empleado->modalCargo($pagina, $cantidad, $campoCargo, $buscar));
             $empleado = null;
             break;
@@ -139,15 +139,15 @@ switch ($opcion) {
     case 'listar': {
             $empleado = new Empleado();
             echo json_encode($empleado->tablaEmpleado($pagina, $cantidad, $campo, $buscar));
-            $empleado = null; 
+            $empleado = null;
             break;
         }
 
-        case 'eliminar': {
+    case 'eliminar': {
             $empleado = new Empleado();
             $respuesta = array();
-            
-                if ($empleado->eliminarEmpleado(array($id))) {
+            if ($empleado->verificarRelacion($id)) {
+                if ($empleado->eliminarEmpleado($id)) {
                     $respuesta[] = array(
                         "estado" => 1,
                         "encabezado" => "EXITO.",
@@ -158,11 +158,18 @@ switch ($opcion) {
                     $respuesta[] = array(
                         "estado" => 2,
                         "encabezado" => "ERROR.",
-                        "msj" => "NO SE PUDO ELIMINAR EL REGISTRO",
+                        "msj" => "NO SE PUDO ELIMINAR AL EMPLEADO.",
                         "icono" => "error"
                     );
                 }
-            
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS AL EMPLEADO.",
+                    "icono" => "error"
+                );
+            }
             $empleado = null;
             echo  json_encode($respuesta);
             break;

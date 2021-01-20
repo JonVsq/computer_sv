@@ -4,7 +4,7 @@ include('../modelo/Usuario.php');
 $id = (isset($_POST['id'])) ?  $_POST['id'] : '';
 $txt_idEmpleado =  (isset($_POST['txt_idEmpleado'])) ? $_POST['txt_idEmpleado'] : '';
 
-$txt_correo =  (isset($_POST['txt_correo'])) ? strtoupper($_POST['txt_correo']) : '';
+$txt_correo =  (isset($_POST['txt_correo'])) ? $_POST['txt_correo'] : '';
 $txt_ac =  (isset($_POST['txt_ac'])) ? strtoupper($_POST['txt_ac']) : '';
 $txt_contra =  (isset($_POST['txt_contra'])) ? $_POST['txt_contra'] : '';
 
@@ -13,7 +13,7 @@ $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
 $campo = strcmp($campo, '') ? $campo : "correo";
 //MODAL MARCA
 $campoEmpleado = (isset($_POST['campoEmpleado'])) ? $_POST['campoEmpleado'] : '';
-$campoEmpleado= strcmp($campoEmpleado, '') ? $campoEmpleado : "nombres";
+$campoEmpleado = strcmp($campoEmpleado, '') ? $campoEmpleado : "nombres";
 //MODAL CATEGORIA
 
 
@@ -39,7 +39,7 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-            
+
                 if ($usuario->insertarUsuario(
                     array(
                         $txt_idEmpleado, $txt_correo,
@@ -79,7 +79,7 @@ switch ($opcion) {
                     "errores" => $existe
                 );
             } else {
-                
+
                 if ($usuario->modificarUsuario(
                     array(
                         $id,
@@ -112,11 +112,11 @@ switch ($opcion) {
             $usuario = null;
             break;
         }
-    
+
     case 'modal': {
             $usuario = new Usuario();
             echo json_encode($usuario->obtenerDatosModal($id));
-            $usuario= null;
+            $usuario = null;
             break;
         }
     case 'obtener': {
@@ -129,6 +129,28 @@ switch ($opcion) {
             $usuario = new Usuario();
             echo json_encode($usuario->tablaUsuarios($pagina, $cantidad, $campo, $buscar));
             $usuario = null;
+            break;
+        }
+    case 'eliminar': {
+            $usuario = new Usuario();
+            $respuesta = array();
+            if ($usuario->eliminarUsuario($id)) {
+                $respuesta[] = array(
+                    "estado" => 1,
+                    "encabezado" => "EXITO.",
+                    "msj" => "USUARIO ELIMINADO.",
+                    "icono" => "success"
+                );
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "NO SE PUDO ELIMINAR AL USUARIO.",
+                    "icono" => "error"
+                );
+            }
+            $usuario = null;
+            echo  json_encode($respuesta);
             break;
         }
 }

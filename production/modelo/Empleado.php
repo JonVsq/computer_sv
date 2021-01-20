@@ -27,28 +27,6 @@ class Empleado
         $this->nucleo->setConsultarModificar(true);
         return $this->nucleo->coincidencias($campos, $identificador, $valor);
     }
-
-    public function eliminarEmpleado($campos)
-    {
-        return $this->nucleo->eliminarRegistro($campos);
-    }
-
-    public function verificarRelacion($campos)
-    {
-        $this->nucleo->setQueryPersonalizado("SELECT
-        count(v.id_empleado) AS TOTAL
-        FROM
-        venta as v
-        INNER JOIN empleado e ON v.id_empleado = e.id");
-
-        $tablaVenta = $this->nucleo->getDatosParametros($campos);
-        $tablaVenta = $tablaVenta[0]["total"];
-        settype($tablaVenta, 'int');
-
-        return $tablaVenta > 0  ? false : true;
-    }
-
-
     public function obtenerEmpleado($id)
     {
         $this->nucleo->setQueryPersonalizado("SELECT
@@ -71,7 +49,7 @@ class Empleado
         WHERE e.id = $id");
         return $this->nucleo->getDatos();
     }
-    
+
     //MODAL DEPTO
     public function modalDepto($numPagina, $cantidad, $campo, $buscar)
     {
@@ -133,7 +111,7 @@ class Empleado
         WHERE (e.$campo LIKE '%$buscar%') order by e.nombres ASC");
         //RETORNA EL HTML SEGUN REQUERIMIENTOS DADOS
         return $this->nucleo->getDatosHtml(
-            array("dui", "nombres", "apellidos", "nombre","cargo"),
+            array("dui", "nombres", "apellidos", "nombre", "cargo"),
             array("ver" => "tasks", "editar" => "edit", "eliminar" => "trash"),
             "id"
         );
@@ -166,9 +144,9 @@ class Empleado
     }
     private function htmlModalDatosEmpleado($datos)
     {
-        $datosEmpleado= "";
+        $datosEmpleado = "";
         foreach ($datos as $empleado) {
-            $datosEmpleado = $datosEmpleado. "<label class='bmd-label-floating roboto-medium'>DUI: {$empleado['dui']}</label>";
+            $datosEmpleado = $datosEmpleado . "<label class='bmd-label-floating roboto-medium'>DUI: {$empleado['dui']}</label>";
             $datosEmpleado = $datosEmpleado . "<br>";
             $datosEmpleado = $datosEmpleado . "<label class='bmd-label-floating roboto-medium'>NIT: {$empleado['nit']}</label>";
             $datosEmpleado = $datosEmpleado . "<br>";
@@ -186,8 +164,49 @@ class Empleado
             $datosEmpleado = $datosEmpleado . "<br>";
             $datosEmpleado = $datosEmpleado . "<label class='bmd-label-floating roboto-medium'>CARGO: {$empleado['cargo']}</label>";
             $datosEmpleado = $datosEmpleado . "<br>";
-    
         }
         return $datosEmpleado;
+    }
+
+    public function verificarRelacion($id)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(v.id_empleado) as total
+        FROM
+        venta as v
+        WHERE v.id_empleado = $id");
+        $tablaVenta = $this->nucleo->getDatos();
+        $tablaVenta = $tablaVenta[0]['total'];
+        settype($tablaVenta, 'int');
+        return ($tablaVenta > 0) ? false : true;
+    }
+    public function eliminarEmpleado($id)
+    {
+        $this->nucleo->setTablaBase("usuarios");
+        //VERIFICAR SI ES USUARIO CON CUENTA
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(v.id_empleado) as total
+        FROM
+        usuarios as v
+        WHERE v.id_empleado = $id");
+        $tablauser = $this->nucleo->getDatos();
+        $tablauser = $tablauser[0]['total'];
+        settype($tablauser, 'int');
+        if ($tablauser > 0) {
+            //ELIMINA
+            $this->nucleo->setQueryPersonalizado("WHERE id_empleado = ?");
+            $eliminaDatos = $this->nucleo->eliminarRegistro(array($id));
+            $this->nucleo->setTablaBase($this->nombreTabla);
+            if ($eliminaDatos) {
+                $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+                return $this->nucleo->eliminarRegistro(array($id));
+            } else {
+                return false;
+            }
+        } else {
+            $this->nucleo->setTablaBase($this->nombreTabla);
+            $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+            return $this->nucleo->eliminarRegistro(array($id));
+        }
     }
 }

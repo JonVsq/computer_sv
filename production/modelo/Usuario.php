@@ -14,7 +14,7 @@ class Usuario
     {
         return $this->nucleo->insertarRegistro($campos);
     }
-    public function modificarUsuario($campos) 
+    public function modificarUsuario($campos)
     {
         return $this->nucleo->modificarRegistro($campos);
     }
@@ -43,7 +43,7 @@ class Usuario
         WHERE u.id = $id");
         return $this->nucleo->getDatos();
     }
-    
+
     //MODAL EMPLEADO        
     public function modalEmpleado($numPagina, $cantidad, $campo, $buscar)
     {
@@ -64,7 +64,7 @@ class Usuario
         );
     }
     //MODAL CATEGORIA PRODUCTOS
-    
+
     public function tablaUsuarios($numPagina, $cantidad, $campo, $buscar)
     {
         $this->nucleo->setNumPagina($numPagina);
@@ -99,7 +99,7 @@ class Usuario
         u.correo,
         e.nombres,
         e.id as id_empleado,
-        u.acceso
+        IF(u.acceso = 1, 'ADMINISTRADOR','VENDEDOR') as acceso
         FROM
         usuarios AS u
         INNER JOIN empleado e ON u.id_empleado = e.id
@@ -119,8 +119,12 @@ class Usuario
             $datosUsuario = $datosUsuario . "<br>";
             $datosUsuario = $datosUsuario . "<label class='bmd-label-floating roboto-medium'>ACCESO: {$usuario['acceso']}</label>";
             $datosUsuario = $datosUsuario . "<br>";
-        
         }
         return $datosUsuario;
+    }
+    public function eliminarUsuario($id)
+    {
+        $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+        return $this->nucleo->eliminarRegistro(array($id));
     }
 }

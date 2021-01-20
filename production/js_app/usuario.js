@@ -14,7 +14,7 @@ const txt_buscarEmpleado = document.getElementById('txt_buscarEmpleado')
 const spn_empleado = document.getElementById('spn_empleado')
 const btn_modalEmpleado = document.getElementById('btn_modalEmpleado')
 const txt_idEmpleado = document.getElementById('txt_idEmpleado')
-const txt_correo= document.getElementById('txt_correo')
+const txt_correo = document.getElementById('txt_correo')
 const txt_ac = document.getElementById('txt_ac')
 const txt_contra = document.getElementById('txt_contra')
 
@@ -43,24 +43,24 @@ function inicio() {
     opLista.addEventListener("click", tabla)
     btn_listar.addEventListener("click", tabla)
     btn_modalEmpleado.addEventListener("click", modalEmpleado)
-   
+
     txt_buscarEmpleado.addEventListener("keyup", filtroEmpleado)
     btn_guardar.addEventListener("click", guardarModificarUsuario)
 }
 function opcionNuevo() {
     if (modificar) {
         modificar = false;
-       
+
         txt_idEmpleado.value = ""
         spn_empleado.className = "text-danger"
-        
+
         spn_empleado.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE EMPLEADO"
         document.getElementById('frm_Usuario').reset();
         txt_id.value = ""
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
-  
+
     contraError.innerHTML = ""
     correoError.innerHTML = ""
     opNueva.className = "active"
@@ -72,8 +72,7 @@ function opcionNuevo() {
 function tabla() {
     if (modificar) {
         modificar = false;
-        txt_idEmpledo.value = ""
-        
+        txt_idEmpleado.value = ""
         spn_empleado.className = "text-danger"
         spn_empleado.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE EMPLEADO"
         document.getElementById('frm_Usuario').reset();
@@ -81,7 +80,7 @@ function tabla() {
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
- 
+
     contraError.innerHTML = ""
     correoError.innerHTML = ""
     opLista.className = "active"
@@ -119,9 +118,9 @@ function guardarModificarUsuario() {
                     tabla()
                     listarUsuario(1, cantidad.value, '', '')
                     txt_idEmpleado.value = ""
-                    
+
                     spn_empleado.className = "text-danger"
-                   
+
                     spn_empleado.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE EMPLEADO"
                     mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
                     document.getElementById('frm_Usuario').reset()
@@ -131,7 +130,7 @@ function guardarModificarUsuario() {
                     } else {
                         correoError.innerHTML = ""
                     }
-                    
+
                 }
                 btn_guardar.removeAttribute('disabled')
             }).catch(error => {
@@ -203,7 +202,7 @@ function filtroEmpleado() {
         buscarEmpleado = txt_buscarEmpleado.value
         modalEmpleado()
     } else {
-        campoEmpleado= ''
+        campoEmpleado = ''
         buscarEmpleado = ''
         modalEmpleado()
     }
@@ -214,7 +213,7 @@ $(document).on('click', '.pagina', function (e) {
     e.preventDefault()
     let elemento = $(this)[0]
     let pag = $(elemento).attr('pag')
-     if ($('#ModalEmpleado').is(':visible')) {
+    if ($('#ModalEmpleado').is(':visible')) {
         paginaEmpleado = pag
         modalEmpleado()
     } else {
@@ -226,9 +225,9 @@ $(document).on('click', '.siguiente', function (e) {
     e.preventDefault()
     let elemento = $(this)[0]
     let pag = $(elemento).attr('pag')
-     if ($('#ModalEmpleado').is(':visible')) {
+    if ($('#ModalEmpleado').is(':visible')) {
         paginaEmpleado = pag
-       
+
         modalEmpleado()
     } else {
         //listarSolicitudes(pag, cantidad.value, '', '')
@@ -242,7 +241,7 @@ $(document).on('click', '.seleccion', function (e) {
     let elemento = $(this)[0]
     let id = $(elemento).attr('objseleccion')
     console.log(id + " " + nombre)
-     if ($('#ModalEmpleado').is(':visible')) {
+    if ($('#ModalEmpleado').is(':visible')) {
         spn_empleado.className = ""
         spn_empleado.innerText = nombre
         txt_idEmpleado.value = id
@@ -276,14 +275,14 @@ function cargarFormulario(id) {
         } else {
             txt_id.value = respuesta[0]['id']
             txt_idEmpleado.value = respuesta[0]['id_empleado']
-           
+
             spn_empleado.innerText = respuesta[0]['nombres']
             spn_empleado.className = ""
-           
+
             txt_correo.value = respuesta[0]['correo']
             txt_contra.value = respuesta[0]['pass']
             txt_ac.value = respuesta[0]['acceso']
-            
+
             modificar = true
             //OCULTA TABLA Y MUESTRA EL FORMULARIO
             opNueva.className = "active";
@@ -328,4 +327,52 @@ function cargarModal(id) {
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
     swal(encabezado, msj, icono)
+}
+$(document).on('click', '.eliminar', function (e) {
+    e.preventDefault()
+    let fila = $(this).parents("tr").find("td")[0]
+    let nombre = $(fila).html()
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objeliminar')
+
+    confirmarEliminacion("ELIMINAR A: " + nombre, "ESTA SEGURO?", "warning", id)
+})
+
+function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
+    swal({
+        title: titulo,
+        text: msj,
+        type: tipo,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "SI",
+        cancelButtonText: "NO",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            const datos = new FormData()
+            datos.append('id', idEliminar)
+            datos.append('opcion', 'eliminar')
+            fetch(urlUsuario, {
+                method: 'POST',
+                body: datos
+            }).then(function (respuesta) {
+                if (respuesta.ok) {
+                    return respuesta.json()
+                } else {
+                    console('error')
+                }
+            }).then(respuesta => {
+                listarUsuario(1, cantidad.value, '', '')
+                mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+            }).catch(error => {
+                alert('OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, INTENTE DE NUEVO.  ' + error)
+
+
+            })
+        } else {
+            swal("CANCELADO", "EL REGISTRO SE CONSERVA INTACTO", "info");
+        }
+    });
 }

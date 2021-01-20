@@ -72,14 +72,13 @@ function opcionNuevo() {
     if (modificar) {
         modificar = false;
         txt_idCargo.value = ""
-        txt_idMarca.value = ""
         spn_Cargo.className = "text-danger"
         spn_Depto.className = "text-danger"
         spn_Depto.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE Departamento"
         spn_Cargo.innerHTML = "&nbsp; <i class='fas fa-exclamation-triangle'></i> SELECCIONE Cargo"
         document.getElementById('frm_Producto').reset();
         txt_id.value = ""
-       
+
         opNueva.innerHTML = "<i class='fas fa-plus fa-fw'></i> &nbsp; NUEVO"
         btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; GUARDAR"
     }
@@ -145,15 +144,15 @@ function guardarModificarEmpleado() {
     btn_guardar.setAttribute('disabled', 'true')
     validaSexo()
     calcularEdad()
-   
+
     let validar = $('#cuadroFormulario form').valid()
     if (!validar) {
         btn_guardar.removeAttribute('disabled')
         return false;
     } else {
-        if (txt_idCargo.value != "" && txt_idDepto.value != "" && calcularEdad() &&  validaSexo()) {
-            
-           
+        if (txt_idCargo.value != "" && txt_idDepto.value != "" && calcularEdad() && validaSexo()) {
+
+
             const datos = new FormData(document.getElementById('frm_Empleado'))
             if (modificar) {
                 datos.append('id', txt_id.value)
@@ -181,25 +180,25 @@ function guardarModificarEmpleado() {
                     mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
                     document.getElementById('frm_Empleado').reset()
                 } else {
-                    if (respuesta[0].errores[0].dui> 0) {
+                    if (respuesta[0].errores[0].dui > 0) {
                         duiError.innerHTML = "<span class='error'>EL DUI YA SE ENCUENTRA REGISTRADO FAVOR INGRESAR OTRO.</span>"
                     } else {
                         duiError.innerHTML = ""
                     }
-                    if (respuesta[0].errores[1].nit> 0) {
+                    if (respuesta[0].errores[1].nit > 0) {
                         nitError.innerHTML = "<span class='error'>EL NIT YA SE ENCURNTRA REGISTRADO POR FAVOR INGRESE OTRO.</span>"
                     } else {
-                       nitError.innerHTML = ""
+                        nitError.innerHTML = ""
                     }
 
-                    
+
                 }
                 btn_guardar.removeAttribute('disabled')
             }).catch(error => {
                 console.log(error)
                 btn_guardar.removeAttribute('disabled')
-                alert('Ocurrio un error conectando al servidor, intente de nuevo'+
-                error)
+                alert('Ocurrio un error conectando al servidor, intente de nuevo' +
+                    error)
             })
         } else {
             btn_guardar.removeAttribute('disabled')
@@ -399,7 +398,7 @@ $(document).on('click', '.eliminar', function (e) {
     let nombre = $(fila).html()
     let elemento = $(this)[0]
     let id = $(elemento).attr('objeliminar')
-   
+
     confirmarEliminacion("ELIMINAR A: " + nombre, "ESTA SEGURO?", "warning", id)
 })
 
@@ -433,8 +432,8 @@ function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
             }).catch(error => {
                 alert('OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, INTENTE DE NUEVO.  ' + error)
-                
-            
+
+
             })
         } else {
             swal("CANCELADO", "EL REGISTRO SE CONSERVA INTACTO", "info");
@@ -442,55 +441,55 @@ function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
     });
 }
 
-    function cargarFormulario(id) {
-        const datos = new FormData()
-        datos.append('id', id)
-        datos.append('opcion', 'obtener')
-        fetch(urlEmpleado, {
-            method: 'POST',
-            body: datos
-        }).then(function (respuesta) {
-            if (respuesta.ok) {
-                return respuesta.json()
-            }
-        }).then(respuesta => {
-            if (respuesta[0] == null) {
-                swal("NO ES POSIBLE MODIFICAR.", "EL EMPLEADO YA HA SIDO ELIMINADO.", "info")
+function cargarFormulario(id) {
+    const datos = new FormData()
+    datos.append('id', id)
+    datos.append('opcion', 'obtener')
+    fetch(urlEmpleado, {
+        method: 'POST',
+        body: datos
+    }).then(function (respuesta) {
+        if (respuesta.ok) {
+            return respuesta.json()
+        }
+    }).then(respuesta => {
+        if (respuesta[0] == null) {
+            swal("NO ES POSIBLE MODIFICAR.", "EL EMPLEADO YA HA SIDO ELIMINADO.", "info")
+        } else {
+            txt_id.value = respuesta[0]['id']
+            txt_idDepto.value = respuesta[0]['id_departamento']
+            txt_idCargo.value = respuesta[0]['id_cargo']
+            spn_Depto.innerText = respuesta[0]['nombre']
+            spn_Cargo.innerText = respuesta[0]['cargo']
+            spn_Depto.className = ""
+            spn_Cargo.className = ""
+
+            txt_nombre.value = respuesta[0]['nombres']
+            txt_apellido.value = respuesta[0]['apellidos']
+            txt_nit.value = respuesta[0]['nit']
+            txt_dui.value = respuesta[0]['dui']
+            txt_fecha.value = respuesta[0]['fecha_nacimiento']
+            txt_tell.value = respuesta[0]['telefono']
+            txt_dir.value = respuesta[0]['direccion']
+            if (respuesta[0]['sexo'] == "F") {
+                document.getElementById('r1').checked = true
             } else {
-                txt_id.value = respuesta[0]['id']
-                txt_idDepto.value = respuesta[0]['id_departamento']
-                txt_idCargo.value = respuesta[0]['id_cargo']
-                spn_Depto.innerText = respuesta[0]['nombre']
-                spn_Cargo.innerText = respuesta[0]['cargo']
-                spn_Depto.className = ""
-                spn_Cargo.className = ""
-                
-                txt_nombre.value = respuesta[0]['nombres']
-                txt_apellido.value = respuesta[0]['apellidos']
-                txt_nit.value = respuesta[0]['nit']
-                txt_dui.value = respuesta[0]['dui']
-                txt_fecha.value = respuesta[0]['fecha_nacimiento']
-                txt_tell.value = respuesta[0]['telefono']
-                txt_dir.value = respuesta[0]['direccion']
-                if (respuesta[0]['sexo'] == "F") {
-                    document.getElementById('r1').checked = true
-                } else {
-                    document.getElementById('r2').checked = true
-                }
-            
-                modificar = true
-                //OCULTA TABLA Y MUESTRA EL FORMULARIO
-                opNueva.className = "active";
-                opLista.className = "";
-                modificar = true
-                opNueva.innerHTML = "<i class='fas fa-edit fa-fw'></i> &nbsp; MODIFICAR"
-                btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; MODIFICAR"
-                $("#cuadroFormulario").slideDown("slow")
-                $("#cuadroTabla").slideUp("slow")
+                document.getElementById('r2').checked = true
             }
-    
-        })
-    }
+
+            modificar = true
+            //OCULTA TABLA Y MUESTRA EL FORMULARIO
+            opNueva.className = "active";
+            opLista.className = "";
+            modificar = true
+            opNueva.innerHTML = "<i class='fas fa-edit fa-fw'></i> &nbsp; MODIFICAR"
+            btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; MODIFICAR"
+            $("#cuadroFormulario").slideDown("slow")
+            $("#cuadroTabla").slideUp("slow")
+        }
+
+    })
+}
 
 //OBTIENE LOS DATOS PARA VISUALIZAR EN EL MODAL
 $(document).on('click', '.ver', function () {
