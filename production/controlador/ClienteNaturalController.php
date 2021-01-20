@@ -170,4 +170,35 @@ switch ($opcion) {
             $catClienteN = null;
             break;
         }
+    case 'eliminar': {
+            $catClienteN = new ClienteNatural();
+            $respuesta = array();
+            if ($catClienteN->verificarRelacion($txt_codigo)) {
+                if ($catClienteN->eliminarCliente($txt_codigo)) {
+                    $respuesta[] = array(
+                        "estado" => 1,
+                        "encabezado" => "EXITO.",
+                        "msj" => "CLIENTE ELIMINADO.",
+                        "icono" => "success"
+                    );
+                } else {
+                    $respuesta[] = array(
+                        "estado" => 2,
+                        "encabezado" => "ERROR.",
+                        "msj" => "NO SE PUDO ELIMINAR AL CLIENTE.",
+                        "icono" => "error"
+                    );
+                }
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS AL CLIENTE.",
+                    "icono" => "error"
+                );
+            }
+            $catClienteN = null;
+            echo  json_encode($respuesta);
+            break;
+        }
 }

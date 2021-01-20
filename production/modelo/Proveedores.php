@@ -53,4 +53,21 @@ class Proveedores
             "id"
         );
     }
+    public function verificarRelacion($id)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(c.id_proveedor) as total
+        FROM
+        compra as c
+        WHERE c.id_proveedor = $id");
+        $tablaCompra = $this->nucleo->getDatos();
+        $tablaCompra = $tablaCompra[0]['total'];
+        settype($tablaCompra, 'int');
+        return ($tablaCompra > 0) ? false : true;
+    }
+    public function eliminarProveedor($id)
+    {
+        $this->nucleo->setQueryPersonalizado("WHERE id = ?");
+        return $this->nucleo->eliminarRegistro(array($id));
+    }
 }

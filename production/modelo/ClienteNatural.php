@@ -214,5 +214,29 @@ class ClienteNatural
             "codigo"
         );
     }
-    
+    public function verificarRelacion($codigo)
+    {
+        $this->nucleo->setQueryPersonalizado("SELECT
+        COUNT(v.codigo_cliente) as total
+        FROM
+        venta as v
+        WHERE v.codigo_cliente = '$codigo'");
+        $tablaVenta = $this->nucleo->getDatos();
+        $tablaVenta = $tablaVenta[0]['total'];
+        settype($tablaVenta, 'int');
+        return ($tablaVenta > 0) ? false : true;
+    }
+    public function eliminarCliente($codigo)
+    {
+        $this->nucleo->setTablaBase("datos_natural");
+        $this->nucleo->setQueryPersonalizado("WHERE codigo_cliente = ?");
+        $eliminaDatos = $this->nucleo->eliminarRegistro(array($codigo));
+        $this->nucleo->setTablaBase($this->tablaClienteN);
+        if ($eliminaDatos) {
+            $this->nucleo->setQueryPersonalizado("WHERE codigo = ?");
+            return $this->nucleo->eliminarRegistro(array($codigo));
+        } else {
+            return false;
+        }
+    }
 }

@@ -13,13 +13,9 @@ const txt_id = document.getElementById('txt_id')
 const txt_nombre = document.getElementById('txt_nombre')
 const txt_descripcion = document.getElementById('txt_descripcion')
 const txt_maxAtraso = document.getElementById('txt_maxAtraso')
-const txt_maxVentas = document.getElementById('txt_maxVentas')
-const txt_montoLimite = document.getElementById('txt_montoLimite')
 const nombreError = document.getElementById('nombreError')
 const descripcionError = document.getElementById('descripcionError')
 const pagoError = document.getElementById('pagoError')
-const ventaError = document.getElementById('ventaError')
-const montoError = document.getElementById('montoError')
 const btn_limpiar = document.getElementById('btn_limpiar')
 const btn_listar = document.getElementById('btn_listar')
 const btn_guardar = document.getElementById('btn_guardar')
@@ -51,8 +47,6 @@ function opcionNuevo() {
     nombreError.innerHTML = ""
     descripcionError.innerHTML = ""
     pagoError.innerHTML = ""
-    montoError.innerHTML = ""
-    ventaError.innerHTML = ""
     opNueva.className = "active"
     opLista.className = ""
     $("#cuadroFormulario").slideDown("slow")
@@ -69,8 +63,6 @@ function tabla() {
     nombreError.innerHTML = ""
     descripcionError.innerHTML = ""
     pagoError.innerHTML = ""
-    montoError.innerHTML = ""
-    ventaError.innerHTML = ""
     opLista.className = "active"
     opNueva.className = ""
     $("#cuadroFormulario").slideUp("slow")
@@ -156,8 +148,6 @@ function cargarFormulario(id) {
             txt_nombre.value = respuesta[0]['nombre']
             txt_descripcion.value = respuesta[0]['descripcion']
             txt_maxAtraso.value = respuesta[0]['max_atraso']
-            txt_maxVentas.value = respuesta[0]['max_ventas']
-            txt_montoLimite.value = respuesta[0]['monto_limite']
             modificar = true
             //OCULTA TABLA Y MUESTRA EL FORMULARIO
             opNueva.className = "active";
@@ -237,4 +227,50 @@ function filtroNombre() {
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
     swal(encabezado, msj, icono)
+}
+//ELIMINAR
+$(document).on('click', '.eliminar', function (e) {
+    e.preventDefault()
+    let filaNombre = $(this).parents("tr").find("td")[0]
+    let nombre = $(filaNombre).html()
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objeliminar')
+    confirmarEliminacion("ELIMINAR CATEGORIA CLIENTE: " + nombre, "ESTA SEGURO?", "warning", id)
+})
+function confirmarEliminacion(titulo, msj, tipo, idEliminar) {
+    swal({
+        title: titulo,
+        text: msj,
+        type: tipo,
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "SI",
+        cancelButtonText: "NO",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    }, function (isConfirm) {
+        if (isConfirm) {
+            const datos = new FormData()
+            datos.append('id', idEliminar)
+            datos.append('opcion', 'eliminar')
+            fetch(urlCatCliente, {
+                method: 'POST',
+                body: datos
+            }).then(function (respuesta) {
+                if (respuesta.ok) {
+                    return respuesta.json()
+                } else {
+                    console('error')
+                }
+            }).then(respuesta => {
+                listarCategoriaCliente(1, cantidad.value, '', '')
+                mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
+            }).catch(error => {
+                console.log(error)
+                alert("OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, VERIFIQUE SU CONEXION A INTERNET E INTENTE DE NUEVO ")
+            })
+        } else {
+            swal("CANCELADO", "EL REGISTRO SE CONSERVA INTACTO", "info");
+        }
+    });
 }

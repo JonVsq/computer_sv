@@ -6,8 +6,8 @@ $codigoCliente = (isset($_POST['codigoCliente'])) ?  $_POST['codigoCliente'] : '
 $txt_nombre =  (isset($_POST['txt_nombre'])) ? strtoupper($_POST['txt_nombre']) : '';
 $txt_descripcion =  (isset($_POST['txt_descripcion'])) ? strtoupper($_POST['txt_descripcion']) : '';
 $txt_maxAtraso =  (isset($_POST['txt_maxAtraso'])) ? $_POST['txt_maxAtraso'] : '';
-$txt_maxVentas =  (isset($_POST['txt_maxVentas'])) ? $_POST['txt_maxVentas'] : '';
-$txt_montoLimite =  (isset($_POST['txt_montoLimite'])) ? $_POST['txt_montoLimite'] : '';
+$txt_maxVentas =  0;
+$txt_montoLimite = 0;
 //PARAMETROS PARA LISTAR DATOS
 $campo = (isset($_POST['campo'])) ? $_POST['campo'] : '';
 $campo = strcmp($campo, '') ? $campo : "nombre";
@@ -99,6 +99,37 @@ switch ($opcion) {
             $catCliente = new CategoriaCliente();
             echo json_encode($catCliente->categoriaCliente($codigoCliente));
             $catCliente = null;
+            break;
+        }
+    case 'eliminar': {
+            $catCliente = new CategoriaCliente();
+            $respuesta = array();
+            if ($catCliente->verificarRelacion($id)) {
+                if ($catCliente->eliminarCategoria($id)) {
+                    $respuesta[] = array(
+                        "estado" => 1,
+                        "encabezado" => "EXITO.",
+                        "msj" => "CATEGORIA ELIMINADA.",
+                        "icono" => "success"
+                    );
+                } else {
+                    $respuesta[] = array(
+                        "estado" => 2,
+                        "encabezado" => "ERROR.",
+                        "msj" => "NO SE PUDO ELIMINAR LA CATEGORIA.",
+                        "icono" => "error"
+                    );
+                }
+            } else {
+                $respuesta[] = array(
+                    "estado" => 2,
+                    "encabezado" => "ERROR.",
+                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS A LA CATEGORIA.",
+                    "icono" => "error"
+                );
+            }
+            $catCliente = null;
+            echo  json_encode($respuesta);
             break;
         }
 }
