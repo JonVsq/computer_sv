@@ -145,7 +145,8 @@ class ClienteJuridico
         cj.balance_general,
         cj.estado_resultado,
         cj.inventario,
-        cj.pasivo_corriente
+        cj.pasivo_corriente,
+        ct.nombre as categoria
         FROM
         cliente as c
         INNER JOIN datos_juridica as cj ON cj.codigo_cliente = c.codigo
@@ -183,6 +184,10 @@ class ClienteJuridico
             $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>PASIVO CORRIENTE: {$cliente['pasivo_corriente']}</label>";
             $datosCliente = $datosCliente . "<br>";
             $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'>INVENTARIO: {$cliente['inventario']}</label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'><a href='../../archivos/{$cliente['codigo']}/{$cliente['estado_resultado']}' target='__blank'>ESTADO DE RESULTADOS</a></label>";
+            $datosCliente = $datosCliente . "<br>";
+            $datosCliente = $datosCliente . "<label class='bmd-label-floating roboto-medium'><a href='../../archivos/{$cliente['codigo']}/{$cliente['balance_general']}' target='__blank'>BALANCE GENERAL</a></label>";
             $datosCliente = $datosCliente . "<br>";
         }
         return $datosCliente;

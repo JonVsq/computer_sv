@@ -2,6 +2,33 @@
     <li>
         <a href="administracion.php"><i class="fab fa-dashcube fa-fw"></i> &nbsp; INICIO</a>
     </li>
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fa fa-folder-open"></i> &nbsp; CUENTAS POR COBRAR <i class="fas fa-chevron-down"></i></a>
+        <ul>
+
+            <li>
+                <a href="cuenta/cuentaporcobrar.php"><i class="fa fa-university"></i> &nbsp; BUSCAR CUENTA</a>
+            </li>
+
+        </ul>
+    </li>
+
+
+    <li>
+        <a href="#" class="nav-btn-submenu"><i class="fa fa-folder-open"></i> &nbsp; ACTIVO FIJO <i class="fas fa-chevron-down"></i></a>
+        <ul>
+
+            <li>
+                <a href="activo/departamento.php"><i class="fa fa-university"></i> &nbsp; DEPARTAMENTO</a>
+            </li>
+            <li>
+                <a href="activo/tipoactivo.php"><i class="fa fa-folder"></i> &nbsp; TIPO DE ACTIVO</a>
+            </li>
+            <li>
+                <a href="activo/activo.php"><i class="fa fa-car"></i> &nbsp; ACTIVO</a>
+            </li>
+        </ul>
+    </li>
 
     <li>
         <a href="#" class="nav-btn-submenu"><i class="fas fa-list fa-fw"></i> &nbsp; CLIENTES <i class="fas fa-chevron-down"></i></a>
@@ -65,9 +92,7 @@
             </li>
         </ul>
     </li>
-<<<<<<< HEAD
-=======
-    <li>
+    <<<<<<< HEAD=======<li>
         <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; EMPLEADOS <i class="fas fa-chevron-down"></i></a>
         <ul>
             <li>
@@ -76,17 +101,17 @@
             <li>
                 <a href="empleado/empleado.php"><i class="fas fa-list fa-fw"></i> &nbsp; EMPLEADOS</a>
             </li>
-        
+
         </ul>
 
         <li>
-        <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; USUARIO <i class="fas fa-chevron-down"></i></a>
-        <ul>
+            <a href="#" class="nav-btn-submenu"><i class="fas fa-store-alt fa-fw"></i> &nbsp; USUARIO <i class="fas fa-chevron-down"></i></a>
+            <ul>
                 <a href="usuarios/usuario.php"><i class="fas fa-store fa-fw"></i> &nbsp; USUARIOS</a>
-            </li>
-        </ul>
         </li>
-    </li>
+</ul>
+</li>
+</li>
 
 >>>>>>> YESSICA
 

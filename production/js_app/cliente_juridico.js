@@ -11,6 +11,7 @@ const txt_nitFiltro = document.getElementById('txt_nitFiltro')
 const txt_codigo = document.getElementById('txt_codigo')
 const txt_fechaIngreso = document.getElementById('txt_fechaIngreso')
 const spn_codigo = document.getElementById('spn_codigo')
+const md_datosCliente = document.getElementById('md_datosCliente')
 //FORMULARIO
 const txt_nombre = document.getElementById('txt_nombre')
 const txt_telefono = document.getElementById('txt_telefono')
@@ -100,8 +101,8 @@ function guardarModificarClienteJ() {
         }).then(respuesta => {
             console.log(respuesta)
             if (respuesta[0].estado == 1) {
-                //tabla()
-                //listarClienteN(1, cantidad.value, '', '')
+                tabla()
+                listarClienteJ(1, cantidad.value, '', '')
                 mensaje(respuesta[0].encabezado, respuesta[0].msj, respuesta[0].icono)
                 document.getElementById('frm_clienteJ').reset()
             } else {
@@ -165,4 +166,75 @@ function listarClienteJ(pagina, cantidad, campo, buscar) {
 //FUNCION QUE MUESTRA LOS MENSAJES AL USUARIO
 function mensaje(encabezado, msj, icono) {
     swal(encabezado, msj, icono)
+}
+//OBTIENE LOS DATOS PARA VISUALIZAR EN EL MODAL
+$(document).on('click', '.ver', function () {
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objver')
+    cargarModal(id)
+})
+
+function cargarModal(id) {
+    const datos = new FormData()
+    datos.append('opcion', 'modal')
+    datos.append('txt_codigo', id)
+    fetch(urlClienteJ, {
+        method: 'POST',
+        body: datos
+    }).then(function (respuesta) {
+        if (respuesta.ok) {
+            return respuesta.json()
+        } else {
+            console('error')
+        }
+    }).then(respuesta => {
+        md_datosCliente.innerHTML = respuesta['modalCuerpo']
+        $('#ModalCliente').modal('show')
+    }).catch(error => {
+        alert('OCURRIO UN ERROR CONECTANDO CON EL SERVIDOR, INTENTE DE NUEVO.')
+    })
+
+}
+//OBTIENE LOS DATOS PARA MODIFICAR
+$(document).on('click', '.editar', function () {
+    let elemento = $(this)[0]
+    let id = $(elemento).attr('objeditar')
+    cargarFormulario(id)
+})
+function cargarFormulario(id) {
+    const datos = new FormData()
+    datos.append('txt_codigo', id)
+    datos.append('opcion', 'obtener')
+    fetch(urlClienteJ, {
+        method: 'POST',
+        body: datos
+    }).then(function (respuesta) {
+        if (respuesta.ok) {
+            return respuesta.json()
+        }
+    }).then(respuesta => {
+        if (respuesta[0] == null) {
+            swal("NO ES POSIBLE MODIFICAR.", "EL CLIENTE YA HA SIDO ELIMINADO.", "info")
+        } else {
+
+            txt_codigo.value = respuesta[0]['codigo']
+            txt_fechaIngreso.value = respuesta[0]['fecha_ingreso']
+            txt_nombre.value = respuesta[0]['nombre']
+            txt_telefono.value = respuesta[0]['telefono']
+            txt_direccion.value = respuesta[0]['direccion']
+            spn_codigo.innerHTML = "<span class='text text-info tex-center roboto-medium'>CODIGO: " + respuesta[0]['codigo'] + ".</span>"
+            txt_activoCorriente.value = respuesta[0]['activo_corriente']
+            txt_pasivoCorriente.value = respuesta[0]['pasivo_corriente']
+            txt_inventario.value = respuesta[0]['inventario']
+            modificar = true
+            //OCULTA TABLA Y MUESTRA EL FORMULARIO
+            opNueva.className = "active";
+            opLista.className = "";
+            opNueva.innerHTML = "<i class='fas fa-edit fa-fw'></i> &nbsp; MODIFICAR"
+            btn_guardar.innerHTML = "<i class='far fa-save'></i> &nbsp; MODIFICAR"
+            $("#cuadroFormulario").slideDown("slow")
+            $("#cuadroTabla").slideUp("slow")
+        }
+
+    })
 }
