@@ -177,7 +177,7 @@
                                     <div class="col-12 col-md-10">
                                         <div class="form-group">
                                             <label for="txt_contra" class="roboto-medium">CONTRASEÑA</label>
-                                            <input type="text" class="form-control text-uppercase" name="txt_contra" id="txt_contra" minlength="2" maxlength="350" required>
+                                            <input type="text" class="form-control" name="txt_contra" id="txt_contra" minlength="2" maxlength="350" required>
                                             <div id="contraError">
 
                                             </div>

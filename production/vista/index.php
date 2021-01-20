@@ -71,11 +71,12 @@
                             </div>
                             <div class="wizard-footer height-wizard">
                                 <div class="pull-right">
-                                    <a id="btn_ingresar" href="administracion.php" type="button" class="btn btn-next btn-fill btn-warning btn-wd btn-sm" name="next" >INGRESAR</a>
+                                    <a id="btn_ingresar" type="button" class="btn btn-next btn-fill btn-warning btn-wd btn-sm" name="next">INGRESAR</a>
                                 </div>
 
                                 <div class="pull-left">
-                                    <a href="recuperar.php" class="text-info roboto-medium">No recuerda su contraseña?</a> </div>
+                                    <a href="recuperar.php" class="text-info roboto-medium">No recuerda su contraseña?</a>
+                                </div>
                                 <div class="clearfix"></div>
                             </div>
 
