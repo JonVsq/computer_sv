@@ -185,16 +185,18 @@
                                         </div>
                                     </div>
                                <div class="row">
-                               <div class="col-12 col-md-10">
+                               <div class="col-12 col-md-6">
                                         <div class="form-group">
-                                            <label for="txt_ac" class="roboto-medium">ACCESO</label>
-                                            <input type="number" class="form-control text-uppercase" name="txt_ac" id="txt_ac" minlength="2" maxlength="250" required>
-                                            <div id="acError">
-
-                                            </div>
+                                        <label for="txt_ac" class="roboto-medium">ACCESO</label>
+                                            <br>
+                                            <select id="txt_ac" class="select btn btn-block" style="border-color: black;" name="txt_ac">
+                                                <option value="1">1.opcion</option>
+                                                <option value="2">2opcion</option>
+                                            </select>
                                         </div>
                                     </div>
-                             </div>
+                               
+                    
                             
                                
                             </div>

@@ -146,7 +146,7 @@ switch ($opcion) {
         case 'eliminar': {
             $empleado = new Empleado();
             $respuesta = array();
-            if ($empleado->verificarRelacion(array($id))) {
+            
                 if ($empleado->eliminarEmpleado(array($id))) {
                     $respuesta[] = array(
                         "estado" => 1,
@@ -162,14 +162,7 @@ switch ($opcion) {
                         "icono" => "error"
                     );
                 }
-            } else {
-                $respuesta[] = array(
-                    "estado" => 2,
-                    "encabezado" => "ERROR.",
-                    "msj" => "HAY REGISTROS ACTIVOS RELACIONADOS AL REGISTRO.",
-                    "icono" => "error"
-                );
-            }
+            
             $empleado = null;
             echo  json_encode($respuesta);
             break;
