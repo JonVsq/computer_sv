@@ -13,3 +13,7 @@
 -YESSICA VASQUEZ
 -JONATHAN VASQUEZ
 -KELVIN VELASQUEZ
+
+
+DESCARGAR BASE:
+https://download1589.mediafire.com/ja8lqobigrag/3yejoiymvytz0jx/financiero.sql
